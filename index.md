@@ -1,37 +1,23 @@
-## Welcome to GitHub Pages
+## ¿Qué es Tender?
 
-You can use the [editor on GitHub](https://github.com/Singulars2021/tender/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+Tender pretende ser una aplicación para que las personas que desean **adoptar**  o **cuidar temporalmente** un animal, puedan hacerlo.
+Queremos ofrecer una experiencia divertida, amena y segura para  que todos los usuarios de la aplicación puedan encontrar la mascota que mejor se adapta a su estilo de vida y recursos.
+Y a su vez, fomentar la adopción de animales e impedir que estos sean abandonados.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+## ¿Quienes somos?
 
-### Markdown
+Somos un equipo de estudiantes que estamos aprendiendo a desarrollar aplicaciones Web. Tender es nuestro proyecto final de curso, y lo llevamos planeando desde hace tiempo, y además, ahora queremos presentarlo al concurso "@a2lity, tenemos un proyecto para ti". #EmprendedorZ
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+## ¿Cómo lo vaís a hacer?
 
-```markdown
-Syntax highlighted code block
+Vamos a usar esta plataforma para coordinar nuestro trabajo de creación de la aplicación Tender, donde pondremos en pràctica todo lo que hemos aprendido en estos meses de formación:
 
-# Header 1
-## Header 2
-### Header 3
+- HTML/CSS/Javascript
+- Framworks CSS y lenguaje SASS
+- RestAPI
+- Framework Vue
+- Firebase / Strapi
 
-- Bulleted
-- List
+## ¿Cuando estará listo?
 
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/Singulars2021/tender/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+Esperamos el 8 de Marzo tener una aplicación funcional que todo el mundo pueda usar.
