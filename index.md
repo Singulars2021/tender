@@ -1,6 +1,6 @@
 ## ¿Qué es Tender?
 
-<img width="200"  src="https://oscarm.tinytake.com/media/f33d1c?filename=1612454879955_TinyTake04-02-2021-05-07-57_637480516787336789.png&sub_type=thumbnail_preview&type=attachment" title="Powered by TinyTake Screen Capture"/>
+<img src="https://oscarm.tinytake.com/media/f33dcd?filename=1612455651504_TinyTake04-02-2021-05-20-42_637480524449476280.png&sub_type=thumbnail_preview&type=attachment&width=800&height=428" title="Powered by TinyTake Screen Capture"/>
 
 Tender pretende ser una aplicación para que las personas que desean **adoptar**  o **cuidar temporalmente** un animal, puedan hacerlo.
 Queremos ofrecer una experiencia divertida, amena y segura para  que todos los usuarios de la aplicación puedan encontrar la mascota que mejor se adapta a su estilo de vida y recursos.
