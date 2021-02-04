@@ -25,3 +25,5 @@ Vamos a usar esta plataforma para coordinar nuestro trabajo de creación de la a
 ## ¿Cuando estará listo?
 
 Esperamos el 8 de Marzo de 2021 tener una aplicación funcional que todo el mundo pueda usar.
+
+<img src="https://oscarm.tinytake.com/media/f33de2?filename=1612455826892_TinyTake04-02-2021-05-23-43_637480526258007744.png&sub_type=thumbnail_preview&type=attachment&width=799&height=450" title="Powered by TinyTake Screen Capture"/>
