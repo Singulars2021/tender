@@ -10,7 +10,7 @@ Y a su vez, fomentar la adopción de animales e impedir que estos sean abandonad
 
 <img width="200"  src="https://oscarm.tinytake.com/media/f33d5b?filename=1612455164104_TinyTake04-02-2021-05-12-40_637480519625697247.png&sub_type=thumbnail_preview&type=attachment&width=371&height=447" title="Powered by TinyTake Screen Capture"/>
 
-Somos un equipo de estudiantes que estamos aprendiendo a desarrollar aplicaciones Web. Tender es nuestro proyecto final de curso, y lo llevamos planeando desde hace tiempo, y además, ahora queremos presentarlo al concurso "[Actuality](https://www.instagram.com/ac2alityespanol/?hl=es), tenemos un proyecto para ti". #EmprendedorZ
+Somos un [equipo de estudiantes](https://singulars2021.github.io/singusaurus/) que estamos aprendiendo a desarrollar aplicaciones Web. Tender es nuestro proyecto final de curso, y lo llevamos planeando desde hace tiempo, y además, ahora queremos presentarlo al concurso "[Actuality](https://www.instagram.com/ac2alityespanol/?hl=es), tenemos un proyecto para ti". #EmprendedorZ
 
 ## ¿Cómo lo vaís a hacer?
 
