@@ -1,4 +1,6 @@
-## ¿Qué es Tender?
+## ¿Qué es Tender? 
+
+[Video promo Tik Tok](https://vm.tiktok.com/ZMeJKmo2b/)
 
 <img src="https://oscarm.tinytake.com/media/f33dcd?filename=1612455651504_TinyTake04-02-2021-05-20-42_637480524449476280.png&sub_type=thumbnail_preview&type=attachment&width=800&height=428" title="Powered by TinyTake Screen Capture"/>
 
