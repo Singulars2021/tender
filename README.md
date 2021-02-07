@@ -24,4 +24,4 @@ Usando las herramientas que hemos trabajado durante estos últimos meses
 
 ## ¿Cuándo estará listo?
 
-Esperamos el 8 de Marzo de 2021 tener una aplicación funcional que todo el mundo pueda usar.
+Esperamos el 8 de Marzo de 2021 tener un prototipo para poder probar algunas de las funcionalidades de la aplicación.
