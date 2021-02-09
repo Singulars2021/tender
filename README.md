@@ -1,5 +1,10 @@
 # Tender
 
+## First time - install Ionic Cli
+```
+npm install -g @ionic/cli
+```
+
 ## Project setup
 ```
 npm install
