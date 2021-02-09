@@ -1,0 +1,7 @@
+{
+  "name": "Tender",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue"
+}
