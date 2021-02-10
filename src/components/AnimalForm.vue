@@ -11,9 +11,39 @@
       </ion-item>
       <ion-item>
         <ion-label>Sexo</ion-label>
-        <ion-select placeholder="Eliga uno">
+        <ion-select
+          placeholder="Eliga uno"
+          okText="Aceptar"
+          cancelText="Cancelar"
+        >
           <ion-select-option value="f">Femenino</ion-select-option>
           <ion-select-option value="m">Masculino</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Especie</ion-label>
+        <ion-select
+          placeholder="Eliga una"
+          okText="Aceptar"
+          cancelText="Cancelar"
+        >
+          <ion-select-option value="0">Gato</ion-select-option>
+          <ion-select-option value="1">Perro</ion-select-option>
+          <ion-select-option value="2">Tortuga</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Localización</ion-label>
+        <ion-select
+          :interface-options="customActionSheetOptions"
+          interface="action-sheet"
+          placeholder="Eliga una"
+          cancelText="Cancelar"
+        >
+          <ion-select-option value="Barcelona">Barcelona</ion-select-option>
+          <ion-select-option value="Tarragona">Tarragona</ion-select-option>
+          <ion-select-option value="Girona">Girona</ion-select-option>
+          <ion-select-option value="Lleida">Lleida</ion-select-option>
         </ion-select>
       </ion-item>
       <ion-item>
