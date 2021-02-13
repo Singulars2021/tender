@@ -1,44 +1,48 @@
 <template>
   <ion-page>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Animals</ion-title>
-      </ion-toolbar>
-    </ion-header>
     <ion-content :fullscreen="true">
-      <ion-header collapse="condense">
-        <ion-toolbar>
-          <ion-title size="large">Animals</ion-title>
-        </ion-toolbar>
-      </ion-header>
-      <ion-slides pager="false" :options="slideOpts" @ionSlideDidChange="changeSlide">
+      <ion-slides :options="animalSliderOptions">
         <ion-slide :key="animal.id" v-for="animal in animals">
           <ion-card>
-            <div @click="changePicture(animal.pictures)">
-              <img :src="animal.pictures[i]">
-            </div>
+            <ion-slides :options="animalPicturesSliderOptions" pager="true">
+              <ion-slide v-for="picture in animal.pictures" :key="picture">
+                <img :src="picture" />
+              </ion-slide>
+            </ion-slides>
             <ion-card-header>
-              <ion-card-title> {{animal.name}} </ion-card-title>
-              <ion-card-subtitle> {{animal.species}} </ion-card-subtitle>
+              <ion-chip outline color="primary">
+                <ion-icon :icon="maleFemaleOutline"></ion-icon>
+                <ion-label>{{ animal.sex }}</ion-label>
+              </ion-chip>
+              <ion-chip outline color="primary">
+                <ion-icon :icon="pawOutline"></ion-icon>
+                <ion-label>{{ animal.species }}</ion-label>
+              </ion-chip>
+              <ion-card-title> {{ animal.name }} </ion-card-title>
+              <ion-card-subtitle color="tertiary">
+                <ion-icon :icon="locationOutline"></ion-icon>
+                {{ animal.location }}
+              </ion-card-subtitle>
             </ion-card-header>
             <ion-card-content>
-             <ul>
-               <li>{{animal.age}}</li>
-               <li>{{animal.location}}</li>
-               <li>{{animal.sex}}</li>
-               <li>Descripcion</li>
-             </ul>
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+              Perferendis est sed minima vero voluptates enim tempore, libero
+              illo molestias repellat facere. In odit qui sint vitae esse amet
+              quos iure...
             </ion-card-content>
+            <ion-chip outline color="secondary" id="footer-chip">
+              <ion-icon :icon="hourglassOutline"></ion-icon>
+              <ion-label>{{ animal.adoptionType }}</ion-label>
+            </ion-chip>
           </ion-card>
         </ion-slide>
       </ion-slides>
-      <!-- fab placed to the bottom start -->
+
       <ion-fab vertical="bottom" horizontal="start" slot="fixed">
         <ion-fab-button>
           <ion-icon :icon="removeOutline"></ion-icon>
         </ion-fab-button>
       </ion-fab>
-      <!-- fab placed to the bottom end -->
       <ion-fab vertical="bottom" horizontal="end" slot="fixed">
         <ion-fab-button>
           <ion-icon :icon="heartOutline"></ion-icon>
@@ -50,14 +54,9 @@
 
 <script>
 import {
-  IonFab,
-  IonFabButton,
   IonSlides,
   IonSlide,
   IonPage,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
   IonContent,
   IonCardHeader,
   IonCard,
@@ -65,19 +64,24 @@ import {
   IonCardTitle,
   IonCardSubtitle,
   IonIcon,
-
+  IonChip,
+  IonLabel,
+  IonFab,
+  IonFabButton,
 } from "@ionic/vue";
-import { heartOutline, removeOutline } from "ionicons/icons";
+import {
+  heartOutline,
+  removeOutline,
+  maleFemaleOutline,
+  pawOutline,
+  locationOutline,
+  hourglassOutline,
+} from "ionicons/icons";
 export default {
   name: "animal-slider",
   components: {
-    IonFab,
-    IonFabButton,
     IonSlides,
     IonSlide,
-    IonHeader,
-    IonToolbar,
-    IonTitle,
     IonContent,
     IonPage,
     IonCardHeader,
@@ -86,79 +90,103 @@ export default {
     IonCardTitle,
     IonCardSubtitle,
     IonIcon,
-
+    IonChip,
+    IonLabel,
+    IonFab,
+    IonFabButton,
   },
-  methods:{
-    // importAnimalList(){
-    //   fetch('https://animalslist-19bbf-default-rtdb.europe-west1.firebasedatabase.app/animalsList.json').then(response => response.json()).then(data => console.log(data))
-      
-    // }
-    changeSlide(){
-      this.i=0
-    },
-    changePicture(picture){
-      let pictureLength=picture.length
-      console.log("hola")
-      if(this.i<pictureLength-1){
-        this.i++
-      }
-      else{
-        this.i=0
-      }
-    }
-  },
-  //created(){
-    //this.importAnimalList()
-  //},
   data() {
     return {
-      slideOpts: {
+      animalSliderOptions: {
         loop: true,
-        initialSlide:1
+        initialSlide: 1,
+        pager: false,
+      },
+      animalPicturesSliderOptions: {
+        loop: true,
       },
       heartOutline,
       removeOutline,
-      i:0,
-      animals: [{
-          id: '0',
-          species: 'Perro',
-          name: 'Marcos',
-          sex: 'Macho',
-          age: 'Joven',
-          pictures: ['https://images.unsplash.com/photo-1601758003839-512c0f4159e5?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=750&q=80', 'https://images.unsplash.com/photo-1588022274210-7aab7c55c631?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80'],
-          location: 'MatarÃ³'
+      maleFemaleOutline,
+      pawOutline,
+      locationOutline,
+      hourglassOutline,
+      animals: [
+        {
+          id: "0",
+          species: "Perro",
+          name: "Marcos",
+          sex: "Macho",
+          age: "Joven",
+          pictures: [
+            "https://images.unsplash.com/photo-1601758003839-512c0f4159e5?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=750&q=80",
+            "https://images.unsplash.com/photo-1588022274210-7aab7c55c631?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80",
+            "https://images.unsplash.com/photo-1611498491685-abb3e359cf69?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=751&q=80",
+            "https://images.unsplash.com/photo-1608604560300-18ce17489c4f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80",
+          ],
+          location: "Mataró",
+          adoptionType: "Temporal",
         },
         {
-          id: '1',
-          species: 'Perro',
-          name: 'Roberta',
-          sex: 'Hembra',
-          age: 'Adulta',
-          pictures: ['https://images.unsplash.com/photo-1536910467852-a6fded0c5c47?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=750&q=80'],
-          location: 'Garraf'
-        },        
+          id: "1",
+          species: "Perro",
+          name: "Roberta",
+          sex: "Hembra",
+          age: "Adulta",
+          pictures: [
+            "https://images.unsplash.com/photo-1536910467852-a6fded0c5c47?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=750&q=80",
+            "https://images.unsplash.com/photo-1490042706304-06c664f6fd9a?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=751&q=80",
+            "https://images.unsplash.com/photo-1612123183684-89c6437ebf45?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80",
+          ],
+          location: "El Garraf",
+          adoptionType: "Permanente",
+        },
         {
-          id: '2',
-          species: 'Gato',
-          name: 'Simba',
-          sex: 'Macho',
-          age: 'Joven',
-          pictures: ['https://images.unsplash.com/photo-1610121172299-5f3c7c55bccd?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80', 'https://images.unsplash.com/photo-1532934066-274478b07d25?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80'],
-          location: 'Vilassar'
-        },],
+          id: "2",
+          species: "Gato",
+          name: "Simba",
+          sex: "Macho",
+          age: "Joven",
+          pictures: [
+            "https://images.unsplash.com/photo-1511275539165-cc46b1ee89bf?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=750&q=80",
+            "https://images.unsplash.com/photo-1492370284958-c20b15c692d2?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80",
+            "https://images.unsplash.com/photo-1548247416-ec66f4900b2e?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=663&q=80",
+          ],
+          location: "Vilassar de Mar",
+          adoptionType: "Permanente",
+        },
+        {
+          id: "3",
+          species: "Tortuga",
+          name: "Margarita",
+          sex: "Hembra",
+          age: "Senior",
+          pictures: [
+            "https://images.unsplash.com/photo-1579833098880-e52055f43cad?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=750&q=800",
+            "https://images.unsplash.com/photo-1597162216923-ba6d99390c10?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=750&q=80",
+          ],
+          location: "L'Hospitalet de Llobregat",
+          adoptionType: "Temporal",
+        },
+      ],
     };
   },
 };
 </script>
 
 <style scoped>
-ion-fab-button {
-  margin: 1rem;
+ion-card-content {
+  text-align: justify;
 }
-ion-card{
-  min-width: 80%;
+
+ion-fab {
+  margin: 1rem 3rem;
 }
-/* ion-img{
-  max-height: 25vh;
-} */
+#footer-chip {
+  margin-bottom: 1rem;
+}
+
+img {
+  max-height: 40vh;
+}
 </style>
