@@ -2,42 +2,13 @@
   <ion-page>
     <ion-content :fullscreen="true">
       <ion-slides :options="animalSliderOptions">
-        <ion-slide :key="animal.id" v-for="animal in animals">
-          <ion-card>
-            <ion-slides :options="animalPicturesSliderOptions" pager="true">
-              <ion-slide v-for="picture in animal.pictures" :key="picture">
-                <img :src="picture" />
-              </ion-slide>
-            </ion-slides>
-            <ion-card-header>
-              <ion-chip outline color="primary">
-                <ion-icon :icon="maleFemaleOutline"></ion-icon>
-                <ion-label>{{ animal.sex }}</ion-label>
-              </ion-chip>
-              <ion-chip outline color="primary">
-                <ion-icon :icon="pawOutline"></ion-icon>
-                <ion-label>{{ animal.species }}</ion-label>
-              </ion-chip>
-              <ion-card-title> {{ animal.name }} </ion-card-title>
-              <ion-card-subtitle color="tertiary">
-                <ion-icon :icon="locationOutline"></ion-icon>
-                {{ animal.location }}
-              </ion-card-subtitle>
-            </ion-card-header>
-            <ion-card-content>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-              Perferendis est sed minima vero voluptates enim tempore, libero
-              illo molestias repellat facere. In odit qui sint vitae esse amet
-              quos iure...
-            </ion-card-content>
-            <ion-chip outline color="secondary" id="footer-chip">
-              <ion-icon :icon="hourglassOutline"></ion-icon>
-              <ion-label>{{ animal.adoptionType }}</ion-label>
-            </ion-chip>
-          </ion-card>
-        </ion-slide>
+        <animal-slide
+          v-for="animal in animals"
+          :key="animal.id"
+          :animal="animal"
+        >
+        </animal-slide>
       </ion-slides>
-
       <ion-fab vertical="bottom" horizontal="start" slot="fixed">
         <ion-fab-button>
           <ion-icon :icon="removeOutline"></ion-icon>
@@ -53,48 +24,28 @@
 </template>
 
 <script>
+import AnimalSlide from "@/components/AnimalSlide.vue";
 import {
   IonSlides,
-  IonSlide,
   IonPage,
   IonContent,
-  IonCardHeader,
-  IonCard,
-  IonCardContent,
-  IonCardTitle,
-  IonCardSubtitle,
   IonIcon,
-  IonChip,
-  IonLabel,
   IonFab,
   IonFabButton,
 } from "@ionic/vue";
-import {
-  heartOutline,
-  removeOutline,
-  maleFemaleOutline,
-  pawOutline,
-  locationOutline,
-  hourglassOutline,
-} from "ionicons/icons";
+import { heartOutline, removeOutline } from "ionicons/icons";
 export default {
   name: "animal-slider",
   components: {
+    AnimalSlide,
     IonSlides,
-    IonSlide,
     IonContent,
     IonPage,
-    IonCardHeader,
-    IonCard,
-    IonCardContent,
-    IonCardTitle,
-    IonCardSubtitle,
     IonIcon,
-    IonChip,
-    IonLabel,
     IonFab,
     IonFabButton,
   },
+
   data() {
     return {
       animalSliderOptions: {
@@ -102,15 +53,8 @@ export default {
         initialSlide: 1,
         pager: false,
       },
-      animalPicturesSliderOptions: {
-        loop: true,
-      },
       heartOutline,
       removeOutline,
-      maleFemaleOutline,
-      pawOutline,
-      locationOutline,
-      hourglassOutline,
       animals: [
         {
           id: "0",
@@ -175,18 +119,7 @@ export default {
 </script>
 
 <style scoped>
-ion-card-content {
-  text-align: justify;
-}
-
 ion-fab {
   margin: 1rem 3rem;
-}
-#footer-chip {
-  margin-bottom: 1rem;
-}
-
-img {
-  max-height: 40vh;
 }
 </style>
