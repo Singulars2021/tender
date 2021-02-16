@@ -49,7 +49,7 @@ export default {
   data() {
     return {
       animalSliderOptions: {
-        loop: true,
+        loop: false,
         initialSlide: 1,
         pager: false,
       },
