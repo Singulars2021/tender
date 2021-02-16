@@ -16,7 +16,7 @@
         <ion-label>Sexo</ion-label>
         <ion-select
           v-model="sex"
-          placeholder="Eliga uno"
+          placeholder="Elija uno"
           okText="Aceptar"
           cancelText="Cancelar"
         >
@@ -29,7 +29,7 @@
         <ion-label>Especie</ion-label>
         <ion-select
           v-model="species"
-          placeholder="Eliga una"
+          placeholder="Elija una"
           okText="Aceptar"
           cancelText="Cancelar"
         >
@@ -44,7 +44,7 @@
         <ion-select
           v-model="location"
           interface="action-sheet"
-          placeholder="Eliga una"
+          placeholder="Elija una"
           cancelText="Cancelar"
         >
           <ion-select-option value="alava">Álava</ion-select-option>
