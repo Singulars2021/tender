@@ -22,8 +22,13 @@ const routes = [
         path: 'add',
         component: () => import('@/views/AddNewAnimal.vue')
       },
+      {
+        path: 'chat',
+        component: () => import('@/views/ChatCenter.vue')
+      },
+
     ]
-  }
+  },
 ]
 
 const router = createRouter({
