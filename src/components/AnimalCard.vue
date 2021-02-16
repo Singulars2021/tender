@@ -63,6 +63,8 @@ import {
   IonLabel,
   IonPopover,
   IonList,
+  IonText,
+  IonButton,
   IonItem,
 } from "@ionic/vue";
 import {
@@ -81,6 +83,8 @@ export default {
     IonCardHeader,
     IonCard,
     IonCardContent,
+    IonText,
+    IonButton,
     IonCardTitle,
     IonCardSubtitle,
     IonIcon,
