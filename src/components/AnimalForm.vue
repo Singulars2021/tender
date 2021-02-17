@@ -118,8 +118,8 @@
       </ion-item>
       <!-- Description Item -->
       <ion-item>
-        <ion-label position="floating">Descripción</ion-label>
-        <ion-textarea v-model="description" rows="5"></ion-textarea>
+        <ion-label position="fixed">Descripción</ion-label>
+        <ion-textarea placeholder="Explica cómo es su carácter" v-model="description" rows="1" auto-grow></ion-textarea>
       </ion-item>
     </ion-list>
     <ion-button type="submit" expand="block" fill="solid">Guardar</ion-button>
@@ -208,4 +208,8 @@ export default {
 </script>
 
 <style scoped>
+ion-label{
+  font-weight: 700;
+}
+
 </style>
