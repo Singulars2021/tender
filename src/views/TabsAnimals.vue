@@ -21,7 +21,7 @@ import { IonTabBar, IonTabButton, IonTabs, IonIcon, IonPage } from "@ionic/vue";
 import { settingsOutline, layersOutline } from "ionicons/icons";
 
 export default {
-  name: "Tabs",
+  name: "TabsAnimals",
   components: { IonTabs, IonTabBar, IonTabButton, IonIcon, IonPage },
   setup() {
     return {

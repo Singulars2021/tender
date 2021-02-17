@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
-import Tabs from '../views/Tabs.vue'
+import TabsAnimals from '../views/TabsAnimals.vue'
+import TabsSign from "../views/TabsSign.vue"
 
 const routes = [
   {
@@ -8,7 +9,7 @@ const routes = [
   },
   {
     path: '/animals/',
-    component: Tabs,
+    component: TabsAnimals,
     children: [
       {
         path: '',
@@ -21,6 +22,24 @@ const routes = [
       {
         path: 'add',
         component: () => import('@/views/AddNewAnimal.vue')
+      },
+    ]
+  },
+  {
+    path: '/sign/',
+    component: TabsSign,
+    children: [
+      {
+        path: '',
+        redirect: '/sign/singup'
+      },
+      {
+        path: 'signup',
+        component: () => import('@/views/SignUpView.vue')
+      },
+      {
+        path: 'signin',
+        component: () => import('@/views/LogIn.vue')
       },
     ]
   }
