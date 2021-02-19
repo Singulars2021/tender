@@ -1,16 +1,13 @@
 <template>
   <ion-searchbar></ion-searchbar>
-  <ion-slide> </ion-slide>
-  <animal-avatar></animal-avatar>
+  <!-- <avatars></avatars> -->
 </template>
 
 <script>
-import { AnimalAvatar } from "./AnimalAvatar.vue";
 import { IonSearchbar } from "@ionic/vue";
-import { IonAvatar } from "@ionic/vue";
-import { IonSlide } from "@ionic/vue";
+// import { Avatars } from "./Avatars.vue";
 export default {
-  components: [IonSearchbar, IonAvatar, IonSlide, AnimalAvatar],
+  components: { IonSearchbar },
 };
 </script>
 
