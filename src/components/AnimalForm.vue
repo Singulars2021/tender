@@ -16,7 +16,6 @@
         <ion-label>Sexo</ion-label>
         <ion-select
           v-model="sex"
-          placeholder="Elija uno"
           okText="Aceptar"
           cancelText="Cancelar"
         >
@@ -29,7 +28,6 @@
         <ion-label>Especie</ion-label>
         <ion-select
           v-model="species"
-          placeholder="Elija una"
           okText="Aceptar"
           cancelText="Cancelar"
         >
@@ -44,7 +42,6 @@
         <ion-select
           v-model="location"
           interface="action-sheet"
-          placeholder="Elija una"
           cancelText="Cancelar"
         >
           <ion-select-option value="alava">Álava</ion-select-option>
@@ -118,11 +115,16 @@
       </ion-item>
       <!-- Description Item -->
       <ion-item>
-        <ion-label position="fixed">Descripción</ion-label>
-        <ion-textarea placeholder="Explica cómo es su carácter" v-model="description" rows="1" auto-grow></ion-textarea>
+        <ion-label position="floating">Descripción</ion-label>
+        <ion-textarea v-model="description" rows="1" auto-grow></ion-textarea>
       </ion-item>
     </ion-list>
     <ion-button type="submit" expand="block" fill="solid">Guardar</ion-button>
+    <!-- <ion-fab vertical="bottom" slot="fixed">
+      <ion-fab-button class="cta-button">
+        Guardar
+      </ion-fab-button>
+    </ion-fab> -->
   </form>
 </template>
 
@@ -134,6 +136,8 @@ import {
   IonInput,
   IonTextarea,
   IonButton,
+  // IonFab,
+  // IonFabButton,
   IonSelect,
   IonSelectOption,
   toastController,
@@ -148,6 +152,8 @@ export default {
     IonButton,
     IonSelect,
     IonSelectOption,
+    // IonFab,
+    // IonFabButton,
   },
   data() {
     return {
@@ -211,5 +217,6 @@ export default {
 ion-label{
   font-weight: 700;
 }
+
 
 </style>

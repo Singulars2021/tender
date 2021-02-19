@@ -45,7 +45,6 @@ export default {
     IonFab,
     IonFabButton,
   },
-
   data() {
     return {
       animalSliderOptions: {
