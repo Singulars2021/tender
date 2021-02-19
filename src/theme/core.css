@@ -26,3 +26,9 @@ ion-button{
 ion-item{
     --padding-start: var(--ion-no-padding)
 }
+
+@media (max-width: 680px){
+    .image-modal .modal-wrapper{
+        --max-height: 45vh;
+    }
+}

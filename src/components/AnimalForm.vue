@@ -1,6 +1,34 @@
 <template>
   <form action="" class="ion-padding" @submit.prevent="addAnimal">
     <ion-list>
+      <!-- Image item -->
+      <ion-item>
+        <div id="image">
+          <ion-grid>
+            <ion-row>
+              <ion-col v-for="index in 5" :key="index">
+                <ion-icon :icon="images" size="large" @click="takePicture" v-if="index > imagesList.length"></ion-icon>
+                <div class="preview" v-else>
+                  <img :src="imagesList[index-1].preview" @click="setOpen(true)"/>
+                  <ion-modal :is-open="isOpen" @onDidDismiss="setOpen(false)" css-class="image-modal">
+                    <div>
+                      <img :src="imagesList[index-1].preview" />
+                      <ion-fab vertical="bottom" horizontal="center">
+                        <ion-fab-button color="danger">
+                          <ion-icon :icon="trash" size="large"></ion-icon>
+                          Delete
+                        </ion-fab-button>
+                      </ion-fab>
+                    </div>
+                  </ion-modal>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+        <p v-if="error">{{ error }}</p>
+      </ion-item>
+
       <!-- Name item -->
       <ion-item>
         <ion-label position="floating">Nombre</ion-label>
@@ -141,7 +169,19 @@ import {
   IonSelect,
   IonSelectOption,
   toastController,
+  IonGrid,
+  IonRow,
+  IonCol,
+  IonIcon,
+  IonModal,
+  IonFab,
+  IonFabButton,
 } from "@ionic/vue";
+import { images, trash } from "ionicons/icons";
+import { Plugins, CameraResultType } from "@capacitor/core";
+
+const { Camera } = Plugins;
+
 export default {
   components: {
     IonList,
@@ -154,6 +194,13 @@ export default {
     IonSelectOption,
     // IonFab,
     // IonFabButton,
+    IonGrid,
+    IonRow,
+    IonCol,
+    IonIcon,
+    IonModal,
+    IonFab,
+    IonFabButton,
   },
   data() {
     return {
@@ -164,6 +211,11 @@ export default {
       location: undefined,
       image: undefined,
       description: undefined,
+      images: images,
+      trash: trash,
+      imagesList: [],
+      error: null,
+      isOpen: false,
     };
   },
   methods: {
@@ -209,6 +261,25 @@ export default {
       });
       return toast.present();
     },
+    async takePicture() {
+      if (this.imagesList.length < 5) {
+        const image = await Camera.getPhoto({
+          quality: 60,
+          resultType: CameraResultType.Base64,
+        });
+
+        this.imagesList.push({
+          ...image,
+          id: new Date().toISOString,
+          preview: "data:image/jpeg;base64," + image.base64String,
+        });
+      } else {
+        this.error = "You can only upload 5 pictures!";
+      }
+    },
+    setOpen(isOpen){
+      this.isOpen = isOpen 
+    }
   },
 };
 </script>
@@ -217,6 +288,7 @@ export default {
 ion-label{
   font-weight: 700;
 }
-
-
+div#image{
+  margin: 0 auto;
+}
 </style>
