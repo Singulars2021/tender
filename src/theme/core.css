@@ -3,26 +3,6 @@ ion-toolbar {
     --color: var(--ion-color-primary-contrast);
 }
 
-/* Style Button CTA */
-ion-button{
-    --background: var(--ion-color-secondary);
-    --color:var(--ion-color-dark);
-    --border-radius: 29.5px;
-    font-weight:700;
-    --padding-bottom:20px;
-    --padding-top:20px; 
-}
-
-
-/* .cta-button{
-    --background: var(--ion-color-secondary);
-    --color:var(--ion-color-dark);
-    --border-radius: 29.5px;
-    font-weight:700;
-    --padding-bottom:20px;
-    --padding-top:20px; 
-    
-} */
 ion-item{
     --padding-start: var(--ion-no-padding)
 }

@@ -109,22 +109,17 @@
         </ion-select>
       </ion-item>
       <!-- Image item -->
-      <ion-item>
+      <!-- <ion-item>
         <ion-label position="floating">Subir Imagen</ion-label>
         <ion-input v-model="image" type="url"></ion-input>
-      </ion-item>
+      </ion-item> -->
       <!-- Description Item -->
       <ion-item>
         <ion-label position="floating">Descripción</ion-label>
         <ion-textarea v-model="description" rows="1" auto-grow></ion-textarea>
       </ion-item>
     </ion-list>
-    <ion-button type="submit" expand="block" fill="solid">Guardar</ion-button>
-    <!-- <ion-fab vertical="bottom" slot="fixed">
-      <ion-fab-button class="cta-button">
-        Guardar
-      </ion-fab-button>
-    </ion-fab> -->
+   <cta-button>GUARDAR</cta-button>
   </form>
 </template>
 
@@ -135,13 +130,12 @@ import {
   IonLabel,
   IonInput,
   IonTextarea,
-  IonButton,
-  // IonFab,
-  // IonFabButton,
   IonSelect,
   IonSelectOption,
   toastController,
+  
 } from "@ionic/vue";
+import CtaButton from "../ui/CtaButton.vue"
 export default {
   components: {
     IonList,
@@ -149,11 +143,10 @@ export default {
     IonLabel,
     IonInput,
     IonTextarea,
-    IonButton,
     IonSelect,
     IonSelectOption,
-    // IonFab,
-    // IonFabButton,
+    CtaButton
+
   },
   data() {
     return {
@@ -217,6 +210,19 @@ export default {
 ion-label{
   font-weight: 700;
 }
+
+/* ion-select::part(icon){
+  display: none;
+} */
+
+/* ion-select::part(text){
+  background-image: url("/chevron-forward-outline.svg");
+  background-position: right;
+  background-repeat: no-repeat; 
+  height: 19px;
+  flex: 0 0 auto;
+} */
+
 
 
 </style>
