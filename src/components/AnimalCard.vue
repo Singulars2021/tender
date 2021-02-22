@@ -27,13 +27,11 @@
         <ion-popover :is-open="isPopoverOpen">
           <ion-list>
             <ion-item><ion-text color="danger">Denunciar</ion-text> </ion-item>
-            <ion-item>Copiar enlace</ion-item>
-            <ion-item>Compartir en...</ion-item>
-            <ion-item>
-              <ion-button @click="closePopover" fill="clear" expand="full">
+            <ion-item><ion-text>Copiar enlace</ion-text></ion-item>
+            <ion-item><ion-text>Compartir en...</ion-text></ion-item>
+            <ion-item><ion-button size="small" slot="start" color="dark" @click="closePopover" fill="clear" expand="full">
                 Cancelar
-              </ion-button>
-            </ion-item>
+            </ion-button></ion-item>
           </ion-list>
         </ion-popover>
       </div>
@@ -41,7 +39,7 @@
     <ion-card-content>
       Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perferendis est
       sed minima vero voluptates enim tempore, libero illo molestias repellat
-      facere. In odit qui sint vitae esse amet quos iure...
+      facere. In odit qui sint vitae esse amet quos iure.
     </ion-card-content>
     <div>
       <ion-chip  color="dark" id="footer-chip" class="adoption-type-chip">
@@ -120,8 +118,9 @@ export default {
 </script>
 
 <style scoped>
+
 ion-card{
-  margin-bottom:100px
+  margin-bottom: 15vh
 }
 
 ion-card-content {
@@ -152,6 +151,14 @@ ion-card-title{
   text-align: start;
   color: var(--ion-color-dark)
 }
+.md ion-card-title{
+  font-size:28px;
+  font-weight:700;
+}
+.md ion-card-subtitle{
+  font-size:14px;
+  font-weight:700;
+}
 ion-chip{
   margin-top: 0px;
   margin-bottom: 15px;
@@ -170,5 +177,14 @@ div {
 ion-button::part(native){
 padding-inline-end:0px;
 height:30px
+}
+ion-text{
+  padding-left:18px
+}
+item-inner{
+  padding-left:18px
+}
+ion-button{
+  font-size: 18px;
 }
 </style>
