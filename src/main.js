@@ -1,18 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router';
-// import * as firebase from 'firebase';
-
-
-// const firebaseConfig = {
-//     apiKey: "AIzaSyBzEBPH5n8SYpVem0g6vBAcXWnrb6B3uT0",
-//     authDomain: "blueprint-d8d73.firebaseapp.com",
-//     projectId: "blueprint-d8d73",
-//     storageBucket: "blueprint-d8d73.appspot.com",
-//     messagingSenderId: "809559128776",
-//     appId: "1:809559128776:web:fbbf08afa7ffd89c2f43fd",
-//     measurementId: "G-FNVQ4KLZFS"
-// }
+import store from './store';
 
 import ContentContainer from './ui/ContentContainer.vue'
 
@@ -40,7 +29,8 @@ import './theme/core.css';
 
 const app = createApp(App)
   .use(IonicVue)
-  .use(router);
+  .use(router)
+  .use(store);
 
 app.component('content-container', ContentContainer);
 
