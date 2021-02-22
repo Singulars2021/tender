@@ -6,9 +6,7 @@
 
 <script>
 import AnimalCard from "./AnimalCard.vue";
-
 import { IonSlide } from "@ionic/vue"
-
 export default {
   components: {
     AnimalCard,

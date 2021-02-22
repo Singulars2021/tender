@@ -1,0 +1,22 @@
+
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap");
+
+
+
+
+/* $font-family-base: "Quicksand";
+$font-family-md-base: "Quicksand";
+$font-family-ios-base: "Quicksand";
+$font-family-wp-base: "Quicksand";
+$font-size-base:  14px; */
+
+:root { 
+  /* Set the font family of the entire app */
+   --ion-font-family: 'Roboto', sans-serif; 
+} 
+
+ion-title{
+    font-family: 'Quicksand', sans-serif;
+    font-weight:700;
+}
