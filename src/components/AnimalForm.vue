@@ -43,8 +43,9 @@
           v-model="location"
           interface="action-sheet"
           cancelText="Cancelar"
+          :interface-options="options"
         >
-          <ion-select-option value="alava">Álava</ion-select-option>
+          <ion-select-option clas="red-option" value="alava">Álava</ion-select-option>
           <ion-select-option value="albacete">Albacete</ion-select-option>
           <ion-select-option value="alicante"
             >Alicante/Alacant</ion-select-option
@@ -148,6 +149,13 @@ export default {
     CtaButton
 
   },
+  setup() {
+    const options={
+      cssClass: 'my-custom-interface'
+    };
+
+    return { options }
+  },
   data() {
     return {
       name: undefined,
@@ -210,10 +218,12 @@ export default {
 ion-label{
   font-weight: 700;
 }
-
+.my-custom-interface .red-option{
+  --color:red !important;
+}
 /* ion-select::part(icon){
   display: none;
-} */
+} 
 
 /* ion-select::part(text){
   background-image: url("/chevron-forward-outline.svg");

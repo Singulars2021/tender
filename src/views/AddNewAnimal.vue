@@ -3,24 +3,26 @@
     <ion-header>
       <ion-toolbar>
        <ion-buttons slot="start">
-          <ion-button>
-            <ion-icon :icon="chevronBackOutline" ></ion-icon>
-          </ion-button>
+          <ion-back-button default-href="/animals/slider"
+          :text="buttonText"
+          :icon="buttonIcon">
+          </ion-back-button>
         </ion-buttons>
         <ion-title>Tu mascota</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
-      <ion-header collapse="condense">
-        <ion-buttons slot="start">
-          <ion-button>
-            <ion-icon :icon="chevronBackOutline" ></ion-icon>
-          </ion-button>
-        </ion-buttons>
+      <!-- <ion-header collapse="condense">
         <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-back-button default-href="/animals/slider"
+          :text="buttonText"
+          :icon="buttonIcon">
+          </ion-back-button>
+        </ion-buttons>
           <ion-title size="large">Tu mascota</ion-title>
         </ion-toolbar>
-      </ion-header>
+      </ion-header> -->
       <animal-form></animal-form>
     </ion-content>
   </ion-page>
@@ -34,8 +36,7 @@ import {
   IonTitle,
   IonContent,
   IonButtons,
-  IonButton,
-  IonIcon
+  IonBackButton,
 } from "@ionic/vue";
 
 import AnimalForm from "@/components/AnimalForm.vue";
@@ -52,8 +53,7 @@ export default {
     IonContent,
     IonPage,
     IonButtons,
-    IonButton,
-    IonIcon
+    IonBackButton,
   },
   data() {
     return {

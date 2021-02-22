@@ -1,8 +1,15 @@
 ion-toolbar {
-    --background: var(--ion-color-primary);
+    --ion-background-color: var(--ion-color-primary);
     --color: var(--ion-color-primary-contrast);
+}
+.ios ion-toolbar{
+    --color: var(--ion-color-primary);
+    --padding-bottom: 9px;
+    --padding-top:9px;
 }
 
 ion-item{
     --padding-start: var(--ion-no-padding)
 }
+
+
