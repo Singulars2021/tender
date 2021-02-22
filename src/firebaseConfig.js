@@ -30,4 +30,54 @@ async function getData(collection) {
     return data
 }
 
-export {getData}
+async function addNewDocument(data,collection) {
+    const ref = await db.collection(collection)
+    .add({
+        ...data
+    })
+    console.log("firebase: addNewDocument")
+    return ref.id
+}
+
+async function updateDocument(id, data,collection) {
+    const ref = db.collection(collection).doc(id);
+
+    await ref.update({
+      ...data
+    })
+
+    return ref
+}
+
+async function addFavorite(id,id_user) {
+    const ref = db.collection("animals").doc(id);
+
+    return ref.update({
+        favorite: firebase.firestore.FieldValue.arrayUnion(id_user)
+    })
+
+}
+
+async function getCollectionFCollection(user_id,collection,subCollection){
+    const Uanimals = await db.collection(collection).doc(user_id).collection(subCollection).get();
+
+    return Uanimals
+}
+
+async function setPictureToAnimal(id_animal, picture){
+
+    const user = auth.currentUser;
+    const guid = uuidv4();
+    const filePath = `${user?.uid}/images/${guid}.${picture.format}`;
+    const storageRef = storage.ref();
+    await storageRef
+      .child(filePath)
+      .putString(picture.base64String, "base64");
+    const url = await storageRef.child(filePath).getDownloadURL();
+    const id = await db.collection("animals").doc(id_animal).collection("images").add({
+      image: url,
+    })
+    return id
+}
+
+export {getData, addNewDocument, updateDocument, getCollectionFCollection, addFavorite, setPictureToAnimal}
