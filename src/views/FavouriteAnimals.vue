@@ -64,10 +64,12 @@ export default {
         { id: "5", name: "Tortuga" },
         { id: "6", name: "Desi" },
       ],
-      searchedAnimal: { ...this.animalsList },
+      searchedAnimal: [],
     };
   },
-
+created(){
+  this.searchedAnimal= [...this.animalsList ]
+},
   methods: {
     ionChange(event) {
       const searchedInput = event.target.value;
@@ -78,7 +80,11 @@ export default {
             .toLowerCase()
             .startsWith(searchedInput.toLowerCase());
         });
+        
       }
+      else{
+          this.searchedAnimal = this.animalsList
+        }
     },
   },
 };
