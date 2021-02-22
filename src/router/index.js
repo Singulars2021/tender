@@ -22,7 +22,12 @@ const routes = [
         path: 'add',
         component: () => import('@/views/AddNewAnimal.vue')
       },
+      
     ]
+  },
+  {
+    path: '/form',
+    component: () => import('@/views/AddNewAnimal.vue')
   }
 ]
 

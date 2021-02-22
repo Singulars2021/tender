@@ -26,6 +26,8 @@ import '@ionic/vue/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 import './theme/core.css';
+import './theme/typography.css';
+import './theme/padding.css'
 
 const app = createApp(App)
   .use(IonicVue)
