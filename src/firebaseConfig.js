@@ -1,5 +1,8 @@
 import firebase from 'firebase/app'
+require('firebase/auth')
 import 'firebase/firestore'
+// import * as firebase from 'firebase';
+
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -30,4 +33,34 @@ async function getData(collection) {
     return data
 }
 
-export {getData}
+async function createNewUser(email, password, name,  cb){
+    firebase
+    .default
+    .auth()
+    .createUserWithEmailAndPassword(email, password)
+    .then((res) => {
+      res.user
+        .updateProfile({
+          displayName: name
+        })
+        .then(cb);
+    })
+    .catch((error) => {
+       alert(error.message);
+    });
+  }
+
+async function logInUser(email, password,cb){
+    firebase
+        .auth()
+        .signInWithEmailAndPassword(email, password)
+        .then(cb)
+        .catch((error) => {
+          alert(error.message);
+        });
+}
+
+
+export {getData, createNewUser, logInUser}
+
+//Create function recieves user and password and create such user in the database. If everythuing goes well it should updateProfile

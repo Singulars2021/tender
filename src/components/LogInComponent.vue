@@ -35,7 +35,7 @@ import {
   IonButton
 } from "@ionic/vue";
 
-import firebase from "firebase";
+import {logInUser} from "../firebaseConfig.js";
 
 export default {
   data() {
@@ -55,16 +55,12 @@ export default {
   },
   methods: {
     userLogin() {
-        firebase
-        .auth()
-        .signInWithEmailAndPassword(this.user.email, this.user.password)
-        .then(() => {
-            this.$router.push('/home')
-        })
-        .catch((error) => {
-          alert(error.message);
-        });
-    }
+        const that =  this
+        logInUser(
+          this.user.email,
+          this.user.password,
+          function(){that.$router.replace("/animals/slider")})
+      }
   }
 };
 </script>

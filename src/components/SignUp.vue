@@ -40,7 +40,8 @@ import {
   IonButton
 } from "@ionic/vue";
 
-import firebase from "firebase";
+
+import {createNewUser} from "../firebaseConfig.js"
 
 export default {
   data() {
@@ -61,21 +62,15 @@ export default {
   },
   methods: {
     userRegistration() {
-      firebase
-      .auth()
-      .createUserWithEmailAndPassword(this.user.email, this.user.password)
-      .then((res) => {
-        res.user
-          .updateProfile({
-            displayName: this.user.name
-          })
-          .then(() => {
-            this.$router.push('/signin')
-          });
-      })
-      .catch((error) => {
-         alert(error.message);
-      });
+      const that = this
+      createNewUser(
+        this.user.email,
+        this.user.password,
+        this.user.name,
+        function(){
+            that.$router.push('/sign/')
+          }
+      )
     }
   }
 };
