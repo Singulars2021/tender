@@ -44,12 +44,12 @@ const store = createStore({
     // Will update the animal to mark it as favorite by the logged user. First idea is to have an array of users who have favorited this animal. It may have some security implications, tough. For example, an expermineted user could be able to retrieve all the ids of the users that have favorited an animal
 
     // favoritedByUsers: ['userId1', 'userId2', ...]
-    // async setAnimalAsFavorite(context, payload) {
-
-    //   await addFavorite(payload, id_user)
+    async setAnimalAsFavorite(context, payload) {
+      const id_user = 1 // must be changed
+      await addFavorite(payload, id_user)
 
     //   context.commit('setFavorite', payload)
-    // },
+    },
     // Will insert a new animal in the firebase app and then the app state must be updated. I think we may use most of the data structure that AnimalForm is already building. We'll have to take a look about how to relate the photos to the animal
     async insertNewAnimal(context, payload) {
 
