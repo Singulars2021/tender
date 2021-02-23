@@ -44,9 +44,6 @@ import {
   // toastController
 } from "@ionic/vue";
 
-
-import {createNewUser} from "../firebaseConfig.js"
-
 export default {
   data() {
     return {
@@ -66,20 +63,28 @@ export default {
     // toastController
   },
   methods: {
+    // const state = reactive({
+    //   name: "",
+    //   email: "",
+    //   password: "",
+    //   mode: AuthMode.SignIn,
+    //   errorMsg: "",
+    // });
     async userRegistration() {
-      const that = this
-      const responseNewUser = await createNewUser(
-        this.user.email,
-        this.user.password,
-        this.user.name,
-        function(){
-            that.$router.push('/sign/signin')
-          }
-      )
-
-
-      console.log(responseNewUser)
-
+      const payload = {
+        email: this.user.email,
+        password: this.user.password,
+        name: this.user.name
+      }
+      try{
+        await this.$store.dispatch("signup", payload)
+        //Show Toast here
+      }catch(error){
+        //Show Toast here
+        alert("Error when signing up", error)
+        return
+      }
+      this.$router.push('/profile/')
     }
   }
 };

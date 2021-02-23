@@ -32,34 +32,40 @@ async function getData(collection) {
     return data
 }
 
-async function createNewUser(email, password, name, cb){
-    firebase
+async function updateName(user, newName){
+    user.then((res) => res.user.updateProfile({displayName: newName}))
+}
+
+async function createNewUser(email, password){
+    // firebase
+    // .auth()
+    // .createUserWithEmailAndPassword(email, password)
+    // .then((res) => {
+    //   console.log(res)
+    //   res.user
+    //     .updateProfile({
+    //       displayName: name
+    //     })
+    // })
+    const newUser = firebase
     .auth()
     .createUserWithEmailAndPassword(email, password)
-    .then((res) => {
-      console.log(res)
-      res.user
-        .updateProfile({
-          displayName: name
-        })
-        .then(cb);
-    })
-    .catch((error) => {
-       alert(error.message);
-    });
+    
+    return newUser
 }
 
-async function logInUser(email, password, cb){
-    firebase
+async function logInUser(email, password){
+    await firebase
         .auth()
         .signInWithEmailAndPassword(email, password)
-        .then(cb)
-        .catch((error) => {
-          alert(error.message);
-        });
+}
+
+function getCurrentUser(){
+    const user = firebase.auth().currentUser
+    return user
 }
 
 
-export {getData, createNewUser, logInUser}
+export {getData, createNewUser, updateName, logInUser, getCurrentUser}
 
 //Create function recieves user and password and create such user in the database. If everythuing goes well it should updateProfile

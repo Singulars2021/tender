@@ -1,7 +1,7 @@
 <template>
   <ion-page>
     <ion-tabs>
-      <ion-tab-bar slot="bottom">
+      <ion-tab-bar slot="top">
         <ion-tab-button tab="sing-up" href="/sign/signup">
           <ion-icon :icon="settingsOutline" />
         </ion-tab-button>

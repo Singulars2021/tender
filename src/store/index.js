@@ -1,8 +1,8 @@
 import { createStore } from 'vuex'
-import { getData } from '../firebaseConfig.js'
+import { getData, createNewUser, updateName, logInUser, getCurrentUser } from '../firebaseConfig.js'
 
 const store = createStore({
-  state: { 
+  state: {
       loggedUser: {
           id: 'G37irGDes6 mCunZ4W5BdgVGhqU1Bxln1',
           email: 'didac@test.com',
@@ -17,19 +17,38 @@ const store = createStore({
      getAllAnimals(state) {
          return state.animals
     },
+
   },
   // Mutations must update the app's state. Every time we retrieve data from the database, these data must be loaded somewhere in our app state management. Because we are using Vuex of our app, we must use a mutation to alter the state, never alter it directly in an action of inside a component.
   mutations: {
     setAnimals(state, payload) {
         state.animals = payload
+    },
+    signinMutation(state, payload) {
+    state.loggedUser = payload
     }
   },
-  actions: { 
-      signin() {
-        // write the necessary commit to muttations to update 'loggedUser'
+  actions: {
+      async signin(context, payload) {
+      
+        await logInUser(payload.email, payload.password, payload.cb)
+        const user = getCurrentUser()
+        const payloadMutation = {
+          id: user.uid,
+          name: user.displayName,
+          email: user.email
+        }
+        context.commit("signinMutation", payloadMutation)
       },
-      signup() {
+      //Sergi:Same thinks that did before but now with Vuex
+      async signup(_, payload) {
         // write the necessar commits to mutations tu create a new user
+        const newUser = await createNewUser(payload.email, payload.password)
+        console.log(newUser)
+        console.log(updateName)
+        // await updateName(newUser, payload.name)
+
+
       },
       // Will update the animal to mark it as favorite by the logged user. First idea is to have an array of users who have favorited this animal. It may have some security implications, tough. For example, an expermineted user could be able to retrieve all the ids of the users that have favorited an animal
 

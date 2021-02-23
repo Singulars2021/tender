@@ -35,7 +35,7 @@ import {
   IonButton
 } from "@ionic/vue";
 
-import {logInUser} from "../firebaseConfig.js";
+// import {logInUser} from "../firebaseConfig.js";
 
 export default {
   data() {
@@ -54,16 +54,21 @@ export default {
     IonButton
   },
   methods: {
-    userLogin() {
-        const that =  this
-        logInUser(
-          this.user.email,
-          this.user.password,
-          function(){
-            that.$router.replace("/profile")
-            }
-          )
+    async userLogin() {
+      const payload = {
+        email: this.user.email,
+        password: this.user.password
+      }
+      try{
+        await this.$store.dispatch("signin", payload)
+        //Sergi:Use toast to show successful message
+      }catch{
+        //Sergi:Use Toast here if error
+        alert("Error when signing in!")
+        return 
+      }
+      this.$router.replace("/profile")
       }
   }
-};
+}
 </script>

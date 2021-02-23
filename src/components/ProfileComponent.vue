@@ -1,24 +1,33 @@
 <template>
 
   <div>
-        <h3>Welcome</h3>
+    <ion-page>
+      <ion-card>
+        <h3 >Welcome</h3>
         <p> {{user.displayName}} </p>
         <p>{{user.email}} </p>
 
-        <button 
+        <ion-button color="dark"
         type="submit" 
-        class="btn btn-dark btn-lg btn-block"
+        class="btn btn-light btn-lg btn-block"
         @click="logOut()">
             Log out
-        </button>
+        </ion-button>
+      </ion-card>
+    </ion-page>
   </div>
     
 </template>
 
 <script>
 import firebase from "firebase";
+import {  IonButton } from "@ionic/vue";
 
 export default {
+  components: {
+    
+    IonButton
+  },
   data() {
     return {
       user: {displayName: "", email: ""}
