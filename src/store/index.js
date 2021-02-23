@@ -45,7 +45,7 @@ const store = createStore({
 
     // favoritedByUsers: ['userId1', 'userId2', ...]
     async setAnimalAsFavorite(context, payload) {
-
+      const id_user = loggedUser.id
       await addFavorite(payload, id_user)
 
       context.commit('setFavorite', payload)
