@@ -1,29 +1,23 @@
 <template>
-<ion-page>
-  <ion-content :fullscreen="true">
-    <admin-animals></admin-animals>
-  </ion-content>
-</ion-page>
+  <ion-page>
+    <ion-content :fullscreen="true">
+      <admin-your-animals></admin-your-animals>
+    </ion-content>
+  </ion-page>
 </template>
 
 <script>
- import AdminAnimals from '../components/AdminAnimals.vue'
- import {
-  IonContent,
-  IonPage,
-} from "@ionic/vue";
+import AdminYourAnimals from "../components/AdminYourAnimals.vue";
+import { IonContent, IonPage } from "@ionic/vue";
 
 export default {
-
-  components:{
-    AdminAnimals,
+  components: {
+    AdminYourAnimals,
     IonContent,
-    IonPage
-  }
-
-}
+    IonPage,
+  },
+};
 </script>
 
 <style>
-
 </style>
