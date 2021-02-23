@@ -65,7 +65,8 @@ async function getCollectionFCollection(user_id,collection,subCollection){
 }
 
 async function setPictureToAnimal(id_animal, picture){
-
+    console.log(id_animal)
+    console.log(picture)
     /**
     const user = auth.currentUser;
     const guid = uuidv4();
