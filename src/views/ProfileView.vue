@@ -2,16 +2,16 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-title>Sign In</ion-title>
+        <ion-title>Profile Page</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
       <ion-header collapse="condense">
         <ion-toolbar>
-          <ion-title size="large">Sign In</ion-title>
+          <ion-title size="large">Profile Page</ion-title>
         </ion-toolbar>
       </ion-header>
-      <log-in></log-in>
+      <profile-component></profile-component>
     </ion-content>
   </ion-page>
 </template>
@@ -25,17 +25,19 @@ import {
   IonContent,
 } from "@ionic/vue";
 
-import LogIn from "@/components/LogInComponent.vue";
+import ProfileComponent from "@/components/ProfileComponent.vue";
 
 export default {
-  name: "sign-in",
+  name: "profile-page",
   components: {
-    LogIn,
     IonHeader,
     IonToolbar,
     IonTitle,
     IonContent,
     IonPage,
+    ProfileComponent
   },
 };
+
+
 </script>

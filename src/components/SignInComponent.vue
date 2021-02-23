@@ -59,7 +59,10 @@ export default {
         logInUser(
           this.user.email,
           this.user.password,
-          function(){that.$router.replace("/animals/slider")})
+          function(){
+            that.$router.replace("/profile")
+            }
+          )
       }
   }
 };

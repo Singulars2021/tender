@@ -4,17 +4,20 @@
             <h3>Sign Up</h3>
 
             <ion-list>
+                <!-- Name Item --> 
                 <ion-item class="form-group">
                     <ion-label>Name</ion-label>
                     <ion-input type="text" class="form-control form-control-lg" v-model="user.name" />
+                <!-- Email Item -->     
                 </ion-item>
                 <ion-item class="form-group">
                     <ion-label>Email</ion-label>
                     <ion-input type="email" class="form-control form-control-lg" v-model="user.email" />
                 </ion-item>
+                <!-- Password Item --> 
                 <ion-item class="form-group">
                     <ion-label>Password</ion-label>
-                    <ion-input type="password" class="form-control form-control-lg" v-model="user.password" />
+                    <ion-input type="password" pattern='^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$' class="form-control form-control-lg" v-model="user.password" />
                 </ion-item>
             </ion-list>
 
@@ -38,6 +41,7 @@ import {
   IonLabel,
   IonInput,
   IonButton
+  // toastController
 } from "@ionic/vue";
 
 
@@ -58,19 +62,24 @@ export default {
     IonItem,
     IonLabel,
     IonInput,
-    IonButton,
+    IonButton
+    // toastController
   },
   methods: {
-    userRegistration() {
+    async userRegistration() {
       const that = this
-      createNewUser(
+      const responseNewUser = await createNewUser(
         this.user.email,
         this.user.password,
         this.user.name,
         function(){
-            that.$router.push('/sign/')
+            that.$router.push('/sign/signin')
           }
       )
+
+
+      console.log(responseNewUser)
+
     }
   }
 };

@@ -2,16 +2,16 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-title>Sign Up</ion-title>
+        <ion-title>Sign In</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
       <ion-header collapse="condense">
         <ion-toolbar>
-          <ion-title size="large">Sign Up</ion-title>
+          <ion-title size="large">Sign In</ion-title>
         </ion-toolbar>
       </ion-header>
-      <sign-up></sign-up>
+      <sign-in-component></sign-in-component>
     </ion-content>
   </ion-page>
 </template>
@@ -22,20 +22,21 @@ import {
   IonHeader,
   IonToolbar,
   IonTitle,
-  IonContent
+  IonContent,
 } from "@ionic/vue";
 
-import SignUp from "@/components/SignUp.vue";
+import SignInComponent from "@/components/SignInComponent.vue";
+
 
 export default {
-  name: "sing-up",
+  name: "sign-in",
   components: {
-    SignUp,
     IonHeader,
     IonToolbar,
     IonTitle,
     IonContent,
-    IonPage
+    IonPage,
+    SignInComponent
   },
 };
 </script>

@@ -1,7 +1,6 @@
 import firebase from 'firebase/app'
 require('firebase/auth')
 import 'firebase/firestore'
-// import * as firebase from 'firebase';
 
 
 // Your web app's Firebase configuration
@@ -16,8 +15,8 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
 
+const db = firebase.firestore();
 
 async function getData(collection) {
     const collectionRef = db
@@ -33,12 +32,12 @@ async function getData(collection) {
     return data
 }
 
-async function createNewUser(email, password, name,  cb){
+async function createNewUser(email, password, name, cb){
     firebase
-    .default
     .auth()
     .createUserWithEmailAndPassword(email, password)
     .then((res) => {
+      console.log(res)
       res.user
         .updateProfile({
           displayName: name
@@ -48,9 +47,9 @@ async function createNewUser(email, password, name,  cb){
     .catch((error) => {
        alert(error.message);
     });
-  }
+}
 
-async function logInUser(email, password,cb){
+async function logInUser(email, password, cb){
     firebase
         .auth()
         .signInWithEmailAndPassword(email, password)
