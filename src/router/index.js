@@ -27,6 +27,10 @@ const routes = [
         path: 'chat',
         component: () => import('@/views/FavouriteAnimals.vue')
       },
+      {
+        path: 'filters',
+        component: () => import('@/views/SearchAnimals.vue')
+      },
     ]
   },
 ]
