@@ -29,6 +29,11 @@ const routes = [
       },
     ]
   },
+  {
+    path: '/form',
+    component: () => import('@/views/AddNewAnimal.vue')
+  }
+  
 ]
 
 const router = createRouter({

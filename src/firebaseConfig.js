@@ -65,19 +65,21 @@ async function getCollectionFCollection(user_id,collection,subCollection){
 }
 
 async function setPictureToAnimal(id_animal, picture){
+    console.log(id_animal)
+    console.log(picture)
 
-    const user = auth.currentUser;
-    const guid = uuidv4();
-    const filePath = `${user?.uid}/images/${guid}.${picture.format}`;
-    const storageRef = storage.ref();
-    await storageRef
-      .child(filePath)
-      .putString(picture.base64String, "base64");
-    const url = await storageRef.child(filePath).getDownloadURL();
-    const id = await db.collection("animals").doc(id_animal).collection("images").add({
-      image: url,
-    })
-    return id
+    // const user = auth.currentUser;
+    // const guid = uuidv4();
+    // const filePath = `${user?.uid}/images/${guid}.${picture.format}`;
+    // const storageRef = storage.ref();
+    // await storageRef
+    //   .child(filePath)
+    //   .putString(picture.base64String, "base64");
+    // const url = await storageRef.child(filePath).getDownloadURL();
+    // const id = await db.collection("animals").doc(id_animal).collection("images").add({
+    //   image: url,
+    // })
+    // return id
 }
 
 export {getData, addNewDocument, updateDocument, getCollectionFCollection, addFavorite, setPictureToAnimal}

@@ -1,5 +1,6 @@
 import { createStore } from 'vuex'
-import { addNewDocument, getData } from '../firebaseConfig.js'
+import { addNewDocument, getData, addFavorite, setPictureToAnimal } from '../firebaseConfig.js'
+
 
 const store = createStore({
   state: {
@@ -45,7 +46,7 @@ const store = createStore({
 
     // favoritedByUsers: ['userId1', 'userId2', ...]
     async setAnimalAsFavorite(context, payload) {
-
+      const id_user=1 
       await addFavorite(payload, id_user)
 
       context.commit('setFavorite', payload)

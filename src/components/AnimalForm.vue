@@ -5,7 +5,7 @@
       <ion-item v-if="imagesList.length == 0">
         <div class="image">
           <!-- <ion-icon :icon="imagesOutline" size="large" @click="takePicture"></ion-icon> -->
-          <img src="../../public/assets/images-outline.svg" alt="svg add image" width="100" height="100" @click="takePicture">
+          <img src="../../public/assets/add-image-icon.svg" alt="svg add image" width="100" height="100" @click="takePicture">
         </div>
       </ion-item>
       <ion-item v-else>
@@ -14,7 +14,7 @@
             <ion-row>
               <ion-col v-for="index in 5" :key="index">
                 <ion-icon
-                  :icon="imagesOutline"
+                  :icon="imageOutline"
                   size="large"
                   @click="takePicture"
                   v-if="index > imagesList.length"
@@ -34,7 +34,9 @@
             css-class="image-modal"
           >
             <div>
-              <img :src="imageToPreview" />
+              <div >
+              <img  class="image-preview" :src="imageToPreview" />
+              </div>
               <ion-fab vertical="bottom" horizontal="center">
                 <ion-fab-button color="danger">
                   <ion-icon
@@ -57,15 +59,20 @@
       </ion-item>
       <!-- Age item -->
       <ion-item>
-        <ion-label position="fixed">Edad</ion-label>
-        <ion-input v-model="age" type="text" required></ion-input>
+        <ion-label>Edad</ion-label>
+        <ion-select v-model="age" okText="Aceptar" cancelText="Cancelar" required>
+          <ion-select-option value="c">Cria</ion-select-option>
+          <ion-select-option value="j">Joven</ion-select-option>
+          <ion-select-option value="a">Adulto</ion-select-option>
+          <ion-select-option value="s">Senior</ion-select-option>
+        </ion-select>
       </ion-item>
       <!-- Sex item -->
       <ion-item>
         <ion-label>Sexo</ion-label>
         <ion-select v-model="sex" okText="Aceptar" cancelText="Cancelar">
-          <ion-select-option value="f">Femenino</ion-select-option>
-          <ion-select-option value="m">Masculino</ion-select-option>
+          <ion-select-option value="h">Hembra</ion-select-option>
+          <ion-select-option value="m">Macho</ion-select-option>
         </ion-select>
       </ion-item>
       <!-- Species Item -->
@@ -85,9 +92,8 @@
           v-model="location"
           interface="action-sheet"
           cancelText="Cancelar"
-          :interface-options="options"
         >
-          <ion-select-option clas="red-option" value="alava">Álava</ion-select-option>
+          <ion-select-option value="alava">Álava</ion-select-option>
           <ion-select-option value="albacete">Albacete</ion-select-option>
           <ion-select-option value="alicante"
             >Alicante/Alacant</ion-select-option
@@ -179,7 +185,7 @@ import {
   IonFab,
   IonFabButton,
 } from "@ionic/vue";
-import { images, imagesOutline, trash } from "ionicons/icons";
+import { images, imageOutline, trash } from "ionicons/icons";
 import { Plugins, CameraResultType } from "@capacitor/core";
 import CtaButton from "../ui/CtaButton.vue"
 
@@ -213,13 +219,6 @@ export default {
     IonFab,
     IonFabButton,
   },
-  setup() {
-    const options={
-      cssClass: 'my-custom-interface'
-    };
-
-    return { options }
-  },
   data() {
     return {
       name: undefined,
@@ -230,7 +229,7 @@ export default {
       image: undefined,
       description: undefined,
       images: images,
-      imagesOutline: imagesOutline,
+      imageOutline: imageOutline,
       trash: trash,
       imagesList: [],
       error: null,
@@ -337,9 +336,7 @@ export default {
 <style scoped>
 ion-label {
   font-weight: 700;
-}
-.my-custom-interface .red-option{
-  --color:red !important;
+  color:var(--ion-color-dark)!important
 }
 ion-select::part(icon){
   display: none;
@@ -369,7 +366,8 @@ ion-input:part(native){
 
 
 div.image {
-  margin: 0 auto;
+  margin: 20px auto 50px auto;
+  
 }
 ion-col {
   display: flex;
@@ -378,5 +376,12 @@ ion-col {
 }
 ion-col img {
   border-radius: 10px;
+  height: 9vh; 
+  object-fit: cover;
+  min-width:15vw
+  
+}
+ion-icon{
+  color:var(--ion-color-medium)
 }
 </style>

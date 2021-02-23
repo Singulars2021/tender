@@ -11,9 +11,9 @@ ion-toolbar {
 ion-item{
     --padding-start: var(--ion-no-padding)
 }
-/*.image-modal .modal-wrapper {
+.image-modal .modal-wrapper {
     background-color: transparent;
-}*/
+}
 
 @media (max-width: 680px){
     .image-modal .modal-wrapper{
