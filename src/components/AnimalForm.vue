@@ -3,12 +3,12 @@
     <ion-list>
       <!-- Name item -->
       <ion-item>
-        <ion-label position="floating">Nombre</ion-label>
+        <ion-label position="fixed">Nombre</ion-label>
         <ion-input v-model="name" type="text" required></ion-input>
       </ion-item>
       <!-- Age item -->
       <ion-item>
-        <ion-label position="floating">Edad</ion-label>
+        <ion-label position="fixed">Edad</ion-label>
         <ion-input v-model="age" type="text" required></ion-input>
       </ion-item>
       <!-- Sex item -->
@@ -38,7 +38,8 @@
       </ion-item>
       <!-- Location Item -->
       <ion-item>
-        <ion-label>Localización</ion-label>
+        <ion-label
+        >Localización</ion-label>
         <ion-select
           v-model="location"
           interface="action-sheet"
@@ -116,7 +117,7 @@
       </ion-item> -->
       <!-- Description Item -->
       <ion-item>
-        <ion-label position="floating">Descripción</ion-label>
+        <ion-label position="fixed">Descripción</ion-label>
         <ion-textarea v-model="description" rows="1" auto-grow></ion-textarea>
       </ion-item>
     </ion-list>
@@ -221,18 +222,31 @@ ion-label{
 .my-custom-interface .red-option{
   --color:red !important;
 }
-/* ion-select::part(icon){
+ion-select::part(icon){
   display: none;
-} 
+}
 
-/* ion-select::part(text){
+ion-select::part(text){
   background-image: url("/chevron-forward-outline.svg");
   background-position: right;
   background-repeat: no-repeat; 
   height: 19px;
-  flex: 0 0 auto;
-} */
+}
 
+ion-select {
+  max-width: 100%;
+  width: 35%;
+  right: auto;
+  direction: ltr;
+  padding-left: 0;
+}
+ion-input:part(native){
+  max-width: 30%;
+  width: 70%;
+  right: auto;
+  direction: ltr;
+  padding-left: 0;
+}
 
 
 </style>
