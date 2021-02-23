@@ -11,5 +11,17 @@ ion-toolbar {
 ion-item{
     --padding-start: var(--ion-no-padding)
 }
+<<<<<<< HEAD
 
 
+=======
+/*.image-modal .modal-wrapper {
+    background-color: transparent;
+}*/
+
+@media (max-width: 680px){
+    .image-modal .modal-wrapper{
+        --max-height: 45vh;
+    }
+}
+>>>>>>> main

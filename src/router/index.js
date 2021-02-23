@@ -6,6 +6,7 @@ const routes = [
     path: '/',
     redirect: '/animals/slider'
   },
+
   {
     path: '/animals/',
     component: Tabs,
@@ -22,13 +23,12 @@ const routes = [
         path: 'add',
         component: () => import('@/views/AddNewAnimal.vue')
       },
-      
+      {
+        path: 'chat',
+        component: () => import('@/views/FavouriteAnimals.vue')
+      },
     ]
   },
-  {
-    path: '/form',
-    component: () => import('@/views/AddNewAnimal.vue')
-  }
 ]
 
 const router = createRouter({
