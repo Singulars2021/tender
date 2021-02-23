@@ -20,3 +20,20 @@ ion-item{
         --max-height: 45vh;
     }
 }
+
+.my-custom-interface .select-interface-option{
+    color:var(--ion-color-dark);
+
+}
+.my-custom-interface .select-interface-option ion-ripple-effect {
+    border-bottom: 1px solid var(--ion-color-light);
+}
+.my-custom-interface .action-sheet-button.sc-ion-action-sheet-ios:not(.select-interface-option){   
+    color:var(--ion-color-danger);
+}
+.my-custom-interface .action-sheet-button.sc-ion-action-sheet-md:not(.select-interface-option){   
+    color:var(--ion-color-danger);
+    font-weight: 700;
+    border-top: 1px solid var(--ion-color-light);
+
+}

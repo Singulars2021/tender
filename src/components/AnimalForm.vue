@@ -92,6 +92,7 @@
           v-model="location"
           interface="action-sheet"
           cancelText="Cancelar"
+          :interface-options="options"
         >
           <ion-select-option value="alava">Álava</ion-select-option>
           <ion-select-option value="albacete">Albacete</ion-select-option>
@@ -219,6 +220,7 @@ export default {
     IonFab,
     IonFabButton,
   },
+
   data() {
     return {
       name: undefined,
@@ -236,6 +238,8 @@ export default {
       isOpen: false,
       imageToPreview: undefined,
       imageToDelete: undefined,
+      options: {
+      cssClass: 'my-custom-interface'}
     };
   },
   methods: {
