@@ -13,6 +13,9 @@ const store = createStore({
     animals: []
   },
   getters: {
+    getUserId(state) {
+      return state.loggedUser.id;
+    },
     // Knowking that the state of our app is always updated (or it should be); we may write all the getters that we need here to retrieve any sort of info, such all the animals, filter animals by some criteria, retrieve information about the logged user, etc
     getAllAnimals(state) {
       return state.animals
@@ -44,18 +47,23 @@ const store = createStore({
     // Will update the animal to mark it as favorite by the logged user. First idea is to have an array of users who have favorited this animal. It may have some security implications, tough. For example, an expermineted user could be able to retrieve all the ids of the users that have favorited an animal
 
     // favoritedByUsers: ['userId1', 'userId2', ...]
-    async setAnimalAsFavorite(context, payload) {
-      const id_user = 1 // must be changed
-      await addFavorite(payload, id_user)
+    // async setAnimalAsFavorite(context, payload) {
+    //   const id_user = 1 // must be changed
+    //   await addFavorite(payload, id_user)
 
-    //   context.commit('setFavorite', payload)
-    },
+    // //   context.commit('setFavorite', payload)
+    // },
     // Will insert a new animal in the firebase app and then the app state must be updated. I think we may use most of the data structure that AnimalForm is already building. We'll have to take a look about how to relate the photos to the animal
     async insertNewAnimal(context, payload) {
 
-      console.log(payload);
+      // We should add the user id to the animal data
+      // const user = auth.currentUser;
 
-      const animalFields = payload.animalFields;
+      const animalFields = {
+        userId: context.getters.getUserId,
+        ...payload.animalFields
+      };
+
       const animalPhotos = payload.animalPhotos;
 
       const id = await addNewDocument(animalFields, 'animals')

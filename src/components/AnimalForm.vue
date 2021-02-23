@@ -59,12 +59,17 @@
       <!-- Name item -->
       <ion-item>
         <ion-label position="floating">Nombre</ion-label>
-        <ion-input v-model="name" type="text" required></ion-input>
+        <ion-input v-model="name" type="text" @ionBlur="onFormEdit"></ion-input>
       </ion-item>
       <!-- Age item -->
       <ion-item>
         <ion-label position="floating">Edad</ion-label>
-        <ion-select v-model="age" okText="Aceptar" cancelText="Cancelar">
+        <ion-select
+          v-model="age"
+          okText="Aceptar"
+          cancelText="Cancelar"
+          @ionChange="onFormEdit"
+        >
           <ion-select-option
             v-for="age in ageLabels"
             :key="age.value"
@@ -76,7 +81,12 @@
       <!-- Sex item -->
       <ion-item>
         <ion-label>Sexo</ion-label>
-        <ion-select v-model="sex" okText="Aceptar" cancelText="Cancelar">
+        <ion-select
+          v-model="sex"
+          okText="Aceptar"
+          cancelText="Cancelar"
+          @ionChange="onFormEdit"
+        >
           <ion-select-option
             v-for="sex in sexLabels"
             :key="sex.value"
@@ -88,7 +98,12 @@
       <!-- Species Item -->
       <ion-item>
         <ion-label>Especie</ion-label>
-        <ion-select v-model="species" okText="Aceptar" cancelText="Cancelar">
+        <ion-select
+          v-model="species"
+          okText="Aceptar"
+          cancelText="Cancelar"
+          @ionChange="onFormEdit"
+        >
           <ion-select-option
             v-for="specie in speciesLabels"
             :key="specie.value"
@@ -104,6 +119,7 @@
           v-model="location"
           interface="action-sheet"
           cancelText="Cancelar"
+          @ionChange="onFormEdit"
         >
           <ion-select-option
             v-for="province in provincesLabels"
@@ -116,9 +132,17 @@
       <!-- Description Item -->
       <ion-item>
         <ion-label position="floating">Descripción</ion-label>
-        <ion-textarea v-model="description" rows="1" auto-grow></ion-textarea>
+        <ion-textarea
+          v-model="description"
+          rows="1"
+          auto-grow
+          @ionBlur="onFormEdit"
+        ></ion-textarea>
       </ion-item>
     </ion-list>
+    <ion-text v-if="!isFormValid" color="danger">
+      <h4>Por favor, rellena todos los campos antes de guardar.</h4>
+    </ion-text>
     <ion-button type="submit" expand="block" fill="solid">Guardar</ion-button>
   </form>
 </template>
@@ -128,6 +152,7 @@ import { sex, species, provinces, age } from "../utils/labels";
 
 import {
   IonList,
+  IonText,
   IonItem,
   IonLabel,
   IonInput,
@@ -165,16 +190,17 @@ export default {
     IonIcon,
     IonModal,
     IonFab,
+    IonText,
     IonFabButton,
   },
   data() {
     return {
-      name: undefined,
-      age: undefined,
-      sex: undefined,
-      species: undefined,
-      location: undefined,
-      description: undefined,
+      name: "",
+      age: "",
+      sex: "",
+      species: "",
+      location: "",
+      description: "",
       images,
       imagesOutline,
       trash,
@@ -188,23 +214,56 @@ export default {
       sexLabels: sex,
       provincesLabels: provinces,
       userId: undefined,
+      isFormValid: true,
+      // isNameValid: true,
+      // isAgeValid: true,
+      // isLocationValid: true,
+      // isSpeciesValid: true,
+      // isDescriptionValid: true,
+      // isSexValid: true,
     };
   },
   methods: {
-    addAnimal() {
-      const animal = {
-        name: this.name,
-        age: this.age,
-        sex: this.sex,
-        species: this.species,
-        location: this.location,
-        description: this.description,
-      };
+    onFormEdit() {
+      this.isFormValid = true;
+    },
+    // nameValidation() {
+    //   const regex = new RegExp('[a-zA-ZÀÁÈÉÍÒÓÚàáèéíóòú]{3, 20}');
+    //   if()
+    // },
 
-      this.$store.dispatch("insertNewAnimal", {
-        animalFields: animal,
-        animalPhotos: this.imagesList,
-      });
+    // ageValidation() {},
+
+    // formValidation() {
+
+    // },
+
+    addAnimal() {
+      this.isFormValid = true;
+      if (
+        this.name.length > 0 &&
+        this.age.length > 0 &&
+        this.location.length > 0 &&
+        (this.sex.length > 0) & (this.species.length > 0) &&
+        this.description.length > 0 &&
+        this.imagesList.length > 0
+      ) {
+        const animal = {
+          name: this.name,
+          age: this.age,
+          sex: this.sex,
+          species: this.species,
+          location: this.location,
+          description: this.description,
+        };
+
+        this.$store.dispatch("insertNewAnimal", {
+          animalFields: animal,
+          animalPhotos: this.imagesList,
+        });
+      } else {
+        this.isFormValid = false;
+      }
     },
     async openToast(msg, response) {
       const toast = await toastController.create({

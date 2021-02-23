@@ -67,13 +67,9 @@ async function getCollectionFCollection(user_id, collection, subCollection) {
     return Uanimals
 }
 
-async function setPictureToAnimal(id_animal, picture){
-    console.log(id_animal)
-    console.log(picture)
-    /**
-    const user = auth.currentUser;
+async function setPictureToAnimal(id_animal, picture) {
     const guid = uuidv4();
-    const filePath = `${user}/images/${guid}.${picture.format}`;
+    const filePath = `${id_animal}/images/${guid}.${picture.format}`;
     const storageRef = storage.ref();
     await storageRef
         .child(filePath)
@@ -83,7 +79,6 @@ async function setPictureToAnimal(id_animal, picture){
         image: url,
     })
     return id
-    **/
 }
 
 
