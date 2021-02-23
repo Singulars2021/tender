@@ -1,5 +1,6 @@
 import firebase from 'firebase/app'
 import 'firebase/firestore'
+import 'firebase/storage'
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -13,7 +14,9 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
+// const auth = firebase.auth();
 const db = firebase.firestore();
+const storage = firebase.storage();
 
 
 async function getData(collection) {
@@ -26,30 +29,30 @@ async function getData(collection) {
         id: doc.id,
         ...doc.data(),
     }));
-    console.log("firebase: getData from " + collection, data )
+    console.log("firebase: getData from " + collection, data)
     return data
 }
 
-async function addNewDocument(data,collection) {
+async function addNewDocument(data, collection) {
     const ref = await db.collection(collection)
-    .add({
-        ...data
-    })
+        .add({
+            ...data
+        })
     console.log("firebase: addNewDocument")
     return ref.id
 }
 
-async function updateDocument(id, data,collection) {
+async function updateDocument(id, data, collection) {
     const ref = db.collection(collection).doc(id);
 
     await ref.update({
-      ...data
+        ...data
     })
 
     return ref
 }
 
-async function addFavorite(id,id_user) {
+async function addFavorite(id, id_user) {
     const ref = db.collection("animals").doc(id);
 
     return ref.update({
@@ -58,26 +61,35 @@ async function addFavorite(id,id_user) {
 
 }
 
-async function getCollectionFCollection(user_id,collection,subCollection){
+async function getCollectionFCollection(user_id, collection, subCollection) {
     const Uanimals = await db.collection(collection).doc(user_id).collection(subCollection).get();
 
     return Uanimals
 }
 
-async function setPictureToAnimal(id_animal, picture){
+async function setPictureToAnimal(id_animal, picture) {
 
-    const user = auth.currentUser;
+    // const user = auth.currentUser;
+    const user = 'ZVPKk6gTsBUsLMFRKLzoMPmbUC82';
     const guid = uuidv4();
-    const filePath = `${user?.uid}/images/${guid}.${picture.format}`;
+    const filePath = `${user}/images/${guid}.${picture.format}`;
     const storageRef = storage.ref();
     await storageRef
-      .child(filePath)
-      .putString(picture.base64String, "base64");
+        .child(filePath)
+        .putString(picture.base64String, "base64");
     const url = await storageRef.child(filePath).getDownloadURL();
     const id = await db.collection("animals").doc(id_animal).collection("images").add({
-      image: url,
+        image: url,
     })
     return id
 }
 
-export {getData, addNewDocument, updateDocument, getCollectionFCollection, addFavorite, setPictureToAnimal}
+
+function uuidv4() {
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+        const r = (Math.random() * 16) | 0,
+            v = c == "x" ? r : (r & 0x3) | 0x8;
+        return v.toString(16);
+    });
+}
+export { getData, addNewDocument, updateDocument, getCollectionFCollection, addFavorite, setPictureToAnimal }

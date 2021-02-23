@@ -1,11 +1,11 @@
 import { createStore } from 'vuex'
-import { addNewDocument, getData } from '../firebaseConfig.js'
+import { addNewDocument, getData, setPictureToAnimal } from '../firebaseConfig.js'
 
 const store = createStore({
   state: {
     loggedUser: {
-      id: 'G37irGDes6 mCunZ4W5BdgVGhqU1Bxln1',
-      email: 'didac@test.com',
+      id: 'ZVPKk6gTsBUsLMFRKLzoMPmbUC82',
+      email: 'testbueno@test.com',
       description: 'Loving Canela',
       location: 'Barcelona',
       phoneNumber: '+3466677788'
@@ -23,14 +23,14 @@ const store = createStore({
     setAnimals(state, payload) {
       state.animals = payload
     },
-    setFavorite(state, payload, payload2){
+    setFavorite(state, payload, payload2) {
       state.animals.array.forEach(element => {
-        if(element.id==payload){
+        if (element.id == payload) {
           element.favorite.push(payload2)
         }
       });
     },
-    insertAnimal(state, payload){
+    insertAnimal(state, payload) {
       state.animals.push(payload)
     }
   },
@@ -44,25 +44,27 @@ const store = createStore({
     // Will update the animal to mark it as favorite by the logged user. First idea is to have an array of users who have favorited this animal. It may have some security implications, tough. For example, an expermineted user could be able to retrieve all the ids of the users that have favorited an animal
 
     // favoritedByUsers: ['userId1', 'userId2', ...]
-    async setAnimalAsFavorite(context, payload) {
+    // async setAnimalAsFavorite(context, payload) {
 
-      await addFavorite(payload, id_user)
+    //   await addFavorite(payload, id_user)
 
-      context.commit('setFavorite', payload)
-    },
+    //   context.commit('setFavorite', payload)
+    // },
     // Will insert a new animal in the firebase app and then the app state must be updated. I think we may use most of the data structure that AnimalForm is already building. We'll have to take a look about how to relate the photos to the animal
     async insertNewAnimal(context, payload) {
 
-      const animalFields = payload.animalFields
-      const animalPhotos = payload.animalPhotos
+      console.log(payload);
 
-      const id = await addNewDocument(animalFields,'animals')
+      const animalFields = payload.animalFields;
+      const animalPhotos = payload.animalPhotos;
+
+      const id = await addNewDocument(animalFields, 'animals')
 
       for (let i = 0; i < animalPhotos.length; i++) {
-        await setPictureToAnimal(id,animalPhotos[i]);
+        await setPictureToAnimal(id, animalPhotos[i]);
       }
 
-      animalFields.id = id
+      animalFields.id = id;
 
       context.commit('insertAnimal', animalFields)
     },

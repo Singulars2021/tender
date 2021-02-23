@@ -5,7 +5,13 @@
       <ion-item v-if="imagesList.length == 0">
         <div class="image">
           <!-- <ion-icon :icon="imagesOutline" size="large" @click="takePicture"></ion-icon> -->
-          <img src="../../public/assets/images-outline.svg" alt="svg add image" width="100" height="100" @click="takePicture">
+          <img
+            src="../../public/assets/images-outline.svg"
+            alt="svg add image"
+            width="100"
+            height="100"
+            @click="takePicture"
+          />
         </div>
       </ion-item>
       <ion-item v-else>
@@ -58,23 +64,37 @@
       <!-- Age item -->
       <ion-item>
         <ion-label position="floating">Edad</ion-label>
-        <ion-input v-model="age" type="text" required></ion-input>
+        <ion-select v-model="age" okText="Aceptar" cancelText="Cancelar">
+          <ion-select-option
+            v-for="age in ageLabels"
+            :key="age.value"
+            :value="age.value"
+            >{{ age.label }}</ion-select-option
+          >
+        </ion-select>
       </ion-item>
       <!-- Sex item -->
       <ion-item>
         <ion-label>Sexo</ion-label>
         <ion-select v-model="sex" okText="Aceptar" cancelText="Cancelar">
-          <ion-select-option value="f">Femenino</ion-select-option>
-          <ion-select-option value="m">Masculino</ion-select-option>
+          <ion-select-option
+            v-for="sex in sexLabels"
+            :key="sex.value"
+            :value="sex.value"
+            >{{ sex.label }}</ion-select-option
+          >
         </ion-select>
       </ion-item>
       <!-- Species Item -->
       <ion-item>
         <ion-label>Especie</ion-label>
         <ion-select v-model="species" okText="Aceptar" cancelText="Cancelar">
-          <ion-select-option value="0">Gato</ion-select-option>
-          <ion-select-option value="1">Perro</ion-select-option>
-          <ion-select-option value="2">Tortuga</ion-select-option>
+          <ion-select-option
+            v-for="specie in speciesLabels"
+            :key="specie.value"
+            :value="specie.value"
+            >{{ specie.label }}</ion-select-option
+          >
         </ion-select>
       </ion-item>
       <!-- Location Item -->
@@ -85,68 +105,12 @@
           interface="action-sheet"
           cancelText="Cancelar"
         >
-          <ion-select-option value="alava">Álava</ion-select-option>
-          <ion-select-option value="albacete">Albacete</ion-select-option>
-          <ion-select-option value="alicante"
-            >Alicante/Alacant</ion-select-option
+          <ion-select-option
+            v-for="province in provincesLabels"
+            :key="province.value"
+            :value="province.value"
+            >{{ province.label }}</ion-select-option
           >
-          <ion-select-option value="almeria">Almería</ion-select-option>
-          <ion-select-option value="asturias">Asturias</ion-select-option>
-          <ion-select-option value="avila">Ávila</ion-select-option>
-          <ion-select-option value="badajoz">Badajoz</ion-select-option>
-          <ion-select-option value="barcelona">Barcelona</ion-select-option>
-          <ion-select-option value="burgos">Burgos</ion-select-option>
-          <ion-select-option value="caceres">Cáceres</ion-select-option>
-          <ion-select-option value="cadiz">Cádiz</ion-select-option>
-          <ion-select-option value="cantabria">Cantabria</ion-select-option>
-          <ion-select-option value="castellon"
-            >Castellón/Castelló</ion-select-option
-          >
-          <ion-select-option value="ceuta">Ceuta</ion-select-option>
-          <ion-select-option value="ciudadreal">Ciudad Real</ion-select-option>
-          <ion-select-option value="cordoba">Córdoba</ion-select-option>
-          <ion-select-option value="cuenca">Cuenca</ion-select-option>
-          <ion-select-option value="girona">Girona</ion-select-option>
-          <ion-select-option value="laspalmas">Las Palmas</ion-select-option>
-          <ion-select-option value="granada">Granada</ion-select-option>
-          <ion-select-option value="guadalajara">Guadalajara</ion-select-option>
-          <ion-select-option value="guipuzcoa">Guipúzcoa</ion-select-option>
-          <ion-select-option value="huelva">Huelva</ion-select-option>
-          <ion-select-option value="huesca">Huesca</ion-select-option>
-          <ion-select-option value="illesbalears"
-            >Illes Balears</ion-select-option
-          >
-          <ion-select-option value="jaen">Jaén</ion-select-option>
-          <ion-select-option value="acoruña">A Coruña</ion-select-option>
-          <ion-select-option value="larioja">La Rioja</ion-select-option>
-          <ion-select-option value="leon">León</ion-select-option>
-          <ion-select-option value="lleida">Lleida</ion-select-option>
-          <ion-select-option value="lugo">Lugo</ion-select-option>
-          <ion-select-option value="madrid">Madrid</ion-select-option>
-          <ion-select-option value="malaga">Málaga</ion-select-option>
-          <ion-select-option value="melilla">Melilla</ion-select-option>
-          <ion-select-option value="murcia">Murcia</ion-select-option>
-          <ion-select-option value="navarra">Navarra</ion-select-option>
-          <ion-select-option value="ourense">Ourense</ion-select-option>
-          <ion-select-option value="palencia">Palencia</ion-select-option>
-          <ion-select-option value="pontevedra">Pontevedra</ion-select-option>
-          <ion-select-option value="salamanca">Salamanca</ion-select-option>
-          <ion-select-option value="segovia">Segovia</ion-select-option>
-          <ion-select-option value="sevilla">Sevilla</ion-select-option>
-          <ion-select-option value="soria">Soria</ion-select-option>
-          <ion-select-option value="tarragona">Tarragona</ion-select-option>
-          <ion-select-option value="santacruztenerife"
-            >Santa Cruz de Tenerife</ion-select-option
-          >
-          <ion-select-option value="teruel">Teruel</ion-select-option>
-          <ion-select-option value="toledo">Toledo</ion-select-option>
-          <ion-select-option value="valencia"
-            >Valencia/Valéncia</ion-select-option
-          >
-          <ion-select-option value="valladolid">Valladolid</ion-select-option>
-          <ion-select-option value="vizcaya">Vizcaya</ion-select-option>
-          <ion-select-option value="zamora">Zamora</ion-select-option>
-          <ion-select-option value="zaragoza">Zaragoza</ion-select-option>
         </ion-select>
       </ion-item>
       <!-- Description Item -->
@@ -156,15 +120,12 @@
       </ion-item>
     </ion-list>
     <ion-button type="submit" expand="block" fill="solid">Guardar</ion-button>
-    <!-- <ion-fab vertical="bottom" slot="fixed">
-      <ion-fab-button class="cta-button">
-        Guardar
-      </ion-fab-button>
-    </ion-fab> -->
   </form>
 </template>
 
 <script>
+import { sex, species, provinces, age } from "../utils/labels";
+
 import {
   IonList,
   IonItem,
@@ -172,8 +133,6 @@ import {
   IonInput,
   IonTextarea,
   IonButton,
-  // IonFab,
-  // IonFabButton,
   IonSelect,
   IonSelectOption,
   toastController,
@@ -190,14 +149,6 @@ import { Plugins, CameraResultType } from "@capacitor/core";
 
 const { Camera } = Plugins;
 
-/*function uuidv4() {
-  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
-    const r = (Math.random() * 16) | 0,
-      v = c == "x" ? r : (r & 0x3) | 0x8;
-    return v.toString(16);
-  });
-}*/
-
 export default {
   components: {
     IonList,
@@ -208,8 +159,6 @@ export default {
     IonButton,
     IonSelect,
     IonSelectOption,
-    // IonFab,
-    // IonFabButton,
     IonGrid,
     IonRow,
     IonCol,
@@ -225,51 +174,37 @@ export default {
       sex: undefined,
       species: undefined,
       location: undefined,
-      image: undefined,
       description: undefined,
-      images: images,
-      imagesOutline: imagesOutline,
-      trash: trash,
+      images,
+      imagesOutline,
+      trash,
       imagesList: [],
       error: null,
       isOpen: false,
       imageToPreview: undefined,
       imageToDelete: undefined,
+      speciesLabels: species,
+      ageLabels: age,
+      sexLabels: sex,
+      provincesLabels: provinces,
+      userId: undefined,
     };
   },
   methods: {
     addAnimal() {
-      let url =
-        "https://animalslist-19bbf-default-rtdb.europe-west1.firebasedatabase.app/animalsList.json";
-      const newAnimal = {
+      const animal = {
         name: this.name,
         age: this.age,
         sex: this.sex,
         species: this.species,
         location: this.location,
-        image: this.image,
         description: this.description,
       };
 
-      const postOptions = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newAnimal),
-      };
-      //this.uploadPhotos()
-      fetch(url, postOptions)
-        .then((response) => {
-          if (response.ok) {
-            this.openToast("El animal se ha añadido correctamente", response);
-          }
-        })
-        .catch((response) => {
-          if (!response.ok) {
-            this.openToast("Ha ocurrido un error", response);
-          }
-        });
+      this.$store.dispatch("insertNewAnimal", {
+        animalFields: animal,
+        animalPhotos: this.imagesList,
+      });
     },
     async openToast(msg, response) {
       const toast = await toastController.create({
@@ -299,7 +234,7 @@ export default {
     setOpen(index) {
       this.isOpen = true;
       this.imageToPreview = this.imagesList[index - 1].preview;
-      this.imageToDelete = index - 1 
+      this.imageToDelete = index - 1;
     },
     setClose() {
       this.isOpen = false;
