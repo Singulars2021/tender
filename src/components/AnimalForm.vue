@@ -196,10 +196,10 @@ export default {
   data() {
     return {
       name: "",
-      age: "",
-      sex: "",
-      species: "",
-      location: "",
+      age: undefined,
+      sex: undefined,
+      species: undefined,
+      location: undefined,
       description: "",
       images,
       imagesOutline,
@@ -215,55 +215,42 @@ export default {
       provincesLabels: provinces,
       userId: undefined,
       isFormValid: true,
-      // isNameValid: true,
-      // isAgeValid: true,
-      // isLocationValid: true,
-      // isSpeciesValid: true,
-      // isDescriptionValid: true,
-      // isSexValid: true,
     };
   },
   methods: {
     onFormEdit() {
       this.isFormValid = true;
     },
-    // nameValidation() {
-    //   const regex = new RegExp('[a-zA-ZÀÁÈÉÍÒÓÚàáèéíóòú]{3, 20}');
-    //   if()
-    // },
-
-    // ageValidation() {},
-
-    // formValidation() {
-
-    // },
-
     addAnimal() {
       this.isFormValid = true;
       if (
-        this.name.length > 0 &&
-        this.age.length > 0 &&
-        this.location.length > 0 &&
-        (this.sex.length > 0) & (this.species.length > 0) &&
-        this.description.length > 0 &&
-        this.imagesList.length > 0
+        this.name.trim == "" ||
+        typeof this.age != "number" ||
+        typeof this.location != "number" ||
+        typeof this.sex != "number" ||
+        typeof this.species != "number" ||
+        this.description.trim == "" ||
+        this.imagesList.length == 0
       ) {
-        const animal = {
-          name: this.name,
-          age: this.age,
-          sex: this.sex,
-          species: this.species,
-          location: this.location,
-          description: this.description,
-        };
-
-        this.$store.dispatch("insertNewAnimal", {
-          animalFields: animal,
-          animalPhotos: this.imagesList,
-        });
-      } else {
         this.isFormValid = false;
+        return;
       }
+      const animal = {
+        name: this.name,
+        age: this.age,
+        sex: this.sex,
+        species: this.species,
+        location: this.location,
+        description: this.description,
+      };
+
+      this.$store.dispatch("insertNewAnimal", {
+        animalFields: animal,
+        animalPhotos: this.imagesList,
+      });
+
+      this.clearForm();
+      this.$router.push("/animals/slider");
     },
     async openToast(msg, response) {
       const toast = await toastController.create({
@@ -302,26 +289,15 @@ export default {
       this.imagesList.splice(this.imageToDelete, 1);
       this.isOpen = false;
     },
-    /*async uploadPhotos() {
-      for (let i = 0; i < this.imagesList.length; i++) {
-        await this.uploadPhoto(i);
-      }
+    clearForm() {
+      (this.name = ""),
+        (this.age = undefined),
+        (this.location = undefined),
+        (this.sex = undefined),
+        (this.species = undefined),
+        (this.description = undefined),
+        (this.imagesList = []);
     },
-    async uploadPhoto(index) {
-      const user = auth.currentUser;
-      const guid = uuidv4();
-      const filePath = `${user?.uid}/images/${guid}.${this.imagesList[index].format}`;
-      const storageRef = storage.ref();
-
-      await storageRef
-        .child(filePath)
-        .putString(this.imagesList[index].base64String, "base64");
-      const url = await storageRef.child(filePath).getDownloadURL();
-
-      await db.collection("users").doc(user?.uid).collection("images").add({
-        image: url,
-      });
-    },*/
   },
 };
 </script>
