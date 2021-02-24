@@ -8,22 +8,20 @@
     <ion-card-header>
       <ion-chip outline color="primary">
         <ion-icon :icon="maleFemaleOutline"></ion-icon>
-        <ion-label>{{ animal.sex }}</ion-label>
+        <ion-label>{{ getSexLabel(animal.sex) }}</ion-label>
       </ion-chip>
       <ion-chip outline color="primary">
         <ion-icon :icon="pawOutline"></ion-icon>
-        <ion-label>{{ animal.species }}</ion-label>
+        <ion-label>{{ getSpeciesLabel(animal.species) }}</ion-label>
       </ion-chip>
       <ion-card-title> {{ animal.name }} </ion-card-title>
       <ion-card-subtitle color="tertiary">
         <ion-icon :icon="locationOutline"></ion-icon>
-        {{ animal.location }}
+        {{ getProvinceLabel(animal.location) }}
       </ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>
-      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perferendis est
-      sed minima vero voluptates enim tempore, libero illo molestias repellat
-      facere. In odit qui sint vitae esse amet quos iure...
+      {{ animal.description }}
     </ion-card-content>
     <div>
       <ion-chip outline color="secondary" id="footer-chip">
@@ -50,6 +48,7 @@
 </template>
 
 <script>
+import { provinces, sex, age, species } from "../utils/labels.js";
 import {
   IonSlides,
   IonSlide,
@@ -102,6 +101,22 @@ export default {
     closePopover() {
       this.isPopoverOpen = false;
     },
+    getSexLabel(value) {
+      // console.log(this.sexLabels[value].label);
+      return this.sexLabels[value].label;
+    },
+    getSpeciesLabel(value) {
+      // console.log(this.speciesLabels[value].label);
+      return this.speciesLabels[value].label;
+    },
+    getAgeLabel(value) {
+      // console.log(this.ageLabels[value].label);
+      return this.ageLabels[value].label;
+    },
+    getProvinceLabel(value) {
+      // console.log(this.provincesLabels[value].label);
+      return this.provincesLabels[value - 1].label;
+    },
   },
   data() {
     return {
@@ -116,6 +131,10 @@ export default {
       animalPicturesSliderOptions: {
         loop: true,
       },
+      sexLabels: sex,
+      speciesLabels: species,
+      provincesLabels: provinces,
+      ageLabels: age,
     };
   },
 };
