@@ -40,6 +40,7 @@
               <ion-fab vertical="bottom" horizontal="center">
                 <ion-fab-button color="danger">
                   <ion-icon
+                    class="icon-trash"
                     :icon="trash"
                     size="large"
                     @click="deleteImage()"
@@ -390,6 +391,10 @@ ion-col img {
   
 }
 ion-icon{
-  color:var(--ion-color-medium)
+  color:var(--ion-color-medium);
+}
+
+.icon-trash{
+  color:white;
 }
 </style>
