@@ -1,0 +1,55 @@
+/* custom class that modifies image-wrapper Component Form */
+.image-modal .modal-wrapper {
+    background-color: transparent;
+}
+
+@media (max-width: 680px){
+    .image-modal .modal-wrapper{
+        --max-height: 45vh;
+    }
+}
+
+
+/* custom class that modifies select-option Component Form  */
+.my-custom-interface .select-interface-option{
+    color:var(--ion-color-dark);
+
+}
+
+.my-custom-interface .select-interface-option ion-ripple-effect {
+    border-bottom: 1px solid var(--ion-color-light);
+}
+
+/* iOS */
+.my-custom-interface .action-sheet-button.sc-ion-action-sheet-ios:not(.select-interface-option){   
+    color:var(--ion-color-dark);
+}
+
+/* Android */
+.my-custom-interface .action-sheet-button.sc-ion-action-sheet-md:not(.select-interface-option){   
+    color:var(--ion-color-dark);
+    font-weight: 700;
+    border-top: 1px solid var(--ion-color-light);
+}
+
+
+
+/* custom class that modifies social action-sheet Component Animal Card */
+
+/* iOS */
+.action-sheet-style .action-sheet-button.sc-ion-action-sheet-ios :not(.action-sheet-destructive .sc-ion-action-sheet-ios){
+    color: var(--ion-color-dark)
+}
+
+/* Android */
+.action-sheet-style .action-sheet-button.sc-ion-action-sheet-md :not(.action-sheet-destructive .sc-ion-action-sheet-md){
+    color: var(--ion-color-dark)
+}
+
+.action-sheet-style .action-sheet-destructive .sc-ion-action-sheet-md {
+    color: var(--ion-color-danger) 
+}
+
+.action-sheet-style .action-sheet-cancel .sc-ion-action-sheet-md{   
+    font-weight: 700;
+}
