@@ -1,5 +1,7 @@
 import firebase from 'firebase/app'
+require('firebase/auth')
 import 'firebase/firestore'
+
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -13,8 +15,8 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
 
+const db = firebase.firestore();
 
 async function getData(collection) {
     const collectionRef = db
@@ -80,4 +82,33 @@ async function getCollectionFCollection(user_id,collection,subCollection){
 //     return id
 // }
 
-export {getData, addNewDocument, updateDocument, getCollectionFCollection, addFavorite}
+async function updateName(newName){
+    const user = getCurrentUser()
+    await user.updateProfile({
+        displayName: newName
+    })
+}
+
+async function createNewUser(email, password){
+    const newUser = await firebase
+    .auth()
+    .createUserWithEmailAndPassword(email, password)
+    
+    return newUser
+}
+
+async function logInUser(email, password){
+    await firebase
+        .auth()
+        .signInWithEmailAndPassword(email, password)
+}
+
+function getCurrentUser(){
+    const user = firebase.auth().currentUser
+    return user
+}
+
+
+export {getData,addNewDocument, updateDocument, getCollectionFCollection, addFavorite, createNewUser, updateName, logInUser, getCurrentUser}
+
+//Create function recieves user and password and create such user in the database. If everythuing goes well it should updateProfile
