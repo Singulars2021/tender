@@ -2,6 +2,7 @@
   <ion-page>
     <ion-content :fullscreen="true">
       <div class="header">
+        <img class="logo" src="/assets/tender.png" />
         <ion-item>
           <ion-avatar slot="start">
             <img src="/assets/avatar.png" />
@@ -18,31 +19,37 @@
           >Ajustes búsqueda</ion-button
         >
       </div>
-
       <div class="animals-list">
         <h1>Tus animales</h1>
         <ion-button>
           <ion-icon :icon="chevronForwardOutline" />
         </ion-button>
       </div>
-      <div class="animals-grid">
-        <ion-card v-for="animal in animalsCreated" :key="animal.name">
-          <ion-card-header>
-            <img :src="animal.img" />
-            <ion-card-title>{{ animal.name }}</ion-card-title>
-          </ion-card-header>
-        </ion-card>
-      </div>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-card>
+              <ion-card-header>
+                <img src="{{img}}" />
+                <ion-card-title>{{ name }}</ion-card-title>
+              </ion-card-header>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-content>
-    <ion-fab-button href="/animals/add">
-      <ion-icon :icon="addCircleOutline"></ion-icon>
-    </ion-fab-button>
+    <ion-router-link href="/animals/add">
+      <ion-fab-button>
+        <ion-icon :icon="addCircleOutline"> </ion-icon>
+      </ion-fab-button>
+    </ion-router-link>
   </ion-page>
 </template>
 
 <script>
 import { chevronForwardOutline, addCircleOutline } from "ionicons/icons";
 import {
+  IonFabButton,
   IonPage,
   IonIcon,
   IonButton,
@@ -50,42 +57,23 @@ import {
   IonItem,
   IonLabel,
   IonContent,
-  IonFabButton,
   IonCard,
   IonCardTitle,
   IonCardHeader,
+  IonGrid,
+  IonRow,
+  IonCol,
 } from "@ionic/vue";
 export default {
+  props: ["name", "img"],
   data() {
     return {
-      animalsCreated: [
-        {
-          img:
-            "https://images.unsplash.com/photo-1601758003839-512c0f4159e5?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=750&q=80",
-          name: "Marcos",
-        },
-        {
-          img:
-            "https://images.unsplash.com/photo-1536910467852-a6fded0c5c47?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=750&q=80",
-          name: "Roberta",
-        },
-        {
-          img:
-            "https://images.unsplash.com/photo-1511275539165-cc46b1ee89bf?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=750&q=80",
-          name: "Simba",
-        },
-        {
-          img:
-            "https://images.unsplash.com/photo-1579833098880-e52055f43cad?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=750&q=800",
-          name: "Margarita",
-        },
-      ],
       chevronForwardOutline,
       addCircleOutline,
     };
   },
-  name: "admin-animals",
   components: {
+    IonFabButton,
     IonPage,
     IonContent,
     IonIcon,
@@ -93,7 +81,9 @@ export default {
     IonAvatar,
     IonItem,
     IonLabel,
-    IonFabButton,
+    IonGrid,
+    IonRow,
+    IonCol,
     IonCard,
     IonCardTitle,
     IonCardHeader,
@@ -107,7 +97,7 @@ export default {
 }
 ion-button {
   width: fit-content;
-  margin: 1.25rem;
+  margin: 1rem;
   text-align: center;
 }
 
@@ -119,9 +109,9 @@ ion-button {
 
 h2,
 p {
-  margin-left: 1.3rem;
-  margin-right: 1.3rem;
-  font-size: 1.35rem;
+  margin-left: 1rem;
+  margin-right: 0.5rem;
+  font-size: 1.2rem;
 }
 .animals-list {
   display: flex;
@@ -136,20 +126,25 @@ p {
   justify-content: center;
   align-content: center;
 }
-.animals-grid {
-  display: grid;
-  grid-template-columns: 140px 140px;
-  gap: 10px;
-  justify-content: center;
-  margin-top: 1rem;
+
+.logo {
+  display: flex;
+  align-self: start;
+  margin-left: 1.5rem;
+  margin-top: 1.5rem;
+  width: 40px;
+  height: 40px;
 }
-/* .animal {
-  background-color: blue;
-  height: 150px;
-  width: 140px;
-  border: 3px solid black;
-} */
 ion-fab-button {
   margin: 4rem 8rem;
+}
+ion-label {
+  margin-left: 0px;
+}
+ion-avatar {
+  margin: 0px;
+}
+ion-card {
+  margin: 0px;
 }
 </style>

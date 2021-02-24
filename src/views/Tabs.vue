@@ -11,9 +11,9 @@
         <ion-tab-button tab="chat-center" href="/animals/chat">
           <ion-icon size="large" src="../../assets/cat.svg" />
         </ion-tab-button>
-        <ion-tab-button tab="admin-animals" href="/animals/adminAnimals">
+        <!-- <ion-tab-button tab="admin-animals" href="/animals/adminAnimals">
           <ion-icon :icon="ellipsisVerticalOutline" />
-        </ion-tab-button>
+        </ion-tab-button> -->
       </ion-tab-bar>
     </ion-tabs>
   </ion-page>
