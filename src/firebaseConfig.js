@@ -18,6 +18,22 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const storage = firebase.storage();
 
+async function getCollectionFromCollection(from_collection, collection, doc_id) {
+    const collectionRef = db
+        .collection(from_collection)
+        .doc(doc_id)
+        .collection(collection);
+
+    const snapshot = await collectionRef.get();
+
+    const images = snapshot.docs.map((doc) => ({
+        ...doc.data(),
+    }));
+
+    return images;
+
+    // console.log("firebase: getCollectionFromCollection " + collection + " from " + from_collection, images);
+}
 
 async function getData(collection) {
     const collectionRef = db
@@ -28,7 +44,9 @@ async function getData(collection) {
     const data = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
+        pictures: [],
     }));
+
     console.log("firebase: getData from " + collection, data)
     return data
 }
@@ -61,11 +79,6 @@ async function addFavorite(id, id_user) {
 
 }
 
-async function getCollectionFCollection(user_id, collection, subCollection) {
-    const Uanimals = await db.collection(collection).doc(user_id).collection(subCollection).get();
-
-    return Uanimals
-}
 
 async function setPictureToAnimal(id_animal, picture) {
     const guid = uuidv4();
@@ -89,4 +102,4 @@ function uuidv4() {
         return v.toString(16);
     });
 }
-export { getData, addNewDocument, updateDocument, getCollectionFCollection, addFavorite, setPictureToAnimal }
+export { getData, addNewDocument, updateDocument, getCollectionFromCollection, addFavorite, setPictureToAnimal }

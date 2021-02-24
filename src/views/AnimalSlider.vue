@@ -47,12 +47,13 @@ export default {
   },
   created() {
     // Example about how to update app's state
-    this.$store.dispatch('getAnimals')
+    this.$store.dispatch("getAnimals");
+    // this.animals = this.$store.getters.getAllAnimals;
   },
   // Ionic hook executed everytime the user changes to this view
   ionViewWillEnter() {
     // Just a try to check if DB is working. It would be a good idea if this getters fills a computed property for the animal slider, for example
-    console.log(this.$store.getters.getAllAnimals[0])
+    console.log("ionViewWillEnter"); 
   },
 
   data() {

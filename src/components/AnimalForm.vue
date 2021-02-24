@@ -250,7 +250,8 @@ export default {
       });
 
       this.clearForm();
-      this.$router.push("/animals/slider");
+      this.$store.dispatch("getAnimals");
+      this.$router.push("/adminanimals");
     },
     async openToast(msg, response) {
       const toast = await toastController.create({

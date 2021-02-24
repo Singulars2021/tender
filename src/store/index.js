@@ -1,5 +1,5 @@
 import { createStore } from 'vuex'
-import { addNewDocument, getData, setPictureToAnimal } from '../firebaseConfig.js'
+import { addNewDocument, getCollectionFromCollection, getData, setPictureToAnimal } from '../firebaseConfig.js'
 
 const store = createStore({
   state: {
@@ -55,15 +55,10 @@ const store = createStore({
     // },
     // Will insert a new animal in the firebase app and then the app state must be updated. I think we may use most of the data structure that AnimalForm is already building. We'll have to take a look about how to relate the photos to the animal
     async insertNewAnimal(context, payload) {
-
-      // We should add the user id to the animal data
-      // const user = auth.currentUser;
-
       const animalFields = {
         userId: context.getters.getUserId,
         ...payload.animalFields
       };
-
       const animalPhotos = payload.animalPhotos;
 
       const id = await addNewDocument(animalFields, 'animals')
@@ -73,7 +68,6 @@ const store = createStore({
       }
 
       animalFields.id = id;
-
       context.commit('insertAnimal', animalFields)
     },
     // Action to update an animal by its id (change description, name, etc.)
@@ -88,10 +82,18 @@ const store = createStore({
     // Retrieves all the animals from database, no filters
     async getAnimals(context) {
       // Get all the data from the collection named 'animals'
-      const animals = await getData('animals')
+      const animals = await getData('animals');
+
+      for (const animal in animals) {
+        const photos = await getCollectionFromCollection("animals", "images", animals[animal].id);
+        
+        for (const photo in photos)
+        animals[animal]["pictures"].push(photos[photo].image);
+      }
+
       // updates the data in the app
       context.commit('setAnimals', animals)
-    }
+    },
   }
 })
 
