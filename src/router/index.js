@@ -36,6 +36,10 @@ const routes = [
     ]
   },
   {
+    path: '/filters',
+    component: () => import('@/views/SearchAnimals.vue')
+  },
+  {
     path: '/form',
     component: () => import('@/views/AddNewAnimal.vue')
   },
