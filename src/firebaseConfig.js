@@ -1,5 +1,7 @@
 import firebase from 'firebase/app'
+require('firebase/auth')
 import 'firebase/firestore'
+
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -13,8 +15,8 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
 
+const db = firebase.firestore();
 
 async function getData(collection) {
     const collectionRef = db
@@ -64,22 +66,49 @@ async function getCollectionFCollection(user_id,collection,subCollection){
     return Uanimals
 }
 
-async function setPictureToAnimal(id_animal, picture){
-    console.log(id_animal)
-    console.log(picture)
+// async function setPictureToAnimal(id_animal, picture){
 
-    // const user = auth.currentUser;
-    // const guid = uuidv4();
-    // const filePath = `${user?.uid}/images/${guid}.${picture.format}`;
-    // const storageRef = storage.ref();
-    // await storageRef
-    //   .child(filePath)
-    //   .putString(picture.base64String, "base64");
-    // const url = await storageRef.child(filePath).getDownloadURL();
-    // const id = await db.collection("animals").doc(id_animal).collection("images").add({
-    //   image: url,
-    // })
-    // return id
+//     const user = auth.currentUser;
+//     const guid = uuidv4();
+//     const filePath = `${user?.uid}/images/${guid}.${picture.format}`;
+//     const storageRef = storage.ref();
+//     await storageRef
+//       .child(filePath)
+//       .putString(picture.base64String, "base64");
+//     const url = await storageRef.child(filePath).getDownloadURL();
+//     const id = await db.collection("animals").doc(id_animal).collection("images").add({
+//       image: url,
+//     })
+//     return id
+// }
+
+async function updateName(newName){
+    const user = getCurrentUser()
+    await user.updateProfile({
+        displayName: newName
+    })
 }
 
-export {getData, addNewDocument, updateDocument, getCollectionFCollection, addFavorite, setPictureToAnimal}
+async function createNewUser(email, password){
+    const newUser = await firebase
+    .auth()
+    .createUserWithEmailAndPassword(email, password)
+    
+    return newUser
+}
+
+async function logInUser(email, password){
+    await firebase
+        .auth()
+        .signInWithEmailAndPassword(email, password)
+}
+
+function getCurrentUser(){
+    const user = firebase.auth().currentUser
+    return user
+}
+
+
+export {getData,addNewDocument, updateDocument, getCollectionFCollection, addFavorite, createNewUser, updateName, logInUser, getCurrentUser}
+
+//Create function recieves user and password and create such user in the database. If everythuing goes well it should updateProfile

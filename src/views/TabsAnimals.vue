@@ -28,7 +28,7 @@ import {
 } from "ionicons/icons";
 
 export default {
-  name: "Tabs",
+  name: "TabsAnimals",
   components: { IonTabs, IonTabBar, IonTabButton, IonIcon, IonPage },
   setup() {
     return {
