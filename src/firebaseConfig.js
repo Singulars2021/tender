@@ -1,6 +1,8 @@
 import firebase from 'firebase/app'
+require('firebase/auth')
 import 'firebase/firestore'
 import 'firebase/storage'
+
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -14,9 +16,8 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
-// const auth = firebase.auth();
 const db = firebase.firestore();
-const storage = firebase.storage();
+
 
 async function getCollectionFromCollection(from_collection, collection, doc_id) {
     const collectionRef = db
@@ -94,12 +95,26 @@ async function setPictureToAnimal(id_animal, picture) {
     return id
 }
 
+async function createNewUser(email, password) {
+    const newUser = await firebase
+        .auth()
+        .createUserWithEmailAndPassword(email, password)
 
-function uuidv4() {
-    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
-        const r = (Math.random() * 16) | 0,
-            v = c == "x" ? r : (r & 0x3) | 0x8;
-        return v.toString(16);
-    });
+    return newUser
 }
-export { getData, addNewDocument, updateDocument, getCollectionFromCollection, addFavorite, setPictureToAnimal }
+
+async function logInUser(email, password) {
+    await firebase
+        .auth()
+        .signInWithEmailAndPassword(email, password)
+}
+
+function getCurrentUser() {
+    const user = firebase.auth().currentUser
+    return user
+}
+
+
+export { getData, addNewDocument, updateDocument, getCollectionFromCollection, addFavorite, createNewUser, updateName, logInUser, getCurrentUser, setPictureToAnimal }
+
+//Create function recieves user and password and create such user in the database. If everythuing goes well it should updateProfile

@@ -6,7 +6,7 @@
         <div class="image">
           <!-- <ion-icon :icon="imagesOutline" size="large" @click="takePicture"></ion-icon> -->
           <img
-            src="../../public/assets/images-outline.svg"
+            src="../../public/assets/add-image-icon.svg"
             alt="svg add image"
             width="100"
             height="100"
@@ -20,7 +20,7 @@
             <ion-row>
               <ion-col v-for="index in 5" :key="index">
                 <ion-icon
-                  :icon="imagesOutline"
+                  :icon="imageOutline"
                   size="large"
                   @click="takePicture"
                   v-if="index > imagesList.length"
@@ -40,10 +40,13 @@
             css-class="image-modal"
           >
             <div>
-              <img :src="imageToPreview" />
+              <div>
+                <img class="image-preview" :src="imageToPreview" />
+              </div>
               <ion-fab vertical="bottom" horizontal="center">
                 <ion-fab-button color="danger">
                   <ion-icon
+                    class="icon-trash"
                     :icon="trash"
                     size="large"
                     @click="deleteImage()"
@@ -58,12 +61,12 @@
 
       <!-- Name item -->
       <ion-item>
-        <ion-label position="floating">Nombre</ion-label>
+        <ion-label position="fixed">Nombre</ion-label>
         <ion-input v-model="name" type="text" @ionBlur="onFormEdit"></ion-input>
       </ion-item>
       <!-- Age item -->
       <ion-item>
-        <ion-label position="floating">Edad</ion-label>
+        <ion-label>Edad</ion-label>
         <ion-select
           v-model="age"
           okText="Aceptar"
@@ -120,6 +123,7 @@
           interface="action-sheet"
           cancelText="Cancelar"
           @ionChange="onFormEdit"
+          :interface-options="options"
         >
           <ion-select-option
             v-for="province in provincesLabels"
@@ -131,7 +135,7 @@
       </ion-item>
       <!-- Description Item -->
       <ion-item>
-        <ion-label position="floating">Descripción</ion-label>
+        <ion-label position="fixed">Descripción</ion-label>
         <ion-textarea
           v-model="description"
           rows="1"
@@ -143,7 +147,8 @@
     <ion-text v-if="!isFormValid" color="danger">
       <h4>Por favor, rellena todos los campos antes de guardar.</h4>
     </ion-text>
-    <ion-button type="submit" expand="block" fill="solid">Guardar</ion-button>
+
+    <cta-button>GUARDAR</cta-button>
   </form>
 </template>
 
@@ -157,7 +162,6 @@ import {
   IonLabel,
   IonInput,
   IonTextarea,
-  IonButton,
   IonSelect,
   IonSelectOption,
   toastController,
@@ -169,8 +173,9 @@ import {
   IonFab,
   IonFabButton,
 } from "@ionic/vue";
-import { images, imagesOutline, trash } from "ionicons/icons";
+import { images, imageOutline, trash } from "ionicons/icons";
 import { Plugins, CameraResultType } from "@capacitor/core";
+import CtaButton from "../ui/CtaButton.vue";
 
 const { Camera } = Plugins;
 
@@ -181,9 +186,11 @@ export default {
     IonLabel,
     IonInput,
     IonTextarea,
-    IonButton,
     IonSelect,
     IonSelectOption,
+    CtaButton,
+    // IonFab,
+    // IonFabButton,
     IonGrid,
     IonRow,
     IonCol,
@@ -193,6 +200,7 @@ export default {
     IonText,
     IonFabButton,
   },
+
   data() {
     return {
       name: "",
@@ -202,7 +210,7 @@ export default {
       location: undefined,
       description: "",
       images,
-      imagesOutline,
+      imageOutline,
       trash,
       imagesList: [],
       error: null,
@@ -215,6 +223,9 @@ export default {
       provincesLabels: provinces,
       userId: undefined,
       isFormValid: true,
+      options: {
+        cssClass: "my-custom-interface",
+      },
     };
   },
   methods: {
@@ -304,11 +315,42 @@ export default {
 </script>
 
 <style scoped>
+form {
+  margin-bottom: 80px;
+}
+
 ion-label {
   font-weight: 700;
+  color: var(--ion-color-dark) !important;
 }
+ion-select::part(icon) {
+  display: none;
+}
+
+ion-select::part(text) {
+  background-image: url("/chevron-forward-outline.svg");
+  background-position: right;
+  background-repeat: no-repeat;
+  height: 19px;
+}
+
+ion-select {
+  max-width: 100%;
+  width: 35%;
+  right: auto;
+  direction: ltr;
+  padding-left: 0;
+}
+ion-input:part(native) {
+  max-width: 30%;
+  width: 70%;
+  right: auto;
+  direction: ltr;
+  padding-left: 0;
+}
+
 div.image {
-  margin: 0 auto;
+  margin: 20px auto 50px auto;
 }
 ion-col {
   display: flex;
@@ -317,5 +359,15 @@ ion-col {
 }
 ion-col img {
   border-radius: 10px;
+  height: 9vh;
+  object-fit: cover;
+  min-width: 15vw;
+}
+ion-icon {
+  color: var(--ion-color-medium);
+}
+
+.icon-trash {
+  color: white;
 }
 </style>

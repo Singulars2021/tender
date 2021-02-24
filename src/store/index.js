@@ -1,5 +1,5 @@
 import { createStore } from 'vuex'
-import { addNewDocument, getCollectionFromCollection, getData, setPictureToAnimal } from '../firebaseConfig.js'
+import { addNewDocument, getCollectionFromCollection, getData, setPictureToAnimal, updateDocument, createNewUser, updateName, logInUser, getCurrentUser } from '../firebaseConfig.js'
 
 const store = createStore({
   state: {
@@ -7,10 +7,11 @@ const store = createStore({
       id: 'ZVPKk6gTsBUsLMFRKLzoMPmbUC82',
       email: 'testbueno@test.com',
       description: 'Loving Canela',
-      location: 'Barcelona',
+      location: 1,
       phoneNumber: '+3466677788'
     },
-    animals: []
+    animals: [],
+    animalSearchFilters: []
   },
   getters: {
     getUserId(state) {
@@ -20,12 +21,16 @@ const store = createStore({
     getAllAnimals(state) {
       return state.animals
     },
+    getFilters(state) {
+      return state.animalSearchFilters
+    },
+    //Getter of users
+    getLoggedUser(state) {
+      return state.loggedUser
+    }
   },
   // Mutations must update the app's state. Every time we retrieve data from the database, these data must be loaded somewhere in our app state management. Because we are using Vuex of our app, we must use a mutation to alter the state, never alter it directly in an action of inside a component.
   mutations: {
-    setAnimals(state, payload) {
-      state.animals = payload
-    },
     setFavorite(state, payload, payload2) {
       state.animals.array.forEach(element => {
         if (element.id == payload) {
@@ -35,14 +40,49 @@ const store = createStore({
     },
     insertAnimal(state, payload) {
       state.animals.push(payload)
+    },
+    setFilters(state, payload) {
+      state.animalSearchFilters = payload
+    },
+    updateUserInfo(state, payload) {
+      state.loggedUser.name = payload.name
+      state.loggedUser.phoneNumber = payload.phoneNumber
+      state.loggedUser.description = payload.description
+      state.loggedUser.location = payload.location
+    },
+    setAnimals(state, payload) {
+      state.animals = payload
+    },
+    signinMutation(state, payload) {
+      state.loggedUser = payload
+      console.dir(state.loggedUser)
     }
   },
   actions: {
-    signin() {
-      // write the necessary commit to muttations to update 'loggedUser'
+    async signin(context, payload) {
+
+      await logInUser(payload.email, payload.password, payload.cb)
+      const user = getCurrentUser()
+      const payloadMutation = {
+        id: user.uid,
+        name: user.displayName,
+        email: user.email
+      }
+      context.commit("signinMutation", payloadMutation)
     },
-    signup() {
+    async signup(context, payload) {
       // write the necessar commits to mutations tu create a new user
+      await createNewUser(payload.email, payload.password)
+      await updateName(payload.name)
+      const user = getCurrentUser()
+      const payloadMutation = {
+        id: user.uid,
+        name: user.displayName,
+        email: user.email
+      }
+      context.commit("signinMutation", payloadMutation)
+
+
     },
     // Will update the animal to mark it as favorite by the logged user. First idea is to have an array of users who have favorited this animal. It may have some security implications, tough. For example, an expermineted user could be able to retrieve all the ids of the users that have favorited an animal
 
@@ -86,14 +126,36 @@ const store = createStore({
 
       for (const animal in animals) {
         const photos = await getCollectionFromCollection("animals", "images", animals[animal].id);
-        
+
         for (const photo in photos)
-        animals[animal]["pictures"].push(photos[photo].image);
+          animals[animal]["pictures"].push(photos[photo].image);
       }
 
       // updates the data in the app
       context.commit('setAnimals', animals)
     },
+    updateFilters(context, payload) {
+      const Filters = payload.filterFields
+
+      console.log(Filters)
+
+      context.commit('setFilters', Filters)
+    },
+    //Update user
+    async updateUser(context, payload) {
+      const id = context.getters.getLoggedUser.id
+      //Actualizar la colecion users, con nuevos datos (payload)
+      const updatedInfo = {
+        name: payload.name,
+        description: payload.description,
+        phoneNumber: payload.phoneNumber,
+        location: payload.location
+      }
+      console.log(updatedInfo)
+      await updateDocument(id, updatedInfo, 'users')
+
+      context.commit('updateUserInfo', payload)
+    }
   }
 })
 

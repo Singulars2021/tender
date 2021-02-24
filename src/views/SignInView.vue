@@ -2,12 +2,16 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <back-button href="/animals/slider"></back-button>
-        <ion-title>Tu mascota</ion-title>
+        <ion-title>Sign In</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
-      <animal-form></animal-form>
+      <ion-header collapse="condense">
+        <ion-toolbar>
+          <ion-title size="large">Sign In</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <sign-in-component></sign-in-component>
     </ion-content>
   </ion-page>
 </template>
@@ -21,23 +25,18 @@ import {
   IonContent,
 } from "@ionic/vue";
 
-import AnimalForm from "@/components/AnimalForm.vue";
-import BackButton from '../ui/BackButton.vue';
+import SignInComponent from "@/components/SignInComponent.vue";
+
 
 export default {
-  name: "add-new-animal",
+  name: "sign-in",
   components: {
-    AnimalForm,
     IonHeader,
     IonToolbar,
     IonTitle,
     IonContent,
     IonPage,
-    BackButton,
+    SignInComponent
   },
-}
+};
 </script>
-
-<style scoped>
-
-</style>

@@ -28,6 +28,7 @@ import './theme/variables.css';
 import './theme/core.css';
 import './theme/typography.css';
 import './theme/padding.css'
+import './theme/customInterface.css'
 
 const app = createApp(App)
   .use(IonicVue)
