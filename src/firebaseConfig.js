@@ -17,6 +17,7 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
+const storage = firebase.storage();
 
 
 async function getCollectionFromCollection(from_collection, collection, doc_id) {
@@ -34,6 +35,13 @@ async function getCollectionFromCollection(from_collection, collection, doc_id) 
     return images;
 
     // console.log("firebase: getCollectionFromCollection " + collection + " from " + from_collection, images);
+}
+
+async function updateName(newName) {
+    const user = getCurrentUser()
+    await user.updateProfile({
+        displayName: newName
+    })
 }
 
 async function getData(collection) {
@@ -80,6 +88,13 @@ async function addFavorite(id, id_user) {
 
 }
 
+function uuidv4() {
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+        const r = (Math.random() * 16) | 0,
+            v = c == "x" ? r : (r & 0x3) | 0x8;
+        return v.toString(16);
+    });
+}
 
 async function setPictureToAnimal(id_animal, picture) {
     const guid = uuidv4();
