@@ -6,11 +6,14 @@
           <ion-icon :icon="settingsOutline" />
         </ion-tab-button>
         <ion-tab-button tab="animal-slider" href="/animals/slider">
-          <ion-icon :icon="layersOutline"></ion-icon>
+          <ion-icon :icon="layersOutline" />
         </ion-tab-button>
         <ion-tab-button tab="chat-center" href="/animals/chat">
           <ion-icon size="large" src="../../assets/cat.svg" />
         </ion-tab-button>
+        <!-- <ion-tab-button tab="admin-animals" href="/animals/adminAnimals">
+          <ion-icon :icon="ellipsisVerticalOutline" />
+        </ion-tab-button> -->
       </ion-tab-bar>
     </ion-tabs>
   </ion-page>
@@ -18,7 +21,11 @@
 
 <script>
 import { IonTabBar, IonTabButton, IonTabs, IonIcon, IonPage } from "@ionic/vue";
-import { settingsOutline, layersOutline } from "ionicons/icons";
+import {
+  settingsOutline,
+  layersOutline,
+  ellipsisVerticalOutline,
+} from "ionicons/icons";
 
 export default {
   name: "Tabs",
@@ -27,6 +34,7 @@ export default {
     return {
       settingsOutline,
       layersOutline,
+      ellipsisVerticalOutline,
     };
   },
 };

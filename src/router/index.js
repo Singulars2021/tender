@@ -6,6 +6,10 @@ const routes = [
     path: '/',
     redirect: '/animals/slider'
   },
+  {
+    path: '/adminanimals',
+    component: () => import('@/views/AdminAnimals.vue')
+  },
 
   {
     path: '/animals/',
@@ -27,6 +31,7 @@ const routes = [
         path: 'chat',
         component: () => import('@/views/FavouriteAnimals.vue')
       },
+
     ]
   },
 
