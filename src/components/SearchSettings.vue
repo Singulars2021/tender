@@ -1,5 +1,5 @@
 <template>
-  <form>
+  <form action="" class="ion-padding" @submit.prevent="updateFilters">
     <ion-title class="sub-title">AJUSTES DE BÚSQUEDA</ion-title>
     <ion-list>
       <ion-item>
@@ -15,6 +15,7 @@
             :value="province.value"
             >{{ province.label }}</ion-select-option
           >
+          <ion-select-option value="">Cualquiera</ion-select-option>
         </ion-select>
       </ion-item>
     </ion-list>
@@ -38,6 +39,7 @@
             :value="specie.value"
             >{{ specie.label }}</ion-select-option
           >
+          <ion-select-option value="">Cualquiera</ion-select-option>
         </ion-select>
       </ion-item>
     </ion-list>
@@ -51,6 +53,7 @@
             :value="sex.value"
             >{{ sex.label }}</ion-select-option
           >
+          <ion-select-option value="">Cualquiera</ion-select-option>
         </ion-select>
       </ion-item>
     </ion-list>
@@ -64,18 +67,19 @@
             :value="age.value"
             >{{ age.label }}</ion-select-option
           >
+          <ion-select-option value="">Cualquiera</ion-select-option>
         </ion-select>
       </ion-item>
     </ion-list>
     <ion-list>
       <ion-item>
         <ion-label>Tipo de adopcion</ion-label>
-        <ion-select value="any"
-          interface="action-sheet"
-          cancelText="Cancelar">
+        <ion-select v-model="adoptionType"  okText="Aceptar" cancelText="Cancelar">
+          <ion-select-option 
+            v-for="adoptionType in adoptionTypeLabels"
+            :key="adoptionType.value"
+            :value="adoptionType.value">{{adoptionType.label}}</ion-select-option>
           <ion-select-option value="">Cualquiera</ion-select-option>
-          <ion-select-option>Temporal</ion-select-option>
-          <ion-select-option>Permanente</ion-select-option>
         </ion-select>
       </ion-item>
     </ion-list>
@@ -84,7 +88,7 @@
 </template>
 
 <script>
-import { sex, species, provinces, age } from "../utils/labels";
+import { sex, species, provinces, age, adoptionType } from "../utils/labels";
 import {
   IonTitle,
   IonLabel,
@@ -112,21 +116,36 @@ export default {
   },
   data() {
     return {
-      name: undefined,
       age: undefined,
       sex: undefined,
       species: undefined,
       location: undefined,
-      description: undefined,
       error: null,
       speciesLabels: species,
       ageLabels: age,
       sexLabels: sex,
       provincesLabels: provinces,
+      adoptionTypeLabels: adoptionType,
       userId: undefined,
+      adoptionType: undefined,
     };
   },
   methods: {
+    updateFilters() {
+      const filter = {
+        age: this.age,
+        sex: this.sex,
+        species: this.species,
+        location: this.location,
+        adoptionType: this.adoptionType,
+      };
+ 
+      this.$store.dispatch("updateFilters", {
+        filterFields: filter,
+      });
+
+      console.log(this.$store.getters.getFilters)
+    },
     async openToast(msg, response) {
       const toast = await toastController.create({
         message: msg,

@@ -250,6 +250,16 @@ const species = [
     }
 ]
 
+const adoptionType = [
+    {
+        value: 0,
+        label: 'Temporal',
+    },
+    {
+        value: 1,
+        label: 'Permanente'
+    }
+]
 
 
-export { provinces, sex, species, age }
+export { provinces, sex, species, age, adoptionType }

@@ -1,5 +1,5 @@
 import { createStore } from 'vuex'
-import { addNewDocument, getData } from '../firebaseConfig.js'
+import { addNewDocument, getData, setPictureToAnimal } from '../firebaseConfig.js'
 
 const store = createStore({
   state: {
@@ -10,13 +10,17 @@ const store = createStore({
       location: 'Barcelona',
       phoneNumber: '+3466677788'
     },
-    animals: []
+    animals: [],
+    animalSearchFilters:[]
   },
   getters: {
     // Knowking that the state of our app is always updated (or it should be); we may write all the getters that we need here to retrieve any sort of info, such all the animals, filter animals by some criteria, retrieve information about the logged user, etc
     getAllAnimals(state) {
       return state.animals
     },
+    getFilters(state){
+      return state.animalSearchFilters
+    }
   },
   // Mutations must update the app's state. Every time we retrieve data from the database, these data must be loaded somewhere in our app state management. Because we are using Vuex of our app, we must use a mutation to alter the state, never alter it directly in an action of inside a component.
   mutations: {
@@ -32,7 +36,10 @@ const store = createStore({
     },
     insertAnimal(state, payload){
       state.animals.push(payload)
-    }
+    },
+    setFilters(state, payload){
+      state.animalSearchFilters = payload
+    },
   },
   actions: {
     signin() {
@@ -44,12 +51,12 @@ const store = createStore({
     // Will update the animal to mark it as favorite by the logged user. First idea is to have an array of users who have favorited this animal. It may have some security implications, tough. For example, an expermineted user could be able to retrieve all the ids of the users that have favorited an animal
 
     // favoritedByUsers: ['userId1', 'userId2', ...]
-    async setAnimalAsFavorite(context, payload) {
+    /*async setAnimalAsFavorite(context, payload) {
 
       await addFavorite(payload, id_user)
 
       context.commit('setFavorite', payload)
-    },
+    },*/
     // Will insert a new animal in the firebase app and then the app state must be updated. I think we may use most of the data structure that AnimalForm is already building. We'll have to take a look about how to relate the photos to the animal
     async insertNewAnimal(context, payload) {
 
@@ -81,6 +88,13 @@ const store = createStore({
       const animals = await getData('animals')
       // updates the data in the app
       context.commit('setAnimals', animals)
+    },
+    updateFilters(context, payload){
+      const Filters = payload.filterFields
+
+      console.log(Filters)
+
+      context.commit('setFilters', Filters)
     }
   }
 })
