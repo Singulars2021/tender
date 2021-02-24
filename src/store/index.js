@@ -1,14 +1,15 @@
 import { createStore } from 'vuex'
-import { addNewDocument, getData, addFavorite, setPictureToAnimal } from '../firebaseConfig.js'
+import { addNewDocument, getData, updateDocument } from '../firebaseConfig.js'
 
 const store = createStore({
   state: {
     loggedUser: {
-      id: 'G37irGDes6 mCunZ4W5BdgVGhqU1Bxln1',
+      id: 'G37irGDCunZ4W5BdgVGhqU1Bxln1',
       email: 'didac@test.com',
+      name: 'Didac',
       description: 'Loving Canela',
-      location: 'Barcelona',
-      phoneNumber: '+3466677788'
+      location: 1,
+      phoneNumber: '+34666777888',
     },
     animals: []
   },
@@ -17,6 +18,10 @@ const store = createStore({
     getAllAnimals(state) {
       return state.animals
     },
+    //Getter of users
+    getLoggedUser(state){
+      return state.loggedUser
+    }
   },
   // Mutations must update the app's state. Every time we retrieve data from the database, these data must be loaded somewhere in our app state management. Because we are using Vuex of our app, we must use a mutation to alter the state, never alter it directly in an action of inside a component.
   mutations: {
@@ -32,6 +37,12 @@ const store = createStore({
     },
     insertAnimal(state, payload){
       state.animals.push(payload)
+    },
+    updateUserInfo(state, payload){
+      state.loggedUser.name = payload.name
+      state.loggedUser.phoneNumber = payload.phoneNumber
+      state.loggedUser.description = payload.description
+      state.loggedUser.location = payload.location
     }
   },
   actions: {
@@ -45,8 +56,8 @@ const store = createStore({
 
     // favoritedByUsers: ['userId1', 'userId2', ...]
     async setAnimalAsFavorite(context, payload) {
-      const id_user = 1 // must be changed
-      await addFavorite(payload, id_user)
+      // const id_user = 1 // must be changed
+      // await addFavorite(payload, id_user)
 
       context.commit('setFavorite', payload)
     },
@@ -59,7 +70,7 @@ const store = createStore({
       const id = await addNewDocument(animalFields,'animals')
 
       for (let i = 0; i < animalPhotos.length; i++) {
-        await setPictureToAnimal(id,animalPhotos[i]);
+        // await setPictureToAnimal(id,animalPhotos[i]);
       }
 
       animalFields.id = id
@@ -68,12 +79,26 @@ const store = createStore({
     },
     // Action to update an animal by its id (change description, name, etc.)
     async updateAnimal() {
-
-
+  
     },
     // Action to remove the animal from the firebase database. Caution! Usually, we do not remove data from databases. It is better to set a new field such as "removalDate"; so if it has a value, we know that this animal should not be retrieved from firebase anymore (we'll have to change the getters to take this info into account)
     async removeAnimal() {
 
+    },
+    //Update user
+    async updateUser(context, payload){
+      const id = context.getters.getLoggedUser.id
+      //Actualizar la colecion users, con nuevos datos (payload)
+      const updatedInfo = {
+        name: payload.name,
+        description: payload.description,
+        phoneNumber: payload.phoneNumber,
+        location: payload.location
+      }
+      console.log(updatedInfo)
+      await updateDocument(id, updatedInfo, 'users')
+
+      context.commit('updateUserInfo', payload)
     },
     // Retrieves all the animals from database, no filters
     async getAnimals(context) {

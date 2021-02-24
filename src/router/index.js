@@ -34,6 +34,11 @@ const routes = [
 
     ]
   },
+
+  {
+    path: '/profile',
+    component: () => import('@/views/EditProfile.vue')
+  }
 ]
 
 const router = createRouter({
