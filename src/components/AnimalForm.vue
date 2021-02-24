@@ -338,6 +338,10 @@ export default {
 </script>
 
 <style scoped>
+form{
+  margin-bottom: 80px;
+}
+
 ion-label {
   font-weight: 700;
   color:var(--ion-color-dark)!important

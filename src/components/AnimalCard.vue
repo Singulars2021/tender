@@ -21,19 +21,10 @@
           {{ animal.location }}
           </ion-card-subtitle>
         </div>
-        <ion-button @click="openPopover" fill="clear" size="large" class="button-native">
+        <ion-button @click="presentActionSheet" fill="clear" size="large" class="button-native">
           <ion-icon :icon="ellipsisHorizontal"></ion-icon>
         </ion-button>
-        <ion-popover :is-open="isPopoverOpen">
-          <ion-list>
-            <ion-item><ion-text color="danger">Denunciar</ion-text> </ion-item>
-            <ion-item><ion-text>Copiar enlace</ion-text></ion-item>
-            <ion-item><ion-text>Compartir en...</ion-text></ion-item>
-            <ion-item><ion-button size="small" slot="start" color="dark" @click="closePopover" fill="clear" expand="full">
-                Cancelar
-            </ion-button></ion-item>
-          </ion-list>
-        </ion-popover>
+        
       </div>
     </ion-card-header>
     <ion-card-content>
@@ -61,11 +52,8 @@ import {
   IonIcon,
   IonChip,
   IonLabel,
-  IonPopover,
-  IonList,
-  IonText,
   IonButton,
-  IonItem,
+  actionSheetController
 } from "@ionic/vue";
 import {
   heartOutline,
@@ -81,25 +69,50 @@ export default {
     IonCardHeader,
     IonCard,
     IonCardContent,
-    IonText,
     IonButton,
     IonCardTitle,
     IonCardSubtitle,
     IonIcon,
     IonChip,
     IonLabel,
-    IonPopover,
-    IonList,
-    IonItem,
   },
   props: ["animal"],
   methods: {
-    openPopover() {
-      this.isPopoverOpen = true;
-    },
-    closePopover() {
-      this.isPopoverOpen = false;
-    },
+async presentActionSheet() {
+      const actionSheet = await actionSheetController
+        .create({
+          cssClass: 'action-sheet-style',
+          buttons: [
+            {
+              text: 'Denunciar',
+              role: 'destructive',
+              handler: () => {
+                console.log('Denunciar clicked')
+              },
+            },
+            {
+              text: 'Copiar enlace',
+              handler: () => {
+                console.log('Copy link clicked')
+              },
+            },
+            {
+              text: 'Compartir en',
+              handler: () => {
+                console.log('Share clicked')
+              },
+            },
+            {
+              text: 'Cancelar',
+              role: 'cancel',
+              handler: () => {
+                console.log('Cancel clicked')
+              },
+            },
+          ],
+          });
+        return actionSheet.present();
+       },
   },
   data() {
     return {
