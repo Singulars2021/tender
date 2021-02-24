@@ -1,24 +1,27 @@
 import { createStore } from 'vuex'
-import { getData, updateDocument, createNewUser, updateName, logInUser, getCurrentUser } from '../firebaseConfig.js'
+import { addNewDocument, getCollectionFromCollection, getData, setPictureToAnimal, updateDocument, createNewUser, updateName, logInUser, getCurrentUser } from '../firebaseConfig.js'
 
 const store = createStore({
   state: {
     loggedUser: {
-      id: 'G37irGDes6 mCunZ4W5BdgVGhqU1Bxln1',
-      email: 'didac@test.com',
+      id: 'ZVPKk6gTsBUsLMFRKLzoMPmbUC82',
+      email: 'testbueno@test.com',
       description: 'Loving Canela',
       location: 1,
       phoneNumber: '+3466677788'
     },
     animals: [],
-    animalSearchFilters:[]
+    animalSearchFilters: []
   },
   getters: {
+    getUserId(state) {
+      return state.loggedUser.id;
+    },
     // Knowking that the state of our app is always updated (or it should be); we may write all the getters that we need here to retrieve any sort of info, such all the animals, filter animals by some criteria, retrieve information about the logged user, etc
     getAllAnimals(state) {
       return state.animals
     },
-    getFilters(state){
+    getFilters(state) {
       return state.animalSearchFilters
     },
     //Getter of users
@@ -38,7 +41,7 @@ const store = createStore({
     insertAnimal(state, payload) {
       state.animals.push(payload)
     },
-    setFilters(state, payload){
+    setFilters(state, payload) {
       state.animalSearchFilters = payload
     },
     updateUserInfo(state, payload) {
@@ -84,14 +87,32 @@ const store = createStore({
     // Will update the animal to mark it as favorite by the logged user. First idea is to have an array of users who have favorited this animal. It may have some security implications, tough. For example, an expermineted user could be able to retrieve all the ids of the users that have favorited an animal
 
     // favoritedByUsers: ['userId1', 'userId2', ...]
-    /*async setAnimalAsFavorite(context, payload) {
+    // async setAnimalAsFavorite(context, payload) {
+    //   const id_user = 1 // must be changed
+    //   await addFavorite(payload, id_user)
 
-      await addFavorite(payload, id_user)
-
-      context.commit('setFavorite', payload)
-    },*/
+    // //   context.commit('setFavorite', payload)
+    // },
     // Will insert a new animal in the firebase app and then the app state must be updated. I think we may use most of the data structure that AnimalForm is already building. We'll have to take a look about how to relate the photos to the animal
-    async insertNewAnimal() {
+    async insertNewAnimal(context, payload) {
+      const animalFields = {
+        userId: context.getters.getUserId,
+        ...payload.animalFields
+      };
+      const animalPhotos = payload.animalPhotos;
+
+      const id = await addNewDocument(animalFields, 'animals')
+
+      for (let i = 0; i < animalPhotos.length; i++) {
+        await setPictureToAnimal(id, animalPhotos[i]);
+      }
+
+      animalFields.id = id;
+      context.commit('insertAnimal', animalFields)
+    },
+    // Action to update an animal by its id (change description, name, etc.)
+    async updateAnimal() {
+
 
     },
     // Action to remove the animal from the firebase database. Caution! Usually, we do not remove data from databases. It is better to set a new field such as "removalDate"; so if it has a value, we know that this animal should not be retrieved from firebase anymore (we'll have to change the getters to take this info into account)
@@ -101,11 +122,19 @@ const store = createStore({
     // Retrieves all the animals from database, no filters
     async getAnimals(context) {
       // Get all the data from the collection named 'animals'
-      const animals = await getData('animals')
+      const animals = await getData('animals');
+
+      for (const animal in animals) {
+        const photos = await getCollectionFromCollection("animals", "images", animals[animal].id);
+
+        for (const photo in photos)
+          animals[animal]["pictures"].push(photos[photo].image);
+      }
+
       // updates the data in the app
       context.commit('setAnimals', animals)
     },
-    updateFilters(context, payload){
+    updateFilters(context, payload) {
       const Filters = payload.filterFields
 
       console.log(Filters)

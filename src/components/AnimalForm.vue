@@ -5,7 +5,13 @@
       <ion-item v-if="imagesList.length == 0">
         <div class="image">
           <!-- <ion-icon :icon="imagesOutline" size="large" @click="takePicture"></ion-icon> -->
-          <img src="../../public/assets/add-image-icon.svg" alt="svg add image" width="100" height="100" @click="takePicture">
+          <img
+            src="../../public/assets/add-image-icon.svg"
+            alt="svg add image"
+            width="100"
+            height="100"
+            @click="takePicture"
+          />
         </div>
       </ion-item>
       <ion-item v-else>
@@ -34,8 +40,8 @@
             css-class="image-modal"
           >
             <div>
-              <div >
-              <img  class="image-preview" :src="imageToPreview" />
+              <div>
+                <img class="image-preview" :src="imageToPreview" />
               </div>
               <ion-fab vertical="bottom" horizontal="center">
                 <ion-fab-button color="danger">
@@ -56,122 +62,102 @@
       <!-- Name item -->
       <ion-item>
         <ion-label position="fixed">Nombre</ion-label>
-        <ion-input v-model="name" type="text" required></ion-input>
+        <ion-input v-model="name" type="text" @ionBlur="onFormEdit"></ion-input>
       </ion-item>
       <!-- Age item -->
       <ion-item>
         <ion-label>Edad</ion-label>
-        <ion-select v-model="age" okText="Aceptar" cancelText="Cancelar" required>
-          <ion-select-option value="c">Cria</ion-select-option>
-          <ion-select-option value="j">Joven</ion-select-option>
-          <ion-select-option value="a">Adulto</ion-select-option>
-          <ion-select-option value="s">Senior</ion-select-option>
+        <ion-select
+          v-model="age"
+          okText="Aceptar"
+          cancelText="Cancelar"
+          @ionChange="onFormEdit"
+        >
+          <ion-select-option
+            v-for="age in ageLabels"
+            :key="age.value"
+            :value="age.value"
+            >{{ age.label }}</ion-select-option
+          >
         </ion-select>
       </ion-item>
       <!-- Sex item -->
       <ion-item>
         <ion-label>Sexo</ion-label>
-        <ion-select v-model="sex" okText="Aceptar" cancelText="Cancelar">
-          <ion-select-option value="h">Hembra</ion-select-option>
-          <ion-select-option value="m">Macho</ion-select-option>
+        <ion-select
+          v-model="sex"
+          okText="Aceptar"
+          cancelText="Cancelar"
+          @ionChange="onFormEdit"
+        >
+          <ion-select-option
+            v-for="sex in sexLabels"
+            :key="sex.value"
+            :value="sex.value"
+            >{{ sex.label }}</ion-select-option
+          >
         </ion-select>
       </ion-item>
       <!-- Species Item -->
       <ion-item>
         <ion-label>Especie</ion-label>
-        <ion-select v-model="species" okText="Aceptar" cancelText="Cancelar">
-          <ion-select-option value="0">Gato</ion-select-option>
-          <ion-select-option value="1">Perro</ion-select-option>
-          <ion-select-option value="2">Tortuga</ion-select-option>
+        <ion-select
+          v-model="species"
+          okText="Aceptar"
+          cancelText="Cancelar"
+          @ionChange="onFormEdit"
+        >
+          <ion-select-option
+            v-for="specie in speciesLabels"
+            :key="specie.value"
+            :value="specie.value"
+            >{{ specie.label }}</ion-select-option
+          >
         </ion-select>
       </ion-item>
       <!-- Location Item -->
       <ion-item>
-        <ion-label
-        >Localización</ion-label>
+        <ion-label>Localización</ion-label>
         <ion-select
           v-model="location"
           interface="action-sheet"
           cancelText="Cancelar"
+          @ionChange="onFormEdit"
           :interface-options="options"
         >
-          <ion-select-option value="alava">Álava</ion-select-option>
-          <ion-select-option value="albacete">Albacete</ion-select-option>
-          <ion-select-option value="alicante"
-            >Alicante/Alacant</ion-select-option
+          <ion-select-option
+            v-for="province in provincesLabels"
+            :key="province.value"
+            :value="province.value"
+            >{{ province.label }}</ion-select-option
           >
-          <ion-select-option value="almeria">Almería</ion-select-option>
-          <ion-select-option value="asturias">Asturias</ion-select-option>
-          <ion-select-option value="avila">Ávila</ion-select-option>
-          <ion-select-option value="badajoz">Badajoz</ion-select-option>
-          <ion-select-option value="barcelona">Barcelona</ion-select-option>
-          <ion-select-option value="burgos">Burgos</ion-select-option>
-          <ion-select-option value="caceres">Cáceres</ion-select-option>
-          <ion-select-option value="cadiz">Cádiz</ion-select-option>
-          <ion-select-option value="cantabria">Cantabria</ion-select-option>
-          <ion-select-option value="castellon"
-            >Castellón/Castelló</ion-select-option
-          >
-          <ion-select-option value="ceuta">Ceuta</ion-select-option>
-          <ion-select-option value="ciudadreal">Ciudad Real</ion-select-option>
-          <ion-select-option value="cordoba">Córdoba</ion-select-option>
-          <ion-select-option value="cuenca">Cuenca</ion-select-option>
-          <ion-select-option value="girona">Girona</ion-select-option>
-          <ion-select-option value="laspalmas">Las Palmas</ion-select-option>
-          <ion-select-option value="granada">Granada</ion-select-option>
-          <ion-select-option value="guadalajara">Guadalajara</ion-select-option>
-          <ion-select-option value="guipuzcoa">Guipúzcoa</ion-select-option>
-          <ion-select-option value="huelva">Huelva</ion-select-option>
-          <ion-select-option value="huesca">Huesca</ion-select-option>
-          <ion-select-option value="illesbalears"
-            >Illes Balears</ion-select-option
-          >
-          <ion-select-option value="jaen">Jaén</ion-select-option>
-          <ion-select-option value="acoruña">A Coruña</ion-select-option>
-          <ion-select-option value="larioja">La Rioja</ion-select-option>
-          <ion-select-option value="leon">León</ion-select-option>
-          <ion-select-option value="lleida">Lleida</ion-select-option>
-          <ion-select-option value="lugo">Lugo</ion-select-option>
-          <ion-select-option value="madrid">Madrid</ion-select-option>
-          <ion-select-option value="malaga">Málaga</ion-select-option>
-          <ion-select-option value="melilla">Melilla</ion-select-option>
-          <ion-select-option value="murcia">Murcia</ion-select-option>
-          <ion-select-option value="navarra">Navarra</ion-select-option>
-          <ion-select-option value="ourense">Ourense</ion-select-option>
-          <ion-select-option value="palencia">Palencia</ion-select-option>
-          <ion-select-option value="pontevedra">Pontevedra</ion-select-option>
-          <ion-select-option value="salamanca">Salamanca</ion-select-option>
-          <ion-select-option value="segovia">Segovia</ion-select-option>
-          <ion-select-option value="sevilla">Sevilla</ion-select-option>
-          <ion-select-option value="soria">Soria</ion-select-option>
-          <ion-select-option value="tarragona">Tarragona</ion-select-option>
-          <ion-select-option value="santacruztenerife"
-            >Santa Cruz de Tenerife</ion-select-option
-          >
-          <ion-select-option value="teruel">Teruel</ion-select-option>
-          <ion-select-option value="toledo">Toledo</ion-select-option>
-          <ion-select-option value="valencia"
-            >Valencia/Valéncia</ion-select-option
-          >
-          <ion-select-option value="valladolid">Valladolid</ion-select-option>
-          <ion-select-option value="vizcaya">Vizcaya</ion-select-option>
-          <ion-select-option value="zamora">Zamora</ion-select-option>
-          <ion-select-option value="zaragoza">Zaragoza</ion-select-option>
         </ion-select>
       </ion-item>
       <!-- Description Item -->
       <ion-item>
         <ion-label position="fixed">Descripción</ion-label>
-        <ion-textarea v-model="description" rows="1" auto-grow></ion-textarea>
+        <ion-textarea
+          v-model="description"
+          rows="1"
+          auto-grow
+          @ionBlur="onFormEdit"
+        ></ion-textarea>
       </ion-item>
     </ion-list>
-   <cta-button>GUARDAR</cta-button>
+    <ion-text v-if="!isFormValid" color="danger">
+      <h4>Por favor, rellena todos los campos antes de guardar.</h4>
+    </ion-text>
+
+    <cta-button>GUARDAR</cta-button>
   </form>
 </template>
 
 <script>
+import { sex, species, provinces, age } from "../utils/labels";
+
 import {
   IonList,
+  IonText,
   IonItem,
   IonLabel,
   IonInput,
@@ -189,17 +175,9 @@ import {
 } from "@ionic/vue";
 import { images, imageOutline, trash } from "ionicons/icons";
 import { Plugins, CameraResultType } from "@capacitor/core";
-import CtaButton from "../ui/CtaButton.vue"
+import CtaButton from "../ui/CtaButton.vue";
 
 const { Camera } = Plugins;
-
-/*function uuidv4() {
-  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
-    const r = (Math.random() * 16) | 0,
-      v = c == "x" ? r : (r & 0x3) | 0x8;
-    return v.toString(16);
-  });
-}*/
 
 export default {
   components: {
@@ -219,63 +197,72 @@ export default {
     IonIcon,
     IonModal,
     IonFab,
+    IonText,
     IonFabButton,
   },
 
   data() {
     return {
-      name: undefined,
+      name: "",
       age: undefined,
       sex: undefined,
       species: undefined,
       location: undefined,
-      image: undefined,
-      description: undefined,
-      images: images,
-      imageOutline: imageOutline,
-      trash: trash,
+      description: "",
+      images,
+      imageOutline,
+      trash,
       imagesList: [],
       error: null,
       isOpen: false,
       imageToPreview: undefined,
       imageToDelete: undefined,
+      speciesLabels: species,
+      ageLabels: age,
+      sexLabels: sex,
+      provincesLabels: provinces,
+      userId: undefined,
+      isFormValid: true,
       options: {
-      cssClass: 'my-custom-interface'}
+        cssClass: "my-custom-interface",
+      },
     };
   },
   methods: {
+    onFormEdit() {
+      this.isFormValid = true;
+    },
     addAnimal() {
-      let url =
-        "https://animalslist-19bbf-default-rtdb.europe-west1.firebasedatabase.app/animalsList.json";
-      const newAnimal = {
+      this.isFormValid = true;
+      if (
+        this.name.trim == "" ||
+        typeof this.age != "number" ||
+        typeof this.location != "number" ||
+        typeof this.sex != "number" ||
+        typeof this.species != "number" ||
+        this.description.trim == "" ||
+        this.imagesList.length == 0
+      ) {
+        this.isFormValid = false;
+        return;
+      }
+      const animal = {
         name: this.name,
         age: this.age,
         sex: this.sex,
         species: this.species,
         location: this.location,
-        image: this.image,
         description: this.description,
       };
 
-      const postOptions = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newAnimal),
-      };
-      //this.uploadPhotos()
-      fetch(url, postOptions)
-        .then((response) => {
-          if (response.ok) {
-            this.openToast("El animal se ha añadido correctamente", response);
-          }
-        })
-        .catch((response) => {
-          if (!response.ok) {
-            this.openToast("Ha ocurrido un error", response);
-          }
-        });
+      this.$store.dispatch("insertNewAnimal", {
+        animalFields: animal,
+        animalPhotos: this.imagesList,
+      });
+
+      this.clearForm();
+      this.$store.dispatch("getAnimals");
+      this.$router.push("/adminanimals");
     },
     async openToast(msg, response) {
       const toast = await toastController.create({
@@ -305,7 +292,7 @@ export default {
     setOpen(index) {
       this.isOpen = true;
       this.imageToPreview = this.imagesList[index - 1].preview;
-      this.imageToDelete = index - 1 
+      this.imageToDelete = index - 1;
     },
     setClose() {
       this.isOpen = false;
@@ -314,47 +301,36 @@ export default {
       this.imagesList.splice(this.imageToDelete, 1);
       this.isOpen = false;
     },
-    /*async uploadPhotos() {
-      for (let i = 0; i < this.imagesList.length; i++) {
-        await this.uploadPhoto(i);
-      }
+    clearForm() {
+      (this.name = ""),
+        (this.age = undefined),
+        (this.location = undefined),
+        (this.sex = undefined),
+        (this.species = undefined),
+        (this.description = undefined),
+        (this.imagesList = []);
     },
-    async uploadPhoto(index) {
-      const user = auth.currentUser;
-      const guid = uuidv4();
-      const filePath = `${user?.uid}/images/${guid}.${this.imagesList[index].format}`;
-      const storageRef = storage.ref();
-
-      await storageRef
-        .child(filePath)
-        .putString(this.imagesList[index].base64String, "base64");
-      const url = await storageRef.child(filePath).getDownloadURL();
-
-      await db.collection("users").doc(user?.uid).collection("images").add({
-        image: url,
-      });
-    },*/
   },
 };
 </script>
 
 <style scoped>
-form{
+form {
   margin-bottom: 80px;
 }
 
 ion-label {
   font-weight: 700;
-  color:var(--ion-color-dark)!important
+  color: var(--ion-color-dark) !important;
 }
-ion-select::part(icon){
+ion-select::part(icon) {
   display: none;
 }
 
-ion-select::part(text){
+ion-select::part(text) {
   background-image: url("/chevron-forward-outline.svg");
   background-position: right;
-  background-repeat: no-repeat; 
+  background-repeat: no-repeat;
   height: 19px;
 }
 
@@ -365,7 +341,7 @@ ion-select {
   direction: ltr;
   padding-left: 0;
 }
-ion-input:part(native){
+ion-input:part(native) {
   max-width: 30%;
   width: 70%;
   right: auto;
@@ -373,10 +349,8 @@ ion-input:part(native){
   padding-left: 0;
 }
 
-
 div.image {
   margin: 20px auto 50px auto;
-  
 }
 ion-col {
   display: flex;
@@ -385,16 +359,15 @@ ion-col {
 }
 ion-col img {
   border-radius: 10px;
-  height: 9vh; 
+  height: 9vh;
   object-fit: cover;
-  min-width:15vw
-  
+  min-width: 15vw;
 }
-ion-icon{
-  color:var(--ion-color-medium);
+ion-icon {
+  color: var(--ion-color-medium);
 }
 
-.icon-trash{
-  color:white;
+.icon-trash {
+  color: white;
 }
 </style>
