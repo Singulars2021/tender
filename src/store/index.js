@@ -1,5 +1,5 @@
 import { createStore } from 'vuex'
-import { addNewDocument, getData, setPictureToAnimal } from '../firebaseConfig.js'
+import { addNewDocument, getData, addFavorite, setPictureToAnimal } from '../firebaseConfig.js'
 
 const store = createStore({
   state: {
