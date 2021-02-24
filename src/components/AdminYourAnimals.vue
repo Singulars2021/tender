@@ -1,71 +1,25 @@
 <template>
-  <ion-page>
-    <ion-content :fullscreen="true">
-      <div class="header">
-        <img class="logo" src="/assets/tender.png" />
-        <ion-item>
-          <ion-avatar slot="start">
-            <img src="/assets/avatar.png" />
-          </ion-avatar>
-          <ion-label>
-            <h2>Tu nombre</h2>
-            <p>Ver mi perfil</p>
-          </ion-label>
-          <ion-button>
-            <ion-icon :icon="chevronForwardOutline" />
-          </ion-button>
-        </ion-item>
-        <ion-button type="submit" expand="block" fill="solid"
-          >Ajustes búsqueda</ion-button
-        >
-      </div>
-      <div class="animals-list">
-        <h1>Tus animales</h1>
-        <ion-button>
-          <ion-icon :icon="chevronForwardOutline" />
-        </ion-button>
-      </div>
-      <ion-grid>
-        <ion-row>
-          <ion-col>
-            <ion-card>
-              <ion-card-header>
-                <img src="{{img}}" />
-                <ion-card-title>{{ name }}</ion-card-title>
-              </ion-card-header>
-            </ion-card>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-content>
-    <ion-router-link href="/animals/add">
-      <ion-fab-button>
-        <ion-icon :icon="addCircleOutline"> </ion-icon>
-      </ion-fab-button>
-    </ion-router-link>
-  </ion-page>
+  <!--animals grid-->
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <admin-card
+          v-for="animal in animalsCreated"
+          :key="animal.name"
+          :img="animal.img"
+          :name="animal.name"
+        ></admin-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </template>
 
 <script>
+import AdminCard from "./AdminCard.vue";
 import { chevronForwardOutline, addCircleOutline } from "ionicons/icons";
-import {
-  IonFabButton,
-  IonPage,
-  IonIcon,
-  IonButton,
-  IonAvatar,
-  IonItem,
-  IonLabel,
-  IonContent,
-  IonCard,
-  IonCardTitle,
-  IonCardHeader,
-  IonGrid,
-  IonRow,
-  IonCol,
-} from "@ionic/vue";
+import { IonGrid, IonRow, IonCol } from "@ionic/vue";
 export default {
-  props: ["name", "img"],
+  props: ["animalsCreated"],
   data() {
     return {
       chevronForwardOutline,
@@ -73,20 +27,10 @@ export default {
     };
   },
   components: {
-    IonFabButton,
-    IonPage,
-    IonContent,
-    IonIcon,
-    IonButton,
-    IonAvatar,
-    IonItem,
-    IonLabel,
     IonGrid,
     IonRow,
     IonCol,
-    IonCard,
-    IonCardTitle,
-    IonCardHeader,
+    AdminCard,
   },
 };
 </script>
