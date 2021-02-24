@@ -26,6 +26,7 @@ ion-button{
 ion-item{
     --padding-start: var(--ion-no-padding)
 }
+
 /*.image-modal .modal-wrapper {
     background-color: transparent;
 }*/
