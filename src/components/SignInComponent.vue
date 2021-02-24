@@ -7,12 +7,12 @@
               <!-- Email Item -->
               <ion-item class="form-group">
                   <ion-label>Email address</ion-label>
-                  <ion-input type="email" class="form-control form-control-lg" v-model="user.email" />
+                  <ion-input type="email" class="form-control form-control-lg" v-model="user.email" required/>
               </ion-item>
               <!-- Password Item -->
               <ion-item class="form-group">
                   <ion-label>Password</ion-label>
-                  <ion-input type="password" class="form-control form-control-lg" v-model="user.password" />
+                  <ion-input type="password" class="form-control form-control-lg" v-model="user.password" required/>
               </ion-item>
               <!-- Submit Button -->
               <ion-button type="submit" class="btn btn-dark btn-lg btn-block">Sign In</ion-button>
