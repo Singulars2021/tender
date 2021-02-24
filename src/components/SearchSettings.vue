@@ -144,6 +144,8 @@ export default {
         filterFields: filter,
       });
 
+      this.$router.push("/animals/slider")
+      
       console.log(this.$store.getters.getFilters)
     },
     async openToast(msg, response) {
