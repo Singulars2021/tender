@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="77px" height="67px" viewBox="0 0 77 67" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Add-image</title>
+    <g id="Add-New-Animal" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(-144.000000, -99.000000)" id="Add-image">
+            <g transform="translate(146.000000, 101.000000)">
+                <g id="Icon-img" stroke="#949494" stroke-width="3">
+                    <rect id="Rectangle" stroke-linejoin="round" x="0" y="0" width="67" height="57" rx="18"></rect>
+                    <circle id="Oval" cx="46.5" cy="15.5" r="5.5"></circle>
+                    <path d="M41.4291609,41.5404392 L27.4656932,27 C27.3989581,27.0014145 27.3322022,27.0014145 27.265467,27 L2,44.1451527 M28.5749656,57 L47.2943979,37.1810391 L65,46.7161221" id="Shape" stroke-linecap="round" stroke-linejoin="round"></path>
+                </g>
+                <g id="Icon-plus" transform="translate(54.000000, 44.000000)">
+                    <path d="M21,10.5 C21,4.703125 16.296875,0 10.5,0 C4.703125,0 0,4.703125 0,10.5 C0,16.296875 4.703125,21 10.5,21 C16.296875,21 21,16.296875 21,10.5 Z" id="Path" fill="#74FFA5"></path>
+                    <path d="M10.521875,6 L10.521875,15 M15,10.521875 L6,10.521875" id="Shape" stroke="#27303B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

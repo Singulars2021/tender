@@ -2,25 +2,11 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
-       <ion-buttons slot="start">
-          <ion-button>
-            <ion-icon :icon="chevronBackOutline" ></ion-icon>
-          </ion-button>
-        </ion-buttons>
+        <back-button href="/animals/slider"></back-button>
         <ion-title>Tu mascota</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
-      <ion-header collapse="condense">
-        <ion-buttons slot="start">
-          <ion-button>
-            <ion-icon :icon="chevronBackOutline" ></ion-icon>
-          </ion-button>
-        </ion-buttons>
-        <ion-toolbar>
-          <ion-title size="large">Tu mascota</ion-title>
-        </ion-toolbar>
-      </ion-header>
       <animal-form></animal-form>
     </ion-content>
   </ion-page>
@@ -33,14 +19,10 @@ import {
   IonToolbar,
   IonTitle,
   IonContent,
-  IonButtons,
-  IonButton,
-  IonIcon
 } from "@ionic/vue";
 
 import AnimalForm from "@/components/AnimalForm.vue";
-
-import { chevronBackOutline } from "ionicons/icons";
+import BackButton from '../ui/BackButton.vue';
 
 export default {
   name: "add-new-animal",
@@ -51,17 +33,11 @@ export default {
     IonTitle,
     IonContent,
     IonPage,
-    IonButtons,
-    IonButton,
-    IonIcon
+    BackButton,
   },
-  data() {
-    return {
-     chevronBackOutline,
-    }
-  }
 }
 </script>
+
 <style scoped>
 
 </style>

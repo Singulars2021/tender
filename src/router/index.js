@@ -35,6 +35,11 @@ const routes = [
 
     ]
   },
+  {
+    path: '/form',
+    component: () => import('@/views/AddNewAnimal.vue')
+  },
+  
 
   {
     path: '/profile',

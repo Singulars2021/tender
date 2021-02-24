@@ -19,4 +19,5 @@ $font-size-base:  14px; */
 ion-title{
     font-family: 'Quicksand', sans-serif;
     font-weight:700;
+    font-size: 20px;   
 }
