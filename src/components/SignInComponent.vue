@@ -1,5 +1,5 @@
 <template>
-    <div class="vue-template">
+    <div >
         <form class="ion-padding" @submit.prevent="userLogin">
             <h3>Sign In</h3>
 
@@ -32,10 +32,9 @@ import {
   IonItem,
   IonLabel,
   IonInput,
-  IonButton
+  IonButton,
+  toastController
 } from "@ionic/vue";
-
-// import {logInUser} from "../firebaseConfig.js";
 
 export default {
   data() {
@@ -51,9 +50,19 @@ export default {
     IonItem,
     IonLabel,
     IonInput,
-    IonButton
+    IonButton,
+    
   },
   methods: {
+    async openToast(msg) {
+      const toast = await toastController.create({
+        message: msg,
+        duration: 3000,
+        //For the time, only danger color has been considered, if more messages need to appear with dif colors, modify next line
+        color: "danger",
+      });
+      return toast.present();
+    },
     async userLogin() {
       const payload = {
         email: this.user.email,
@@ -61,10 +70,10 @@ export default {
       }
       try{
         await this.$store.dispatch("signin", payload)
-        //Sergi:Use toast to show successful message
-      }catch{
+      }catch(error){
         //Sergi:Use Toast here if error
-        alert("Error when signing in!")
+        this.openToast(error.message)
+        console.log("Error", error)
         return 
       }
       this.$router.replace("/profile")

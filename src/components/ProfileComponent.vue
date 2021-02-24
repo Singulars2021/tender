@@ -9,7 +9,6 @@
 
         <ion-button color="dark"
         type="submit" 
-        class="btn btn-light btn-lg btn-block"
         @click="logOut()">
             Log out
         </ion-button>
@@ -34,14 +33,18 @@ export default {
     };
   },
   created() {
-    firebase.auth().onAuthStateChanged((user) => {
-      console.log(user)
-      if (user) {
-        this.user = user;
-      } else {
-        this.user = null;
-      }
-    });
+    // firebase.auth().onAuthStateChanged((user) => {
+    //   console.log(user)
+    //   if (user) {
+    //     this.user = user;
+    //   } else {
+    //     this.user = null;
+    //   }
+    // });
+    const user = firebase.auth().currentUser
+    this.user = (user) ? user : null
+    console.log("This user object in profile component", this.user)
+    console.log("This user name in profile component", this.user.displayName)
   },
   methods: {
     logOut() {

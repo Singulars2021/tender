@@ -1,5 +1,5 @@
 <template>
-    <div class="vue-tempalte">
+    <div >
         <form class="ion-padding" @submit.prevent="userRegistration">
             <h3>Sign Up</h3>
 
@@ -7,17 +7,17 @@
                 <!-- Name Item --> 
                 <ion-item class="form-group">
                     <ion-label>Name</ion-label>
-                    <ion-input type="text" class="form-control form-control-lg" v-model="user.name" />
+                    <ion-input type="text" class="form-control form-control-lg" v-model="user.name" required/>
                 <!-- Email Item -->     
                 </ion-item>
                 <ion-item class="form-group">
                     <ion-label>Email</ion-label>
-                    <ion-input type="email" class="form-control form-control-lg" v-model="user.email" />
+                    <ion-input type="email" class="form-control form-control-lg" v-model="user.email" required/>
                 </ion-item>
                 <!-- Password Item --> 
                 <ion-item class="form-group">
                     <ion-label>Password</ion-label>
-                    <ion-input type="password" pattern='^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$' class="form-control form-control-lg" v-model="user.password" />
+                    <ion-input type="password" pattern='^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$' class="form-control form-control-lg" v-model="user.password" required/>
                 </ion-item>
             </ion-list>
 
@@ -40,14 +40,14 @@ import {
   IonItem,
   IonLabel,
   IonInput,
-  IonButton
-  // toastController
+  IonButton,
+  toastController
 } from "@ionic/vue";
 
 export default {
   data() {
     return {
-      user: {
+        user: {
         name: '',
         email: '',
         password: ''
@@ -60,16 +60,17 @@ export default {
     IonLabel,
     IonInput,
     IonButton
-    // toastController
   },
   methods: {
-    // const state = reactive({
-    //   name: "",
-    //   email: "",
-    //   password: "",
-    //   mode: AuthMode.SignIn,
-    //   errorMsg: "",
-    // });
+    async openToast(msg) {
+      const toast = await toastController.create({
+        message: msg,
+        duration: 3000,
+        //For the time, only danger color has been considered, if more messages need to appear with dif colors, modify next line
+        color: "danger",
+      });
+      return toast.present();
+    },
     async userRegistration() {
       const payload = {
         email: this.user.email,
@@ -78,10 +79,9 @@ export default {
       }
       try{
         await this.$store.dispatch("signup", payload)
-        //Show Toast here
       }catch(error){
-        //Show Toast here
-        alert("Error when signing up", error)
+        this.openToast(error.message)
+        console.log("Error", error)
         return
       }
       this.$router.push('/profile/')

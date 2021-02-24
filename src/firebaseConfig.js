@@ -32,22 +32,15 @@ async function getData(collection) {
     return data
 }
 
-async function updateName(user, newName){
-    user.then((res) => res.user.updateProfile({displayName: newName}))
+async function updateName(newName){
+    const user = getCurrentUser()
+    await user.updateProfile({
+        displayName: newName
+    })
 }
 
 async function createNewUser(email, password){
-    // firebase
-    // .auth()
-    // .createUserWithEmailAndPassword(email, password)
-    // .then((res) => {
-    //   console.log(res)
-    //   res.user
-    //     .updateProfile({
-    //       displayName: name
-    //     })
-    // })
-    const newUser = firebase
+    const newUser = await firebase
     .auth()
     .createUserWithEmailAndPassword(email, password)
     

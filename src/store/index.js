@@ -25,7 +25,8 @@ const store = createStore({
         state.animals = payload
     },
     signinMutation(state, payload) {
-    state.loggedUser = payload
+      state.loggedUser = payload
+      console.dir(state.loggedUser)
     }
   },
   actions: {
@@ -40,13 +41,17 @@ const store = createStore({
         }
         context.commit("signinMutation", payloadMutation)
       },
-      //Sergi:Same thinks that did before but now with Vuex
-      async signup(_, payload) {
+      async signup(context, payload) {
         // write the necessar commits to mutations tu create a new user
-        const newUser = await createNewUser(payload.email, payload.password)
-        console.log(newUser)
-        console.log(updateName)
-        // await updateName(newUser, payload.name)
+        await createNewUser(payload.email, payload.password)
+        await updateName(payload.name)
+        const user = getCurrentUser()
+        const payloadMutation = {
+          id: user.uid,
+          name: user.displayName,
+          email: user.email
+        }
+        context.commit("signinMutation", payloadMutation)
 
 
       },
