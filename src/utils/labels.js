@@ -263,7 +263,22 @@ const adoptionType = [
         value: 1,
         label: 'Permanente'
     }
+    
+]
+const size = [
+    {
+        value: 0,
+        label: 'Pequeño',
+    },
+    {
+        value: 1,
+        label: 'Mediano'
+    },
+    {
+        value: 2,
+        label: 'Grande'
+    }
+    
 ]
 
-
-export { provinces, sex, species, age, adoptionType }
+export { provinces, sex, species, age, adoptionType, size }

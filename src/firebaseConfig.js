@@ -60,6 +60,15 @@ async function getData(collection) {
     return data
 }
 
+async function getDataById(id, collection) {
+    const docRef = db
+        .collection(collection).doc(id);
+
+    const doc = await docRef.get()
+
+    return doc.data()
+}
+
 async function addNewDocument(data, collection) {
     const ref = await db.collection(collection)
         .add({
@@ -130,6 +139,18 @@ function getCurrentUser() {
 }
 
 
-export { getData, addNewDocument, updateDocument, getCollectionFromCollection, addFavorite, createNewUser, updateName, logInUser, getCurrentUser, setPictureToAnimal }
+export {
+    getData,
+    addNewDocument,
+    updateDocument,
+    getCollectionFromCollection,
+    addFavorite,
+    createNewUser,
+    updateName,
+    logInUser,
+    getCurrentUser,
+    setPictureToAnimal,
+    getDataById
+}
 
 //Create function recieves user and password and create such user in the database. If everythuing goes well it should updateProfile

@@ -55,6 +55,10 @@ const routes = [
     path: '/signin',
     name: 'login',
     component: () => import('@/views/SignInView.vue')
+  },
+  {
+    path: '/editanimal/:id',
+    component: () => import('@/views/AddNewAnimal.vue')
   }
 ]
 

@@ -64,6 +64,23 @@
         <ion-label position="fixed">Nombre</ion-label>
         <ion-input v-model="name" type="text" @ionBlur="onFormEdit"></ion-input>
       </ion-item>
+      <!-- Species Item -->
+      <ion-item>
+        <ion-label>{{animal.name}}</ion-label>
+        <ion-select
+          v-model="species"
+          okText="Aceptar"
+          cancelText="Cancelar"
+          @ionChange="onFormEdit"
+        >
+          <ion-select-option
+            v-for="specie in speciesLabels"
+            :key="specie.value"
+            :value="specie.value"
+            >{{ specie.label }}</ion-select-option
+          >
+        </ion-select>
+      </ion-item>
       <!-- Age item -->
       <ion-item>
         <ion-label>Edad</ion-label>
@@ -98,20 +115,40 @@
           >
         </ion-select>
       </ion-item>
-      <!-- Species Item -->
+
+      <!-- Size item -->
       <ion-item>
-        <ion-label>Especie</ion-label>
+        <ion-label>Tamaño</ion-label>
         <ion-select
-          v-model="species"
+          v-model="size"
           okText="Aceptar"
           cancelText="Cancelar"
           @ionChange="onFormEdit"
+          :interface-options="options"
         >
           <ion-select-option
-            v-for="specie in speciesLabels"
-            :key="specie.value"
-            :value="specie.value"
-            >{{ specie.label }}</ion-select-option
+            v-for="size in sizeLabels"
+            :key="size.value"
+            :value="size.value"
+            >{{ size.label }}</ion-select-option
+          >
+        </ion-select>
+      </ion-item>
+      <!-- Adoption Type Item -->
+      <ion-item>
+        <ion-label>Tipo de adopción</ion-label>
+        <ion-select
+          v-model="adoptionType"
+          okText="Aceptar"
+          cancelText="Cancelar"
+          @ionChange="onFormEdit"
+          :interface-options="options"
+        >
+          <ion-select-option
+            v-for="adoptionType in adoptionTypeLabels"
+            :key="adoptionType.value"
+            :value="adoptionType.value"
+            >{{ adoptionType.label }}</ion-select-option
           >
         </ion-select>
       </ion-item>
@@ -153,7 +190,14 @@
 </template>
 
 <script>
-import { sex, species, provinces, age } from "../utils/labels";
+import {
+  provinces,
+  sex,
+  species,
+  age,
+  adoptionType,
+  size,
+} from "../utils/labels";
 
 import {
   IonList,
@@ -200,7 +244,7 @@ export default {
     IonText,
     IonFabButton,
   },
-
+ 
   data() {
     return {
       name: "",
@@ -208,6 +252,8 @@ export default {
       sex: undefined,
       species: undefined,
       location: undefined,
+      adoptionType: undefined,
+      size: undefined,
       description: "",
       images,
       imageOutline,
@@ -218,14 +264,17 @@ export default {
       imageToPreview: undefined,
       imageToDelete: undefined,
       speciesLabels: species,
+      sizeLabels: size,
       ageLabels: age,
       sexLabels: sex,
       provincesLabels: provinces,
+      adoptionTypeLabels: adoptionType,
       userId: undefined,
       isFormValid: true,
       options: {
         cssClass: "my-custom-interface",
       },
+      animal: this.$store.getters.getAnimalBy
     };
   },
   methods: {
@@ -240,6 +289,8 @@ export default {
         typeof this.location != "number" ||
         typeof this.sex != "number" ||
         typeof this.species != "number" ||
+        typeof this.size != "number" ||
+        typeof this.adoptionType != "number" ||
         this.description.trim == "" ||
         this.imagesList.length == 0
       ) {
@@ -251,8 +302,11 @@ export default {
         age: this.age,
         sex: this.sex,
         species: this.species,
+        size: this.size,
+        adoptionType: this.adoptionType,
         location: this.location,
         description: this.description,
+        creationDate: new Date(),
       };
 
       this.$store.dispatch("insertNewAnimal", {
@@ -308,7 +362,9 @@ export default {
         (this.sex = undefined),
         (this.species = undefined),
         (this.description = undefined),
-        (this.imagesList = []);
+        (this.imagesList = []),
+        (this.adoptionType = undefined),
+        (this.size = undefined);
     },
   },
 };

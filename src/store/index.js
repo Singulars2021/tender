@@ -1,5 +1,5 @@
 import { createStore } from 'vuex'
-import { addNewDocument, getCollectionFromCollection, getData, setPictureToAnimal, updateDocument, createNewUser, updateName, logInUser, getCurrentUser } from '../firebaseConfig.js'
+import { addNewDocument, getCollectionFromCollection, getData, setPictureToAnimal, updateDocument, createNewUser, updateName, logInUser, getCurrentUser,getDataById } from '../firebaseConfig.js'
 
 const store = createStore({
   state: {
@@ -11,7 +11,18 @@ const store = createStore({
       phoneNumber: '+3466677788'
     },
     animals: [],
-    animalSearchFilters: []
+    animalSearchFilters: [],
+    animal: {
+      name: "",
+        age: "",
+        sex: "",
+        species: "",
+        size: "",
+        adoptionType: "",
+        location: "",
+        description: "",
+        creationDate: "",
+    }
   },
   getters: {
     getUserId(state) {
@@ -27,6 +38,9 @@ const store = createStore({
     //Getter of users
     getLoggedUser(state) {
       return state.loggedUser
+    },
+    getAnimalBy(state){
+      return state.animal
     }
   },
   // Mutations must update the app's state. Every time we retrieve data from the database, these data must be loaded somewhere in our app state management. Because we are using Vuex of our app, we must use a mutation to alter the state, never alter it directly in an action of inside a component.
@@ -56,6 +70,10 @@ const store = createStore({
     signinMutation(state, payload) {
       state.loggedUser = payload
       console.dir(state.loggedUser)
+    },
+    setAnimalById(state, payload){
+      state.animal = payload
+      console.log(state.animal)
     }
   },
   actions: {
@@ -113,11 +131,16 @@ const store = createStore({
     // Action to update an animal by its id (change description, name, etc.)
     async updateAnimal() {
 
-
     },
     // Action to remove the animal from the firebase database. Caution! Usually, we do not remove data from databases. It is better to set a new field such as "removalDate"; so if it has a value, we know that this animal should not be retrieved from firebase anymore (we'll have to change the getters to take this info into account)
     async removeAnimal() {
 
+    },
+
+    async getAnimal(context, payload){
+      const animal = await getDataById(payload, 'animals')
+
+      context.commit('setAnimalById', animal)
     },
     // Retrieves all the animals from database, no filters
     async getAnimals(context) {

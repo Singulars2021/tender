@@ -22,7 +22,7 @@ import {
 } from "@ionic/vue";
 
 import AnimalForm from "@/components/AnimalForm.vue";
-import BackButton from '../ui/BackButton.vue';
+import BackButton from "../ui/BackButton.vue";
 
 export default {
   name: "add-new-animal",
@@ -35,9 +35,11 @@ export default {
     IonPage,
     BackButton,
   },
-}
+  async ionViewWillEnter() {
+    await this.$store.dispatch("getAnimal", this.$route.params.id);
+  },
+};
 </script>
 
 <style scoped>
-
 </style>
