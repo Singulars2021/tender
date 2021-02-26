@@ -1,5 +1,5 @@
 import { createStore } from 'vuex'
-import { addNewDocument, getCollectionFromCollection, getData, setPictureToAnimal, updateDocument, createNewUser, updateName, logInUser, getCurrentUser } from '../firebaseConfig.js'
+import { addNewDocument, getCollectionFromCollection, getData, setPictureToAnimal, updateDocument, createNewUser, updateName, logInUser, getCurrentUser } from '../firebaseConfig'
 
 const store = createStore({
   state: {
@@ -8,10 +8,14 @@ const store = createStore({
       email: 'testbueno@test.com',
       description: 'Loving Canela',
       location: 1,
-      phoneNumber: '+3466677788'
+      phoneNumber: '+3466677788',
+      name: 'Didac',
+      favoriteAnimalsId: ['fgndsfkjgdk3423423', 'fjdfkjsdhfkds3']
     },
-    animals: [],
-    animalSearchFilters: []
+    animals: new Array<{
+      pictures: string[]
+    }>(),
+    animalSearchFilters: [] as any[],
   },
   getters: {
     getUserId(state) {
@@ -27,16 +31,19 @@ const store = createStore({
     //Getter of users
     getLoggedUser(state) {
       return state.loggedUser
+    },
+    getFavoriteAnimals(state){
+
     }
   },
   // Mutations must update the app's state. Every time we retrieve data from the database, these data must be loaded somewhere in our app state management. Because we are using Vuex of our app, we must use a mutation to alter the state, never alter it directly in an action of inside a component.
   mutations: {
-    setFavorite(state, payload, payload2) {
-      state.animals.array.forEach(element => {
-        if (element.id == payload) {
-          element.favorite.push(payload2)
-        }
-      });
+    setFavorite(state?, payload?) {
+      // state.animals.array.forEach(element => {
+      //   if (element.id == payload) {
+      //     element.favorite.push(payload2)
+      //   }
+      // });
     },
     insertAnimal(state, payload) {
       state.animals.push(payload)
@@ -61,8 +68,13 @@ const store = createStore({
   actions: {
     async signin(context, payload) {
 
-      await logInUser(payload.email, payload.password, payload.cb)
+      await logInUser(payload.email, payload.password)
       const user = getCurrentUser()
+
+      if (!user) {
+        throw new Error("User is null")
+      }
+
       const payloadMutation = {
         id: user.uid,
         name: user.displayName,
@@ -75,6 +87,10 @@ const store = createStore({
       await createNewUser(payload.email, payload.password)
       await updateName(payload.name)
       const user = getCurrentUser()
+      if (!user) {
+        throw new Error("User is null")
+      }
+
       const payloadMutation = {
         id: user.uid,
         name: user.displayName,
@@ -128,7 +144,7 @@ const store = createStore({
         const photos = await getCollectionFromCollection("animals", "images", animals[animal].id);
 
         for (const photo in photos)
-          animals[animal]["pictures"].push(photos[photo].image);
+          (animals[animal].pictures as string[]).push(photos[photo].image);
       }
 
       // updates the data in the app

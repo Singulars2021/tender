@@ -20,7 +20,7 @@ const db = firebase.firestore();
 const storage = firebase.storage();
 
 
-async function getCollectionFromCollection(from_collection, collection, doc_id) {
+async function getCollectionFromCollection(from_collection: string, collection:string, doc_id:string) {
     const collectionRef = db
         .collection(from_collection)
         .doc(doc_id)
@@ -37,14 +37,19 @@ async function getCollectionFromCollection(from_collection, collection, doc_id) 
     // console.log("firebase: getCollectionFromCollection " + collection + " from " + from_collection, images);
 }
 
-async function updateName(newName) {
+async function updateName(newName: string) {
     const user = getCurrentUser()
+
+    if (!user) {
+        throw new Error("Calling method change update name when user is not logged")
+    }
+
     await user.updateProfile({
         displayName: newName
     })
 }
 
-async function getData(collection) {
+async function getData(collection:string) {
     const collectionRef = db
         .collection(collection);
 
@@ -60,7 +65,7 @@ async function getData(collection) {
     return data
 }
 
-async function addNewDocument(data, collection) {
+async function addNewDocument(data:any, collection:string) {
     const ref = await db.collection(collection)
         .add({
             ...data
@@ -69,7 +74,7 @@ async function addNewDocument(data, collection) {
     return ref.id
 }
 
-async function updateDocument(id, data, collection) {
+async function updateDocument(id:string, data:any, collection:string) {
     const ref = db.collection(collection).doc(id);
 
     await ref.update({
@@ -79,7 +84,7 @@ async function updateDocument(id, data, collection) {
     return ref
 }
 
-async function addFavorite(id, id_user) {
+async function addFavorite(id:string, id_user:string) {
     const ref = db.collection("animals").doc(id);
 
     return ref.update({
@@ -96,7 +101,7 @@ function uuidv4() {
     });
 }
 
-async function setPictureToAnimal(id_animal, picture) {
+async function setPictureToAnimal(id_animal:string, picture:any) {
     const guid = uuidv4();
     const filePath = `${id_animal}/images/${guid}.${picture.format}`;
     const storageRef = storage.ref();
@@ -110,7 +115,7 @@ async function setPictureToAnimal(id_animal, picture) {
     return id
 }
 
-async function createNewUser(email, password) {
+async function createNewUser(email:string, password:string) {
     const newUser = await firebase
         .auth()
         .createUserWithEmailAndPassword(email, password)
@@ -118,7 +123,7 @@ async function createNewUser(email, password) {
     return newUser
 }
 
-async function logInUser(email, password) {
+async function logInUser(email:string, password:string) {
     await firebase
         .auth()
         .signInWithEmailAndPassword(email, password)

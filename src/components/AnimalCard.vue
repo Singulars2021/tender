@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import { provinces, sex, age, species } from "../utils/labels.js";
+import { provinces, sex, age, species } from "../utils/labels";
 import {
   IonSlides,
   IonSlide,
