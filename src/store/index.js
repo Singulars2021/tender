@@ -1,5 +1,5 @@
 import { createStore } from 'vuex'
-import { addNewDocument, getCollectionFromCollection, getData, setPictureToAnimal, updateDocument, createNewUser, updateName, logInUser, getCurrentUser } from '../firebaseConfig.js'
+import { addNewDocument, getCollectionFromCollection, getData, setPictureToAnimal, updateDocument, createNewUser, updateName, logInUser, logOutUser, getCurrentUser, recoverPassword } from '../firebaseConfig.js'
 
 const store = createStore({
   state: {
@@ -56,12 +56,12 @@ const store = createStore({
     signinMutation(state, payload) {
       state.loggedUser = payload
       console.dir(state.loggedUser)
-    }
+    },
   },
   actions: {
     async signin(context, payload) {
 
-      await logInUser(payload.email, payload.password, payload.cb)
+      await logInUser(payload.email, payload.password)
       const user = getCurrentUser()
       const payloadMutation = {
         id: user.uid,
@@ -83,6 +83,12 @@ const store = createStore({
       context.commit("signinMutation", payloadMutation)
 
 
+    },
+    async logOutUser(){
+      logOutUser()
+    },
+    async restorePassword(_, payload){
+      await recoverPassword(payload.email)
     },
     // Will update the animal to mark it as favorite by the logged user. First idea is to have an array of users who have favorited this animal. It may have some security implications, tough. For example, an expermineted user could be able to retrieve all the ids of the users that have favorited an animal
 

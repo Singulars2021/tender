@@ -18,6 +18,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const storage = firebase.storage();
+const auth = firebase.auth();
 
 
 async function getCollectionFromCollection(from_collection, collection, doc_id) {
@@ -124,12 +125,21 @@ async function logInUser(email, password) {
         .signInWithEmailAndPassword(email, password)
 }
 
+async function logOutUser(){
+    firebase.auth().signOut();
+}
+
 function getCurrentUser() {
     const user = firebase.auth().currentUser
     return user
 }
 
+async function recoverPassword(emailAddress){
+    await auth.sendPasswordResetEmail(emailAddress);
+    
+}
 
-export { getData, addNewDocument, updateDocument, getCollectionFromCollection, addFavorite, createNewUser, updateName, logInUser, getCurrentUser, setPictureToAnimal }
+
+export { getData, addNewDocument, updateDocument, getCollectionFromCollection, addFavorite, createNewUser, updateName, logInUser, logOutUser, getCurrentUser, setPictureToAnimal, recoverPassword }
 
 //Create function recieves user and password and create such user in the database. If everythuing goes well it should updateProfile

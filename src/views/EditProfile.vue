@@ -2,12 +2,12 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-buttons slot="start">
+        <!-- <ion-buttons slot="start">
           <ion-button  class="btn-back" @click="goBack">
             <ion-icon :icon="chevronBackOutline" ></ion-icon>
           </ion-button>
-        </ion-buttons>
-        <!-- <back-button href="/animals/slider"></back-button> -->
+        </ion-buttons> -->
+        <back-button href="" @click="goBack"></back-button>
         <ion-title>Editar Perfil</ion-title>
       </ion-toolbar>
     </ion-header>
@@ -55,7 +55,7 @@
                 <ion-icon name="chevron-forward" end></ion-icon>
             </ion-item> -->
        </ion-list>
-        <a>Log out</a>
+        <a href="" @click="logOutUser">Log out</a>
     </ion-content>
   </ion-page>
 </template>
@@ -63,7 +63,8 @@
 <script>
 import { provinces } from "../utils/labels";
 import { chevronBackOutline, heart } from "ionicons/icons";
-// import BackButton from '../ui/BackButton.vue'
+import BackButton from '../ui/BackButton.vue';
+
 import {
   IonPage,
   IonHeader,
@@ -78,7 +79,7 @@ import {
   IonSelectOption,
   IonTextarea,
   IonButton,
-  IonButtons,
+  // IonButtons,
   IonIcon,
   toastController,
 } from "@ionic/vue";
@@ -99,9 +100,9 @@ export default {
     IonSelectOption,
     IonTextarea,
     IonButton,
-    IonButtons,
+    // IonButtons,
     IonIcon,
-    // BackButton
+    BackButton
   },
   data(){
       return {
@@ -125,6 +126,14 @@ export default {
   methods: {
       someClick(){
           console.log('Works');
+      },
+      async logOutUser(){
+        try{
+          this.$store.dispatch('logOutUser')
+        }catch(error){
+          console.log(error)
+        }
+        localStorage.clear()
       },
       async updateUserInfo(){
           const newInfo = {

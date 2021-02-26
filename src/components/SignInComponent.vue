@@ -21,12 +21,17 @@
             <p class="forgot-password text-right mt-2 mb-4">
                 <router-link to="/forgot-password">Forgot password ?</router-link>
             </p>
+            <p class="not-account text-right mt-2 mb-4">
+                <router-link to="/signup">Don't you have an account yet?</router-link>
+            </p>
         </form>
     </div>
 </template>
 
 
 <script>
+import {getStoragePassword, setStoragePassword} from '../utils/storePassword.js';
+
 import {
   IonList,
   IonItem,
@@ -71,13 +76,34 @@ export default {
       try{
         await this.$store.dispatch("signin", payload)
       }catch(error){
-        //Sergi:Use Toast here if error
         this.openToast(error.message)
-        console.log("Error", error)
         return 
       }
-      this.$router.replace("/profile")
+      this.$router.replace("/animals/slider")
+      setStoragePassword(payload)
       }
+
+      // async setObject(data) {
+      //   await Storage.set({
+      //     key: 'user',
+      //     value: JSON.stringify({
+      //       email: data.email,
+      //       password: data.password
+      //     })
+      //   });
+      // },
+
+      // async getObject() {
+      //   const ret = await Storage.get({ key: 'user' });
+      //   const user = JSON.parse(ret.value);
+
+      //   return user;
+      // }
+  },
+  async created(){
+    if(await getStoragePassword()){
+      this.$store.dispatch('signin', getStoragePassword())
+    }
   }
 }
 </script>
