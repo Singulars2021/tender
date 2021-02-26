@@ -79,11 +79,19 @@ async function updateDocument(id, data, collection) {
     return ref
 }
 
-async function addFavorite(id, id_user) {
-    const ref = db.collection("animals").doc(id);
+async function addFavorite(id_animal, id_user) {
+    const ref = db.collection("users").doc(id_user);
 
     return ref.update({
-        favorite: firebase.firestore.FieldValue.arrayUnion(id_user)
+        favoriteAnimalsId:firebase.firestore.FieldValue.arrayUnion(id_animal)
+    })
+
+}
+async function addRemoved(id_animal, id_user) {
+    const ref = db.collection("users").doc(id_user);
+
+    return ref.update({
+        removedAnimalsId:firebase.firestore.FieldValue.arrayUnion(id_animal)
     })
 
 }
@@ -130,6 +138,6 @@ function getCurrentUser() {
 }
 
 
-export { getData, addNewDocument, updateDocument, getCollectionFromCollection, addFavorite, createNewUser, updateName, logInUser, getCurrentUser, setPictureToAnimal }
+export { getData, addNewDocument, updateDocument, getCollectionFromCollection, addFavorite, createNewUser, updateName, logInUser, getCurrentUser, setPictureToAnimal, addRemoved}
 
 //Create function recieves user and password and create such user in the database. If everythuing goes well it should updateProfile

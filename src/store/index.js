@@ -1,14 +1,16 @@
 import { createStore } from 'vuex'
-import { addNewDocument, getCollectionFromCollection, getData, setPictureToAnimal, updateDocument, createNewUser, updateName, logInUser, getCurrentUser } from '../firebaseConfig.js'
+import { addNewDocument, getCollectionFromCollection, getData, setPictureToAnimal, updateDocument, createNewUser, updateName, logInUser, getCurrentUser, addFavorite, addRemoved } from '../firebaseConfig.js'
 
 const store = createStore({
   state: {
     loggedUser: {
-      id: 'ZVPKk6gTsBUsLMFRKLzoMPmbUC82',
+      id: 'G37irGDCunZ4W5BdgVGhqU1Bxln1',
       email: 'testbueno@test.com',
       description: 'Loving Canela',
       location: 1,
-      phoneNumber: '+3466677788'
+      phoneNumber: '+3466677788',
+      favoriteAnimalsId: [],
+      removedAnimalsId: []
     },
     animals: [],
     animalSearchFilters: []
@@ -27,7 +29,13 @@ const store = createStore({
     //Getter of users
     getLoggedUser(state) {
       return state.loggedUser
-    }
+    },
+    getFavoriteAnimalsId(state) {
+      return state.loggedUser.favoriteAnimalsId
+    },
+    getRemovedAnimalsId(state) {
+      return state.loggedUser.removedAnimalsId
+    },
   },
   // Mutations must update the app's state. Every time we retrieve data from the database, these data must be loaded somewhere in our app state management. Because we are using Vuex of our app, we must use a mutation to alter the state, never alter it directly in an action of inside a component.
   mutations: {
@@ -56,6 +64,16 @@ const store = createStore({
     signinMutation(state, payload) {
       state.loggedUser = payload
       console.dir(state.loggedUser)
+    },
+    addFavoriteAnimal(state, payload) {
+      state.loggedUser.favoriteAnimalsId.push(payload)
+    },
+    addRemovedAnimal(state, payload) {
+      state.loggedUser.removedAnimalsId.push(payload)
+    },
+    updateAnimals(state, payload) {
+      state.animals.splice(payload, 1)
+      console.log(state.animals);
     }
   },
   actions: {
@@ -84,15 +102,26 @@ const store = createStore({
 
 
     },
-    // Will update the animal to mark it as favorite by the logged user. First idea is to have an array of users who have favorited this animal. It may have some security implications, tough. For example, an expermineted user could be able to retrieve all the ids of the users that have favorited an animal
-
-    // favoritedByUsers: ['userId1', 'userId2', ...]
-    // async setAnimalAsFavorite(context, payload) {
-    //   const id_user = 1 // must be changed
-    //   await addFavorite(payload, id_user)
-
-    // //   context.commit('setFavorite', payload)
-    // },
+    async addFavoriteAnimal(context, payload) {
+      const animalId = payload
+      const userId = context.getters.getUserId
+      await addFavorite(animalId, userId)
+      context.commit('addFavoriteAnimal', animalId)
+    },
+    async addRemovedAnimal(context, payload) {
+      const animalId = payload
+      const userId = context.getters.getUserId
+      await addRemoved(animalId, userId)
+      context.commit('addRemovedAnimal', animalId)
+    },
+    updateAnimals(context, payload) {
+      const animalId = payload
+      const allAnimals = context.getters.getAllAnimals
+      console.log(allAnimals)
+      const indexToDelete = allAnimals.findIndex((animal) => animal.id == animalId)
+      context.commit('updateAnimals', indexToDelete)
+      console.log(context.getters.getAllAnimals)
+    },
     // Will insert a new animal in the firebase app and then the app state must be updated. I think we may use most of the data structure that AnimalForm is already building. We'll have to take a look about how to relate the photos to the animal
     async insertNewAnimal(context, payload) {
       const animalFields = {
@@ -123,6 +152,15 @@ const store = createStore({
     async getAnimals(context) {
       // Get all the data from the collection named 'animals'
       const animals = await getData('animals');
+      // Get only the data that the user wants to see
+      const removedAnimalsId = context.getters.getRemovedAnimalsId;
+      console.log(removedAnimalsId)
+
+      removedAnimalsId.forEach(animalId => {
+        const index = animals.findIndex(animal => animal.id == animalId);
+        animals.splice(index, 1)
+
+      });
 
       for (const animal in animals) {
         const photos = await getCollectionFromCollection("animals", "images", animals[animal].id);
