@@ -236,10 +236,6 @@ const age = [
     {
         value: 3,
         label: 'Senior'
-    },
-    {
-        value: 4,
-        label: 'No lo sé'
     }
 ]
 

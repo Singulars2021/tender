@@ -1,6 +1,5 @@
 <template>
   <form action="" class="ion-padding" @submit.prevent="updateFilters">
-    <ion-title class="sub-title">AJUSTES DE BÚSQUEDA</ion-title>
     <ion-list>
       <ion-item>
         <ion-label>Localización</ion-label>
@@ -8,6 +7,7 @@
           v-model="location"
           interface="action-sheet"
           cancelText="Cancelar"
+          :interface-options="options"
         >
           <ion-select-option
             v-for="province in provincesLabels"
@@ -28,7 +28,6 @@
         <ion-icon slot="end" name="contrast"></ion-icon>
       </ion-range>
     </ion-item> -->
-    <ion-title class="sub-title">AJUSTES DE PERFIL</ion-title>
     <ion-list>
       <ion-item>
         <ion-label>Especie</ion-label>
@@ -83,36 +82,38 @@
         </ion-select>
       </ion-item>
     </ion-list>
-    <ion-button type="submit" expand="block" fill="solid">Buscar</ion-button>
+    <cta-button>BUSCAR</cta-button>
+    <!-- <ion-button type="submit" expand="block" fill="solid">Buscar</ion-button> -->
   </form>
 </template>
 
 <script>
 import { sex, species, provinces, age, adoptionType } from "../utils/labels";
 import {
-  IonTitle,
+  //IonTitle,
   IonLabel,
   IonSelect,
   IonSelectOption,
   IonList,
-  IonButton,
+  //IonButton,
   IonItem,
   //IonIcon,
   //IonRange,
   toastController,
 } from "@ionic/vue";
+import CtaButton from '../ui/CtaButton.vue';
 
 export default {
   components: {
     IonList,
-    IonTitle,
+    //IonTitle,
     IonItem,
     IonLabel,
-    IonButton,
+    //IonButton,
     IonSelect,
     IonSelectOption,
     //IonIcon,
-    //IonRange,
+    CtaButton,    //IonRange,
   },
   data() {
     return {
@@ -128,6 +129,9 @@ export default {
       adoptionTypeLabels: adoptionType,
       userId: undefined,
       adoptionType: undefined,
+      options: {
+        cssClass: "my-custom-interface",
+      },
     };
   },
   methods: {
@@ -162,7 +166,47 @@ export default {
 </script>
 
 <style scoped>
+form{
+  margin-top: 10px;
+}
+
+ion-list{
+  padding: 0;
+}
+
 .sub-title {
   font-size: small;
+}
+
+ion-label {
+  font-weight: 700;
+  color: var(--ion-color-dark) !important;
+}
+
+ion-select::part(icon) {
+  display: none;
+}
+
+ion-select::part(text) {
+  background-image: url("/chevron-forward-outline.svg");
+  background-position: right;
+  background-repeat: no-repeat;
+  height: 19px;
+}
+
+ion-select {
+  max-width: 100%;
+  width: 35%;
+  right: auto;
+  direction: ltr;
+  padding-left: 0;
+}
+
+ion-input:part(native) {
+  max-width: 30%;
+  width: 70%;
+  right: auto;
+  direction: ltr;
+  padding-left: 0;
 }
 </style>
