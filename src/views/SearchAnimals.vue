@@ -1,7 +1,10 @@
 <template>
   <ion-page>
     <ion-header>
-      <ion-title size="large">Ajustes</ion-title>
+      <ion-toolbar>
+        <back-button href="/animals/slider"></back-button>
+        <ion-title>Ajustes búsqueda</ion-title>
+      </ion-toolbar>
     </ion-header>
     <ion-content>
         <search-settings></search-settings>
@@ -12,6 +15,7 @@
 <script>
 import SearchSettings from "@/components/SearchSettings.vue";
 import { IonPage, IonHeader, IonTitle, IonContent } from "@ionic/vue";
+import BackButton from '../ui/BackButton.vue';
 
 export default {
   name: "search-animal",
@@ -21,6 +25,7 @@ export default {
     IonTitle,
     IonContent,
     IonPage,
+    BackButton,
   },
   data() {
     return {};
