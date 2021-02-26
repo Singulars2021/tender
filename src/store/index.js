@@ -11,7 +11,8 @@ const store = createStore({
       phoneNumber: '+3466677788'
     },
     animals: [],
-    animalSearchFilters: []
+    animalSearchFilters: [],
+    reports:[],
   },
   getters: {
     getUserId(state) {
@@ -27,6 +28,9 @@ const store = createStore({
     //Getter of users
     getLoggedUser(state) {
       return state.loggedUser
+    },
+    getReports(state){
+      return state.reports
     }
   },
   // Mutations must update the app's state. Every time we retrieve data from the database, these data must be loaded somewhere in our app state management. Because we are using Vuex of our app, we must use a mutation to alter the state, never alter it directly in an action of inside a component.
@@ -56,6 +60,12 @@ const store = createStore({
     signinMutation(state, payload) {
       state.loggedUser = payload
       console.dir(state.loggedUser)
+    },
+    insertReport(state, payload){
+      state.reports.push(payload)
+    },
+    setReports(state, payload){
+      state.reports = payload
     }
   },
   actions: {
@@ -155,6 +165,20 @@ const store = createStore({
       await updateDocument(id, updatedInfo, 'users')
 
       context.commit('updateUserInfo', payload)
+    },
+    async updateReports(context, payload){
+      const reportFields = {
+        userId: context.getters.getUserId,
+        ...payload.reportFields
+      }
+
+      const id = await addNewDocument(reportFields, 'reports')
+
+      console.log(reportFields)
+
+      reportFields.id = id
+
+      context.commit('setReports', reportFields)
     }
   }
 })
