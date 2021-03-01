@@ -22,6 +22,7 @@ const routes = [
       },
       {
         path: 'slider',
+        name: 'slider',
         component: () => import('@/views/AnimalSlider.vue')
       },
       {

@@ -30,6 +30,8 @@ import './theme/typography.css';
 import './theme/padding.css'
 import './theme/customInterface.css'
 
+
+
 const app = createApp(App)
   .use(IonicVue)
   .use(router)

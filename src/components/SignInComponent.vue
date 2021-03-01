@@ -30,8 +30,8 @@
 
 
 <script>
-import {getStoragePassword, setStoragePassword} from '../utils/storePassword.js';
-
+// import {getStoragePassword, setStoragePassword} from '../utils/storePassword.js';
+// import {getCurrentUser} from '../firebaseConfig.js';
 import {
   IonList,
   IonItem,
@@ -80,30 +80,12 @@ export default {
         return 
       }
       this.$router.replace("/animals/slider")
-      setStoragePassword(payload)
+      // setStoragePassword(payload)
       }
-
-      // async setObject(data) {
-      //   await Storage.set({
-      //     key: 'user',
-      //     value: JSON.stringify({
-      //       email: data.email,
-      //       password: data.password
-      //     })
-      //   });
-      // },
-
-      // async getObject() {
-      //   const ret = await Storage.get({ key: 'user' });
-      //   const user = JSON.parse(ret.value);
-
-      //   return user;
-      // }
+      
   },
-  async created(){
-    if(await getStoragePassword()){
-      this.$store.dispatch('signin', getStoragePassword())
-    }
-  }
+  // async created(){
+  //       console.log(await getCurrentUser())
+  //     }
 }
 </script>

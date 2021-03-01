@@ -64,6 +64,7 @@
 import { provinces } from "../utils/labels";
 import { chevronBackOutline, heart } from "ionicons/icons";
 import BackButton from '../ui/BackButton.vue';
+import {clearStorage} from '../utils/storePassword.js';
 
 import {
   IonPage,
@@ -133,7 +134,7 @@ export default {
         }catch(error){
           console.log(error)
         }
-        localStorage.clear()
+        clearStorage();
       },
       async updateUserInfo(){
           const newInfo = {

@@ -59,6 +59,16 @@ const store = createStore({
     },
   },
   actions: {
+    getUser(){
+      return new Promise((resolve, reject) => {
+        getCurrentUser().then(user => {
+          console.log('action getUser: ',user)
+          resolve(user)
+        }, error => {
+          reject(error)
+        })
+      })
+    },
     async signin(context, payload) {
 
       await logInUser(payload.email, payload.password)
