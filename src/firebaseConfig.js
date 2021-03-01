@@ -60,6 +60,32 @@ async function getData(collection) {
     return data
 }
 
+export async function getRemovedAnimalsId(user_id) {
+    const docRef = db
+    .collection("users")
+    .doc(user_id)
+
+    const snapshot = await docRef.get()
+
+    const data = snapshot.data().removedAnimalsId;
+
+    return data;
+}
+
+
+export async function getFavoriteAnimalsId(user_id) {
+    const docRef = db
+    .collection("users")
+    .doc(user_id)
+
+    const snapshot = await docRef.get()
+
+    const data = snapshot.data().favoriteAnimalsId;
+
+    return data;
+}
+
+
 async function addNewDocument(data, collection) {
     const ref = await db.collection(collection)
         .add({

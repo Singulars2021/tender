@@ -1,5 +1,5 @@
 import { createStore } from 'vuex'
-import { addNewDocument, getCollectionFromCollection, getData, setPictureToAnimal, updateDocument, createNewUser, updateName, logInUser, getCurrentUser, addFavorite, addRemoved } from '../firebaseConfig.js'
+import { addNewDocument, getCollectionFromCollection, getData, setPictureToAnimal, updateDocument, createNewUser, updateName, logInUser, getCurrentUser, addFavorite, addRemoved, getFavoriteAnimalsId, getRemovedAnimalsId } from '../firebaseConfig.js'
 
 const store = createStore({
   state: {
@@ -74,7 +74,14 @@ const store = createStore({
     updateAnimals(state, payload) {
       state.animals.splice(payload, 1)
       console.log(state.animals);
+    },
+    setFavoriteAnimalsId(state, payload) {
+      state.loggedUser.favoriteAnimalsId = payload;
+    },
+    setRemovedAnimalsId(state, payload) {
+      state.loggedUser.removedAnimalsId = payload;
     }
+
   },
   actions: {
     async signin(context, payload) {
@@ -102,10 +109,10 @@ const store = createStore({
 
 
     },
-    async addFavoriteAnimal(context, payload) {
+    addFavoriteAnimal(context, payload) {
       const animalId = payload
       const userId = context.getters.getUserId
-      await addFavorite(animalId, userId)
+      addFavorite(animalId, userId)
       context.commit('addFavoriteAnimal', animalId)
     },
     async addRemovedAnimal(context, payload) {
@@ -120,7 +127,6 @@ const store = createStore({
       console.log(allAnimals)
       const indexToDelete = allAnimals.findIndex((animal) => animal.id == animalId)
       context.commit('updateAnimals', indexToDelete)
-      console.log(context.getters.getAllAnimals)
     },
     // Will insert a new animal in the firebase app and then the app state must be updated. I think we may use most of the data structure that AnimalForm is already building. We'll have to take a look about how to relate the photos to the animal
     async insertNewAnimal(context, payload) {
@@ -152,15 +158,31 @@ const store = createStore({
     async getAnimals(context) {
       // Get all the data from the collection named 'animals'
       const animals = await getData('animals');
-      // Get only the data that the user wants to see
-      const removedAnimalsId = context.getters.getRemovedAnimalsId;
-      console.log(removedAnimalsId)
 
-      removedAnimalsId.forEach(animalId => {
-        const index = animals.findIndex(animal => animal.id == animalId);
-        animals.splice(index, 1)
+      const userId = context.getters.getUserId;
 
-      });
+
+      const removedAnimalsId = await getRemovedAnimalsId(userId);
+      const favoriteAnimalsId = await getFavoriteAnimalsId(userId);
+
+
+
+      if (removedAnimalsId) {
+        context.commit('setRemovedAnimalsId', removedAnimalsId);
+        removedAnimalsId.forEach(animalId => {
+          const index = animals.findIndex(animal => animal.id == animalId);
+          animals.splice(index, 1)
+
+        });
+      }
+
+      if (favoriteAnimalsId) {
+        context.commit('setFavoriteAnimalsId', favoriteAnimalsId);
+        favoriteAnimalsId.forEach(animalId => {
+          const index = animals.findIndex(animal => animal.id == animalId);
+          animals.splice(index, 1)
+        });
+      }
 
       for (const animal in animals) {
         const photos = await getCollectionFromCollection("animals", "images", animals[animal].id);
