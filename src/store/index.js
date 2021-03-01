@@ -11,7 +11,7 @@ const store = createStore({
       phoneNumber: '+3466677788'
     },
     animals: [],
-    animalSearchFilters: []
+    animalSearchFilters: [],
   },
   getters: {
     getUserId(state) {
@@ -21,13 +21,18 @@ const store = createStore({
     getAllAnimals(state) {
       return state.animals
     },
+    getMyAnimals(state, getters) {
+      return state.animals.filter(animal => animal.userId === getters.getUserId)
+    }
+    ,
     getFilters(state) {
       return state.animalSearchFilters
     },
     //Getter of users
     getLoggedUser(state) {
       return state.loggedUser
-    }
+    },
+
   },
   // Mutations must update the app's state. Every time we retrieve data from the database, these data must be loaded somewhere in our app state management. Because we are using Vuex of our app, we must use a mutation to alter the state, never alter it directly in an action of inside a component.
   mutations: {

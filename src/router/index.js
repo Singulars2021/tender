@@ -55,7 +55,12 @@ const routes = [
     path: '/signin',
     name: 'login',
     component: () => import('@/views/SignInView.vue')
-  }
+  },
+  // {
+  //   path: '/editanimal',
+  //   name: 'editAnimal',
+  //   component: () => import('@/views/AddNewAnimal.vue')
+  // },
 ]
 
 const router = createRouter({

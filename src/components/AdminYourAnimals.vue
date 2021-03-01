@@ -4,10 +4,12 @@
     <ion-row>
       <ion-col>
         <admin-card
+          @click="$emit('edit-animal', animal.id)"
           v-for="animal in animalsCreated"
           :key="animal.name"
-          :img="animal.img"
+          :img="animal.pictures[0]"
           :name="animal.name"
+          :id="animal.id"
         ></admin-card>
       </ion-col>
     </ion-row>
@@ -19,12 +21,18 @@ import AdminCard from "./AdminCard.vue";
 import { chevronForwardOutline, addCircleOutline } from "ionicons/icons";
 import { IonGrid, IonRow, IonCol } from "@ionic/vue";
 export default {
+  emits: ["edit-animal"],
   props: ["animalsCreated"],
   data() {
     return {
       chevronForwardOutline,
       addCircleOutline,
     };
+  },
+  methods: {
+    editAnimal() {
+      console.log("funciona el emit", "este es el componente");
+    },
   },
   components: {
     IonGrid,
