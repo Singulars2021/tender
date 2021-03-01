@@ -13,17 +13,6 @@
           >
           </animal-slide>
         </ion-slides>
-        <!-- It'd be interesting to put a loading spinner here using the v-else -->
-        <ion-fab vertical="bottom" horizontal="start" slot="fixed">
-          <ion-fab-button>
-            <ion-icon :icon="removeOutline"></ion-icon>
-          </ion-fab-button>
-        </ion-fab>
-        <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-          <ion-fab-button>
-            <ion-icon :icon="heartOutline"></ion-icon>
-          </ion-fab-button>
-        </ion-fab>
       </div>
     </ion-content>
   </ion-page>
@@ -35,12 +24,9 @@ import {
   IonSlides,
   IonPage,
   IonContent,
-  IonIcon,
-  IonFab,
-  IonFabButton,
   IonSpinner,
 } from "@ionic/vue";
-import { heartOutline, removeOutline } from "ionicons/icons";
+
 export default {
   name: "animal-slider",
   components: {
@@ -48,9 +34,6 @@ export default {
     IonSlides,
     IonContent,
     IonPage,
-    IonIcon,
-    IonFab,
-    IonFabButton,
     IonSpinner,
   },
   created() {
@@ -78,17 +61,12 @@ export default {
         initialSlide: 0,
         pager: false,
       },
-      heartOutline,
-      removeOutline,
     };
   },
 };
 </script>
 
 <style scoped>
-ion-fab {
-  margin: 1rem 3rem;
-}
 
 .spinner-container {
   display: flex;
