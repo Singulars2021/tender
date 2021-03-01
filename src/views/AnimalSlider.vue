@@ -59,7 +59,7 @@ export default {
     console.log("created");
   },
   // Ionic hook executed everytime the user changes to this view
-  ionViewWillEnter() {
+  async ionViewWillEnter() {
     console.log("ionViewWillEnter");
     // this.animals = this.$store.getters.getAllAnimals;
 
@@ -81,7 +81,7 @@ export default {
       heartOutline,
       removeOutline,
     };
-  },
+  }
 };
 </script>
 

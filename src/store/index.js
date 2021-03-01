@@ -3,13 +3,14 @@ import { addNewDocument, getCollectionFromCollection, getData, setPictureToAnima
 
 const store = createStore({
   state: {
-    loggedUser: {
-      id: 'ZVPKk6gTsBUsLMFRKLzoMPmbUC82',
-      email: 'testbueno@test.com',
-      description: 'Loving Canela',
-      location: 1,
-      phoneNumber: '+3466677788'
-    },
+    // loggedUser: {
+    //   id: 'ZVPKk6gTsBUsLMFRKLzoMPmbUC82',
+    //   email: 'testbueno@test.com',
+    //   description: 'Loving Canela',
+    //   location: 1,
+    //   phoneNumber: '+3466677788'
+    // },
+    loggedUser: null,
     animals: [],
     animalSearchFilters: []
   },
@@ -55,36 +56,39 @@ const store = createStore({
     },
     signinMutation(state, payload) {
       state.loggedUser = payload
-      console.dir(state.loggedUser)
+      console.log('Payload Mutaion: ', payload)
+      console.log('SignInMutation: ', state.loggedUser)
     },
   },
   actions: {
-    getUser(){
-      return new Promise((resolve, reject) => {
-        getCurrentUser().then(user => {
-          console.log('action getUser: ',user)
-          resolve(user)
-        }, error => {
-          reject(error)
-        })
-      })
-    },
+    // getUser(){
+    //   return new Promise((resolve, reject) => {
+    //     getCurrentUser().then(user => {
+    //       console.log('action getUser: ',user)
+    //       resolve(user)
+    //     }, error => {
+    //       reject(error)
+    //     })
+    //   })
+    // },
     async signin(context, payload) {
 
       await logInUser(payload.email, payload.password)
-      const user = getCurrentUser()
+      const user = await getCurrentUser()
+      console.log('Usuario: ', user)
       const payloadMutation = {
         id: user.uid,
         name: user.displayName,
         email: user.email
       }
+      console.log('PayloadMutation in action: ',payloadMutation)
       context.commit("signinMutation", payloadMutation)
     },
     async signup(context, payload) {
       // write the necessar commits to mutations tu create a new user
       await createNewUser(payload.email, payload.password)
       await updateName(payload.name)
-      const user = getCurrentUser()
+      const user = await getCurrentUser()
       const payloadMutation = {
         id: user.uid,
         name: user.displayName,

@@ -31,7 +31,7 @@
 
 <script>
 // import {getStoragePassword, setStoragePassword} from '../utils/storePassword.js';
-// import {getCurrentUser} from '../firebaseConfig.js';
+
 import {
   IonList,
   IonItem,
@@ -83,9 +83,6 @@ export default {
       // setStoragePassword(payload)
       }
       
-  },
-  // async created(){
-  //       console.log(await getCurrentUser())
-  //     }
+  }
 }
 </script>

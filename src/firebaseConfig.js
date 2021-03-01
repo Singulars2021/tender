@@ -18,7 +18,6 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const storage = firebase.storage();
-const auth = firebase.auth();
 
 
 async function getCollectionFromCollection(from_collection, collection, doc_id) {
@@ -120,22 +119,7 @@ async function createNewUser(email, password) {
 }
 
 async function logInUser(email, password) {
-    await firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
-    .then(() => {
-        // Existing and future Auth states are now persisted in the current
-        // session only. Closing the window would clear any existing state even
-        // if a user forgets to sign out.
-        // ...
-        // New sign-in will be persisted with session persistence.
-        return firebase.auth().signInWithEmailAndPassword(email, password);
-    })
-    .catch((error) => {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        console.log(errorCode);
-        console.log(errorMessage);
-    });
+    await firebase.auth().signInWithEmailAndPassword(email, password);    
 }
 
 async function logOutUser(){
@@ -144,12 +128,12 @@ async function logOutUser(){
 
 async function getCurrentUser() {
     const user = await firebase.auth().currentUser
-    console.log('FirebaseConfig.js: ', user)
-    return user
+    console.log('User Firebase: ', user)
+    return user  
 }
 
 async function recoverPassword(emailAddress){
-    await auth.sendPasswordResetEmail(emailAddress);
+    await firebase.auth().sendPasswordResetEmail(emailAddress);
     
 }
 

@@ -43,3 +43,9 @@ app.component('content-container', ContentContainer);
 router.isReady().then(() => {
   app.mount('#app');
 });
+
+router.beforeEach(async (to, from, next) => {
+  console.log(await store.getters.getLoggedUser)
+  if (to.name == 'login' && await store.getters.getLoggedUser) next({ name: 'slider' })
+  else next()
+})
