@@ -40,6 +40,10 @@ const routes = [
     component: () => import('@/views/SearchAnimals.vue')
   },
   {
+    path: '/report/:id',
+    component: () => import('@/views/ReportAnimal.vue')
+  },
+  {
     path: '/form',
     component: () => import('@/views/AddNewAnimal.vue')
   },

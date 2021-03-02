@@ -22,7 +22,7 @@
           </ion-card-subtitle>
         </div>
         <ion-button
-          @click="presentActionSheet"
+          @click="presentActionSheet(animal.id)"
           fill="clear"
           size="large"
           class="button-native"
@@ -103,7 +103,7 @@ export default {
       // console.log(this.provincesLabels[value].label);
       return this.provincesLabels[value - 1].label;
     },
-    async presentActionSheet() {
+    async presentActionSheet(id) {
       const actionSheet = await actionSheetController.create({
         cssClass: "action-sheet-style",
         buttons: [
@@ -111,6 +111,7 @@ export default {
             text: "Denunciar",
             role: "destructive",
             handler: () => {
+              this.$router.push("/report/"+id)
               console.log("Denunciar clicked");
             },
           },
