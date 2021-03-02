@@ -54,7 +54,6 @@ ion-button {
   margin: 1rem;
   text-align: center;
 }
-
 .header {
   display: flex;
   flex-direction: column;
@@ -100,5 +99,7 @@ ion-avatar {
 }
 ion-card {
   margin: 0px;
+  margin-top: 15px;
+  border-radius: 15px;
 }
 </style>

@@ -1,5 +1,11 @@
 <template>
   <ion-page>
+     <ion-header>
+      <ion-toolbar>
+        <back-button href="/animals/slider"></back-button>
+        <ion-title>Mi perfil</ion-title>
+      </ion-toolbar>      
+    </ion-header>
     <ion-content :fullscreen="true">
       <div class="header">
         <!-- <img class="logo" src="/assets/tender.png" /> -->
@@ -8,26 +14,27 @@
             <img src="/assets/avatar.png" />
           </ion-avatar>
           <ion-label>
-            <h2>Tu nombre</h2>
-            <p>Ver mi perfil</p>
+            <h1>Mi nombre</h1>
+            <p>Editar mi perfil</p>
           </ion-label>
           <router-link to="/profile">
-            <ion-button>
-              <ion-icon :icon="chevronForwardOutline" />
+            <ion-button color="secondary">
+              <ion-icon name="chevron-forward" end class="forward"></ion-icon>
+              <!-- <ion-icon :icon="chevronForwardOutline" /> -->
             </ion-button>
           </router-link>
         </ion-item>
-        <!-- <router-link to="/fitlers"> -->
-        <ion-button type="" expand="block" fill="solid"
-          >Ajustes búsqueda</ion-button
-        >
+        <!-- <router-link to="/filters"> -->
+          <ctb-button>AJUSTES BÚSQUEDA</ctb-button>
+        
+      <ion-item-divider></ion-item-divider>
         <!-- </router-link> -->
       </div>
       <div class="animals-list">
         <h1>Tus animales</h1>
-        <ion-button>
+        <!-- <ion-button>
           <ion-icon :icon="chevronForwardOutline" />
-        </ion-button>
+        </ion-button> -->
       </div>
       <!--Your animals list -->
       <admin-your-animals
@@ -36,8 +43,8 @@
       ></admin-your-animals>
     </ion-content>
     <router-link to="/animals/add">
-      <ion-fab-button>
-        <ion-icon :icon="addCircleOutline"> </ion-icon>
+      <ion-fab-button color="secondary">
+        <ion-icon :icon="addOutline"> </ion-icon>
       </ion-fab-button>
     </router-link>
   </ion-page>
@@ -45,17 +52,20 @@
 
 <script>
 import AdminYourAnimals from "../components/AdminYourAnimals.vue";
-import { chevronForwardOutline, addCircleOutline } from "ionicons/icons";
+import { chevronForwardOutline, addOutline } from "ionicons/icons";
+import { IonPage, IonHeader, IonTitle, IonContent } from "@ionic/vue";
+import BackButton from '../ui/BackButton.vue';
+
 import {
   IonFabButton,
-  IonPage,
   IonIcon,
   IonButton,
   IonAvatar,
   IonItem,
   IonLabel,
-  IonContent,
+  IonToolbar,
 } from "@ionic/vue";
+import CtbButton from '../ui/CtbButton.vue';
 
 export default {
   created() {
@@ -72,7 +82,7 @@ export default {
   data() {
     return {
       chevronForwardOutline,
-      addCircleOutline,
+      addOutline,
     };
   },
   methods: {
@@ -90,7 +100,12 @@ export default {
     IonItem,
     IonLabel,
     IonContent,
+    IonToolbar,
     AdminYourAnimals,
+    BackButton,
+    IonHeader,
+    IonTitle,
+    CtbButton
   },
 };
 </script>
@@ -120,6 +135,9 @@ p {
   margin-right: 0.5rem;
   font-size: 1.2rem;
 }
+h1{
+  margin-bottom: 0px;
+}
 .animals-list {
   display: flex;
   text-align: center;
@@ -143,15 +161,27 @@ p {
   height: 40px;
 }
 ion-fab-button {
-  margin: 4rem 8rem;
+  margin: 42%;
+  margin-bottom: 15%;
+  
 }
 ion-label {
   margin-left: 0px;
 }
+
 ion-avatar {
   margin: 0px;
 }
 ion-card {
   margin: 0px;
+}
+
+ion-item {
+  margin-top: 10px;
+  margin-bottom: 10px
+}
+
+ion-item{
+  margin-bottom:20px;
 }
 </style>
