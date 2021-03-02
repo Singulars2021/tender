@@ -261,5 +261,28 @@ const adoptionType = [
     }
 ]
 
+const reportOptions = [
+    {
+        value: 0,
+        label: 'Spam',
+    },
+    {
+        value: 1,
+        label: 'Contenido inapropiado'
+    },
+    {
+        value: 2,
+        label: 'Maltrato animal'
+    },
+    {
+        value: 3,
+        label: 'Incita a la compraventa'
+    },
+    {
+        value: 4,
+        label: 'Información engañosa o errónea'
+    }
+]
 
-export { provinces, sex, species, age, adoptionType }
+
+export { provinces, sex, species, age, adoptionType, reportOptions }
