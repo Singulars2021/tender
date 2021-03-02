@@ -49,10 +49,12 @@ Tender pretende ser una aplicación para promover y fomentar la adopción de ani
 
 
 ### Prototipo del diseño
-[Frigma](https://www.figma.com/file/aUHXVXsho6ZdnWUjd6bmgi/Tinder-Mockup-for-Sketch?node-id=0%3A1)
+[Figma](https://www.figma.com/file/aUHXVXsho6ZdnWUjd6bmgi/Tinder-Mockup-for-Sketch?node-id=0%3A1)
 
 
 ### Detalles dela arquitectura 
+
+<a href="https://ibb.co/qMJ4DBk"><img src="https://i.ibb.co/27ZLFqg/tenderph.jpg" alt="tenderph" border="0"></a>
 
 
 ## Wiki
