@@ -4,6 +4,11 @@ import 'firebase/firestore'
 import 'firebase/storage'
 
 
+import Filter from 'bad-words'
+import { ref, onUnmounted } from 'vue'
+import { useStore } from "vuex"
+
+
 // Your web app's Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyBYJhYEmSUXj9J5Tnr7DUExS3hKge6YdN8",
@@ -18,6 +23,50 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const storage = firebase.storage();
+const filter = new Filter()
+
+
+export function useChat(user_id) {
+
+    const store = useStore();
+    const messagesCollection = db.collection('messages')
+    const sentMessagesQuery = messagesCollection.where("fromUserId", "==", user_id);
+    const receivedMessagesQuery = messagesCollection.where("toUserId", "==", user_id);
+
+    const sentMessages = ref([]);
+    const receivedMessages = ref([]);
+
+    const unsubscribeReceived = receivedMessagesQuery.onSnapshot(snapshot => {
+        receivedMessages.value = snapshot.docs
+            .map(doc => ({ ...doc.data() }))
+            .reverse()
+        store.dispatch('setReceivedMessages', receivedMessages.value)
+    })
+    const unsubscribeSent = sentMessagesQuery.onSnapshot(snapshot => {
+        sentMessages.value = snapshot.docs
+            .map(doc => ({ ...doc.data() }))
+            .reverse()
+        store.dispatch('setSentMessages', sentMessages.value)
+
+    })
+
+    onUnmounted(unsubscribeReceived);
+    onUnmounted(unsubscribeSent);
+
+
+
+    const sendMessage = function (from, to, animal, text) {
+        messagesCollection.add({
+            fromUserId: from,
+            toUserId: to,
+            animalId: animal,
+            text: filter.clean(text),
+            createdAt: new Date().getTime(),
+        })
+    }
+
+    return { receivedMessages, sentMessages, sendMessage }
+}
 
 
 async function getCollectionFromCollection(from_collection, collection, doc_id) {
@@ -62,8 +111,8 @@ async function getData(collection) {
 
 export async function getRemovedAnimalsId(user_id) {
     const docRef = db
-    .collection("users")
-    .doc(user_id)
+        .collection("users")
+        .doc(user_id)
 
     const snapshot = await docRef.get()
 
@@ -75,8 +124,8 @@ export async function getRemovedAnimalsId(user_id) {
 
 export async function getFavoriteAnimalsId(user_id) {
     const docRef = db
-    .collection("users")
-    .doc(user_id)
+        .collection("users")
+        .doc(user_id)
 
     const snapshot = await docRef.get()
 
@@ -109,7 +158,7 @@ async function addFavorite(id_animal, id_user) {
     const ref = db.collection("users").doc(id_user);
 
     return ref.update({
-        favoriteAnimalsId:firebase.firestore.FieldValue.arrayUnion(id_animal)
+        favoriteAnimalsId: firebase.firestore.FieldValue.arrayUnion(id_animal)
     })
 
 }
@@ -117,7 +166,7 @@ async function addRemoved(id_animal, id_user) {
     const ref = db.collection("users").doc(id_user);
 
     return ref.update({
-        removedAnimalsId:firebase.firestore.FieldValue.arrayUnion(id_animal)
+        removedAnimalsId: firebase.firestore.FieldValue.arrayUnion(id_animal)
     })
 
 }
@@ -164,6 +213,6 @@ function getCurrentUser() {
 }
 
 
-export { getData, addNewDocument, updateDocument, getCollectionFromCollection, addFavorite, createNewUser, updateName, logInUser, getCurrentUser, setPictureToAnimal, addRemoved}
+export { getData, addNewDocument, updateDocument, getCollectionFromCollection, addFavorite, createNewUser, updateName, logInUser, getCurrentUser, setPictureToAnimal, addRemoved }
 
 //Create function recieves user and password and create such user in the database. If everythuing goes well it should updateProfile

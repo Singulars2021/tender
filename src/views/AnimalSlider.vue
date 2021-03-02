@@ -26,6 +26,9 @@
 </template>
 
 <script>
+import { useChat } from "@/firebaseConfig";
+import { useStore } from "vuex";
+
 import AnimalSlide from "@/components/AnimalSlide.vue";
 import {
   IonSlides,
@@ -44,10 +47,20 @@ export default {
     IonPage,
     IonSpinner,
   },
+  setup() {
+    const store = useStore();
+    const userId = store.getters.getUserId;
+    console.log("user id whose messages will be recovered. for now it is hardcoded", userId);
+
+    const { sentMessages, receivedMessages } = useChat('didac');
+    
+
+    return { sentMessages, receivedMessages};
+  },
   created() {
     // Example about how to update app's state
     this.$store.dispatch("getAnimals");
-    console.log('favoriteanimals:',this.$store.getters.getFavoriteAnimals)
+    console.log("favoriteanimals:", this.$store.getters.getFavoriteAnimals);
 
     console.log("created");
   },
@@ -71,7 +84,11 @@ export default {
         .duration(this.animationDuration)
         .keyframes([
           { offset: 0, transform: "scale(1)", opacity: "1" },
-          { offset: 0.15, transform: "scale(0.90) translateY(0)", opacity: "0.3" },
+          {
+            offset: 0.15,
+            transform: "scale(0.90) translateY(0)",
+            opacity: "0.3",
+          },
           {
             offset: 0.25,
             transform: "scale(0.90) translateY(-100px)",
@@ -103,7 +120,11 @@ export default {
         .duration(this.animationDuration)
         .keyframes([
           { offset: 0, transform: "scale(1)", opacity: "1" },
-          { offset: 0.15, transform: "scale(0.90) translateY(0)",opacity:0.3 },
+          {
+            offset: 0.15,
+            transform: "scale(0.90) translateY(0)",
+            opacity: 0.3,
+          },
           {
             offset: 0.25,
             transform: "scale(0.90) translateY(100px)",

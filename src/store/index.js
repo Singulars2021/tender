@@ -13,7 +13,10 @@ const store = createStore({
       removedAnimalsId: []
     },
     animals: [],
-    animalSearchFilters: []
+    animalSearchFilters: [],
+    receivedMessages: [],
+    sentMessages: [],
+
   },
   getters: {
     getUserId(state) {
@@ -36,6 +39,12 @@ const store = createStore({
     getRemovedAnimalsId(state) {
       return state.loggedUser.removedAnimalsId
     },
+    sentMessages(state) {
+      return state.sentMessages;
+    },
+    receivedMessages(state) {
+      return state.receivedMessages;
+    }
   },
   // Mutations must update the app's state. Every time we retrieve data from the database, these data must be loaded somewhere in our app state management. Because we are using Vuex of our app, we must use a mutation to alter the state, never alter it directly in an action of inside a component.
   mutations: {
@@ -79,7 +88,15 @@ const store = createStore({
     },
     setRemovedAnimalsId(state, payload) {
       state.loggedUser.removedAnimalsId = payload;
-    }
+    },
+    setReceivedMessages(state, payload) {
+      console.log('mutation commited. this are the received messages to be stored: ', payload);
+      state.receivedMessages = payload;
+    },
+    setSentMessages(state, payload) {
+      console.log('mutation commited. this are the sent messages to be stored: ', payload);
+      state.sentMessages = payload;
+    },
 
   },
   actions: {
@@ -110,7 +127,7 @@ const store = createStore({
     },
     async addFavoriteAnimal(context, payload) {
       const animal = payload
-      const animalId=payload.id
+      const animalId = payload.id
       const userId = context.getters.getUserId
       await addFavorite(animalId, userId)
       context.commit('addFavoriteAnimal', animal)
@@ -191,6 +208,19 @@ const store = createStore({
       // updates the data in the app
       context.commit('setAnimals', animals)
     },
+    setReceivedMessages(context, payload) {
+      console.log('action dispatched. this are the received messages to be stored: ', payload);
+      context.commit("setReceivedMessages", payload)
+    },
+
+    setSentMessages(context, payload) {
+      console.log('action dispatched. this are the sent messages to be stored: ', payload);
+      context.commit("setSentMessages", payload)
+
+    },
+
+
+
     updateFilters(context, payload) {
       const Filters = payload.filterFields
 
