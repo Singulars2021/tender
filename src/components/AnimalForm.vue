@@ -192,10 +192,8 @@
     </div>
   </form>
   <div v-if="animal">
-    
     <cta-button @click="eliminar" class="delete">Eliminar</cta-button>
   </div>
-  
 </template>
 
 <script>
@@ -229,6 +227,7 @@ import {
 import { images, imageOutline, trash } from "ionicons/icons";
 import { Plugins, CameraResultType } from "@capacitor/core";
 import CtaButton from "../ui/CtaButton.vue";
+import { alertController } from "@ionic/vue";
 
 const { Camera } = Plugins;
 
@@ -310,10 +309,34 @@ export default {
     }
   },
   methods: {
-    eliminar() {
-      this.$store.dispatch("removeAnimal", this.animal.id);
+    async eliminar() {
+      const alert = await alertController.create({
+        cssClass: "my-custom-class",
+        header: "Alert",
+        subHeader: "Eliminar",
+        message: "Estas seguro que quieres elimnar?",
+        buttons: [
+          {
+              text: 'Cancel',
+              role: 'cancel',
+              cssClass: 'secondary',
+              handler: blah => {
+                console.log('Confirm Cancel:', blah)
+              },
+            },{
+              text: 'Delete',
+              handler: () => {
+                this.$store.dispatch("removeAnimal", this.animal.id);
       this.$router.push("/adminanimals");
-    },
+              },
+            },
+          ]
+      });
+    return alert.present();
+    
+
+      },
+
     onFormEdit() {
       this.isFormValid = true;
     },
@@ -347,7 +370,7 @@ export default {
         description: this.description,
         creationDate: null,
         disableDate: null,
-        disable: false
+        disable: false,
       };
 
       if (!this.animal) {
@@ -484,8 +507,6 @@ ion-icon {
 }
 
 .delete {
-
-
   bottom: 90px;
   --background: var(--ion-color-danger-tint);
   --color: var(--ion-color-dark);
