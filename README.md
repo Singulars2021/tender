@@ -64,7 +64,7 @@ Tender pretende ser una aplicación para promover y fomentar la adopción de ani
 
 El equipo que ha hecho posible este proyecto.
 
-    Óscar Miras - Formador y project manager.Escribe los requisitos en servilletas! - omiras 🧙
+    Óscar Miras -  - omiras 🧙
     Pedro Ninci - - pppeedrito 🐍
     Lenny Cala -   - LennyCC  🤹🏻
     Xiande - - Xiande-zx 🙊
