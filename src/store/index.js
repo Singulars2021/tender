@@ -44,7 +44,7 @@ const store = createStore({
     },
     receivedMessages(state) {
       return state.receivedMessages;
-    }
+    },
   },
   // Mutations must update the app's state. Every time we retrieve data from the database, these data must be loaded somewhere in our app state management. Because we are using Vuex of our app, we must use a mutation to alter the state, never alter it directly in an action of inside a component.
   mutations: {
@@ -182,8 +182,6 @@ const store = createStore({
       const removedAnimalsId = await getRemovedAnimalsId(userId);
       const favoriteAnimalsId = await getFavoriteAnimalsId(userId);
 
-
-
       if (removedAnimalsId) {
         context.commit('setRemovedAnimalsId', removedAnimalsId);
         removedAnimalsId.forEach(animalId => {
@@ -210,11 +208,49 @@ const store = createStore({
     },
     setReceivedMessages(context, payload) {
       console.log('action dispatched. this are the received messages to be stored: ', payload);
+      // const received = payload;
+      // const favoriteAnimals = context.getters.getFavoriteAnimals;
+      // console.log('favorite animals where we\'ll store the messages', favoriteAnimals)
+      // console.log('for will loop for:', received.length)
+
+      // if (favoriteAnimals) {
+      //   for (const message in received) {
+      //     const animalId = received[message]["animalId"];
+      //     console.log('id of the animal whose messages we\'ve received', animalId);
+      //     const animalIndex = favoriteAnimals.findIndex(animal => animal.id == animalId);
+      //     console.log('index to add messages', animalIndex)
+      //     favoriteAnimals[animalIndex]["messages"].push(received[message]);
+      //   }
+
+      // }
+
+      console.log('fav animals + messages', context.getters.getFavoriteAnimals);
       context.commit("setReceivedMessages", payload)
     },
 
     setSentMessages(context, payload) {
       console.log('action dispatched. this are the sent messages to be stored: ', payload);
+      const sent = payload;
+      const favoriteAnimals = context.getters.getFavoriteAnimals;
+
+      console.log('for will loop for:', sent.length)
+
+
+      if (favoriteAnimals) {
+        for (const message in sent) {
+          console.log('favorite animals inside for', favoriteAnimals)
+          const animalId = sent[message]["animalId"];
+          console.log('id of the animal whose messages we\'ve received', animalId);
+          const animalIndex = favoriteAnimals.findIndex(el => el.id == animalId);
+          console.log('index to add messages', animalIndex)
+          // favoriteAnimals[animalIndex]["messages"].push(sent[message]);
+        }
+
+
+      }
+
+
+      console.log('fav animals + messages', context.getters.getFavoriteAnimals);
       context.commit("setSentMessages", payload)
 
     },

@@ -5,10 +5,7 @@
       <ion-text>Me gustas </ion-text>
       <div class="favorite-animals-list scroll" scrollX="true">
         <div v-for="animal in searchedAnimal" :key="animal.id">
-          <div
-            class="favorite-animals-item"
-            @click="chat(animal.id, animal.userId)"
-          >
+          <div class="favorite-animals-item" @click="chatWith(animal.id)">
             <ion-avatar slot="start">
               <img :src="animal.pictures[0]" />
             </ion-avatar>
@@ -104,9 +101,8 @@ export default {
         this.searchedAnimal = this.animalsList;
       }
     },
-    chat(animalId, userId) {
-      this.$router.push(`/chat/${animalId}`);
-      console.log(userId);
+    chatWith(animalId) {
+      this.$router.push("/chat/" + animalId);
     },
   },
   computed: {

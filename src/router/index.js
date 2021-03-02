@@ -57,10 +57,9 @@ const routes = [
     component: () => import('@/views/SignInView.vue')
   },
   {
-    path:'/chat/:id',
-    props:true,
-    component:()=> import('@/views/Chat.vue')
-    
+    path: '/chat/:id',
+    props: true,
+    component: () => import('@/views/Chat.vue')
   }
 ]
 

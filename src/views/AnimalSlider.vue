@@ -50,19 +50,18 @@ export default {
   setup() {
     const store = useStore();
     const userId = store.getters.getUserId;
-    console.log("user id whose messages will be recovered. for now it is hardcoded", userId);
+    console.log(
+      "user id whose messages will be recovered. for now it is hardcoded",
+      userId
+    );
 
-    const { sentMessages, receivedMessages } = useChat('didac');
-    
+    const { sentMessages, receivedMessages } = useChat(userId);
 
-    return { sentMessages, receivedMessages};
+    return { sentMessages, receivedMessages };
   },
   created() {
     // Example about how to update app's state
     this.$store.dispatch("getAnimals");
-    console.log("favoriteanimals:", this.$store.getters.getFavoriteAnimals);
-
-    console.log("created");
   },
   methods: {
     onFavoriteSelected(animalId) {
