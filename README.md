@@ -49,7 +49,7 @@ ionic build
 
 
 ### Prototipo del diseño
-[Figma]("https://i.ibb.co/8gg5QZ9/figma1.jpg")
+[<img src="https://ibb.co/tpps1rD">](http://google.com.au/)
 
 
 ### Detalles dela arquitectura 
