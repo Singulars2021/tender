@@ -56,6 +56,8 @@ ionic build
 
 <a href="https://www.figma.com/file/aUHXVXsho6ZdnWUjd6bmgi/Tinder-Mockup-for-Sketch?node-id=0%3A1"><img src="https://i.ibb.co/smBcfc9/roy.jpg" alt="roy" border="0"></a>
 
+<a href="https://www.figma.com/file/aUHXVXsho6ZdnWUjd6bmgi/Tinder-Mockup-for-Sketch?node-id=0%3A1"><img src="https://i.ibb.co/KFLfVH8/3pets.jpg" alt="3pets" border="0"></a>
+
 
 ### Detalles dela arquitectura 
 
