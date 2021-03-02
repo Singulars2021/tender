@@ -7,6 +7,11 @@ import ContentContainer from './ui/ContentContainer.vue'
 
 import { IonicVue } from '@ionic/vue';
 
+import firebase from "firebase/app"
+
+
+
+
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/vue/css/core.css';
 
@@ -30,22 +35,48 @@ import './theme/typography.css';
 import './theme/padding.css'
 import './theme/customInterface.css'
 
+// const app = createApp(App)
+//   .use(IonicVue)
+//   .use(router)
+//   .use(store);
+
+// app.component('content-container', ContentContainer);
 
 
-const app = createApp(App)
-  .use(IonicVue)
-  .use(router)
-  .use(store);
-
-app.component('content-container', ContentContainer);
+// router.isReady().then(() => {
+//   app.mount('#app');
+// });
 
 
-router.isReady().then(() => {
-  app.mount('#app');
+
+
+let app = '';
+
+
+firebase.auth().onAuthStateChanged(async user => {
+  if (user) {
+    const payload = {
+      id: user.uid,
+      email: user.email,
+      name: user.displayName
+    }
+    store.dispatch("setLoggedUser", payload)
+  }
+  if (!app) {
+    app = createApp(App)
+      .use(IonicVue)
+      .use(router)
+      .use(store);
+    app.component('content-container', ContentContainer);
+
+    router.isReady().then(() => {
+      app.mount('#app');
+    })
+  }
 });
 
+
 router.beforeEach(async (to, from, next) => {
-  console.log(await store.getters.getLoggedUser)
   if (to.name == 'login' && await store.getters.getLoggedUser) next({ name: 'slider' })
   else next()
 })

@@ -56,9 +56,10 @@ const store = createStore({
     },
     signinMutation(state, payload) {
       state.loggedUser = payload
-      console.log('Payload Mutaion: ', payload)
-      console.log('SignInMutation: ', state.loggedUser)
     },
+    setLoggedUser(state, payload){
+      state.loggedUser = payload
+    }
   },
   actions: {
     // getUser(){
@@ -75,13 +76,10 @@ const store = createStore({
 
       await logInUser(payload.email, payload.password)
       const user = await getCurrentUser()
-      console.log('Usuario: ', user)
       const payloadMutation = {
         id: user.uid,
-        name: user.displayName,
         email: user.email
-      }
-      console.log('PayloadMutation in action: ',payloadMutation)
+      }  
       context.commit("signinMutation", payloadMutation)
     },
     async signup(context, payload) {
@@ -94,6 +92,7 @@ const store = createStore({
         name: user.displayName,
         email: user.email
       }
+      await addNewDocument(payloadMutation, "users")
       context.commit("signinMutation", payloadMutation)
 
 
@@ -161,6 +160,9 @@ const store = createStore({
 
       context.commit('setFilters', Filters)
     },
+    async setLoggedUser(context, payload){
+      context.commit("setLoggedUser", payload)
+    },
     //Update user
     async updateUser(context, payload) {
       const id = context.getters.getLoggedUser.id
@@ -175,8 +177,17 @@ const store = createStore({
       await updateDocument(id, updatedInfo, 'users')
 
       context.commit('updateUserInfo', payload)
+    },
+    async getUserId(){
+      const user = await getCurrentUser()
+      const id = user.uid
+      console.log("User inside getUserId action", user)
+      console.log("Id inside getUserId action", id)
+      return id
     }
   }
 })
 
 export default store
+    
+

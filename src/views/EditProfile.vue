@@ -39,7 +39,10 @@
             <ion-input class="secondary-label" type="text" pattern="(\+34|0034|34)?[ -]*(6|7)[ -]*([0-9][ -]*){8}" v-model="newPhone"></ion-input>
           </ion-item>
         </ion-list>
-        <ion-button class="btn" type="submit" expand="block" fill="solid">GUARDAR</ion-button>
+        <!-- <ion-button class="btn" type="submit" expand="block" fill="solid">GUARDAR</ion-button> -->
+        <ion-item>
+          <cta-button>GUARDAR</cta-button>
+        </ion-item>
       </form>
        <ion-list class="list">
             <ion-item @click="someClick">
@@ -64,7 +67,9 @@
 import { provinces } from "../utils/labels";
 import { chevronBackOutline, heart } from "ionicons/icons";
 import BackButton from '../ui/BackButton.vue';
+import CtaButton from '../ui/CtaButton.vue';
 import {clearStorage} from '../utils/storePassword.js';
+import {getCurrentUser} from '../firebaseConfig.js';
 
 import {
   IonPage,
@@ -79,10 +84,10 @@ import {
   IonSelect,
   IonSelectOption,
   IonTextarea,
-  IonButton,
+  // IonButton,
   // IonButtons,
   IonIcon,
-  toastController,
+  toastController
 } from "@ionic/vue";
 
 export default {
@@ -100,10 +105,11 @@ export default {
     IonSelect,
     IonSelectOption,
     IonTextarea,
-    IonButton,
+    // IonButton,
     // IonButtons,
     IonIcon,
-    BackButton
+    BackButton,
+    CtaButton
   },
   data(){
       return {
@@ -116,10 +122,10 @@ export default {
           provincesLabels: provinces
       }
   },
-  ionViewWillEnter(){
-      const userLogged = this.$store.getters.getLoggedUser
+  async ionViewWillEnter(){
+      const userLogged = await getCurrentUser()     
 
-      this.newName = userLogged.name
+      this.newName = userLogged.displayName
       this.newBio = userLogged.description
       this.newPhone = userLogged.phoneNumber
       this.newLocation = userLogged.location
@@ -158,7 +164,7 @@ export default {
       },
       goBack(){
         //This makes us go back
-        history.back();
+        this.$router.replace('/animals/slider'); //Esto debería ir a adminAnimals
       }
   }
 };

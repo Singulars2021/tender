@@ -38,7 +38,7 @@ async function getCollectionFromCollection(from_collection, collection, doc_id) 
 }
 
 async function updateName(newName) {
-    const user = getCurrentUser()
+    const user = await getCurrentUser()
     await user.updateProfile({
         displayName: newName
     })
@@ -59,6 +59,7 @@ async function getData(collection) {
     console.log("firebase: getData from " + collection, data)
     return data
 }
+
 
 async function addNewDocument(data, collection) {
     const ref = await db.collection(collection)
@@ -123,12 +124,12 @@ async function logInUser(email, password) {
 }
 
 async function logOutUser(){
+    console.log("Logging out User")
     firebase.auth().signOut();
 }
 
 async function getCurrentUser() {
     const user = await firebase.auth().currentUser
-    console.log('User Firebase: ', user)
     return user  
 }
 
