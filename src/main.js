@@ -37,6 +37,20 @@ const app = createApp(App)
 
 app.component('content-container', ContentContainer);
 
+//import { Vue } from "vue";
+import * as Sentry from "@sentry/vue";
+import { Vue as VueIntegration } from '@sentry/integrations';
+
+Sentry.init({
+//  Vue,
+  dsn: "https://cf0cdab317fa45d1b4223b39de247440@o538047.ingest.sentry.io/5657631",
+  integrations: [new VueIntegration({ Vue: app })],
+
+  // We recommend adjusting this value in production, or using tracesSampler
+  // for finer control
+  tracesSampleRate: 1.0,
+});
+
 
 router.isReady().then(() => {
   app.mount('#app');
