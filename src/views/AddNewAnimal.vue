@@ -7,7 +7,7 @@
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
-      <animal-form></animal-form>
+      <animal-form :animal = 'animal'></animal-form>
     </ion-content>
   </ion-page>
 </template>
@@ -35,9 +35,18 @@ export default {
     IonPage,
     BackButton,
   },
-  async ionViewWillEnter() {
-    await this.$store.dispatch("getAnimal", this.$route.params.id);
+
+  data(){
+    return{
+      animal : null
+    }
   },
+   async ionViewWillEnter() {
+     await this.$store.dispatch("getAnimals");
+     if(this.$route.params.id){
+       this.animal = this.$store.getters.getAnimalById(this.$route.params.id)
+     }
+   },
 };
 </script>
 

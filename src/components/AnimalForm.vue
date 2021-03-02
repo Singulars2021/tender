@@ -66,7 +66,7 @@
       </ion-item>
       <!-- Species Item -->
       <ion-item>
-        <ion-label>{{animal.name}}</ion-label>
+        <ion-label>Especie</ion-label>
         <ion-select
           v-model="species"
           okText="Aceptar"
@@ -184,9 +184,18 @@
     <ion-text v-if="!isFormValid" color="danger">
       <h4>Por favor, rellena todos los campos antes de guardar.</h4>
     </ion-text>
-
-    <cta-button>GUARDAR</cta-button>
+    <div v-if="!animal">
+      <cta-button>GUARDAR</cta-button>
+    </div>
+    <div v-else>
+      <cta-button>Cambiar</cta-button>
+    </div>
   </form>
+  <div v-if="animal">
+    
+    <cta-button @click="eliminar" class="delete">Eliminar</cta-button>
+  </div>
+  
 </template>
 
 <script>
@@ -224,6 +233,7 @@ import CtaButton from "../ui/CtaButton.vue";
 const { Camera } = Plugins;
 
 export default {
+  props: ["animal"],
   components: {
     IonList,
     IonItem,
@@ -244,9 +254,10 @@ export default {
     IonText,
     IonFabButton,
   },
- 
+
   data() {
     return {
+      id: undefined,
       name: "",
       age: undefined,
       sex: undefined,
@@ -259,6 +270,7 @@ export default {
       imageOutline,
       trash,
       imagesList: [],
+      oldImgId: [],
       error: null,
       isOpen: false,
       imageToPreview: undefined,
@@ -274,14 +286,39 @@ export default {
       options: {
         cssClass: "my-custom-interface",
       },
-      animal: this.$store.getters.getAnimalBy
     };
   },
+  beforeUpdate() {
+    if (this.animal) {
+      this.id = this.animal.id;
+      this.name = this.animal.name;
+      this.age = this.animal.age;
+      this.sex = this.animal.sex;
+      this.species = this.animal.species;
+      this.size = this.animal.size;
+      this.adoptionType = this.animal.adoptionType;
+      this.location = this.animal.location;
+      this.description = this.animal.description;
+
+      for (var i = 0; i < this.animal.pictures.length; i++) {
+        this.imagesList.push({
+          id: this.animal.pictures[i].id,
+          preview: this.animal.pictures[i].image,
+        });
+        this.oldImgId.push(this.animal.pictures[i].id);
+      }
+    }
+  },
   methods: {
+    eliminar() {
+      this.$store.dispatch("removeAnimal", this.animal.id);
+      this.$router.push("/adminanimals");
+    },
     onFormEdit() {
       this.isFormValid = true;
     },
-    addAnimal() {
+    addAnimal(e) {
+      console.log(e);
       this.isFormValid = true;
       if (
         this.name.trim == "" ||
@@ -297,7 +334,9 @@ export default {
         this.isFormValid = false;
         return;
       }
+
       const animal = {
+        id: this.id,
         name: this.name,
         age: this.age,
         sex: this.sex,
@@ -306,17 +345,31 @@ export default {
         adoptionType: this.adoptionType,
         location: this.location,
         description: this.description,
-        creationDate: new Date(),
+        creationDate: null,
+        disableDate: null
       };
 
-      this.$store.dispatch("insertNewAnimal", {
-        animalFields: animal,
-        animalPhotos: this.imagesList,
-      });
-
+      if (!this.animal) {
+        animal.creationDate = new Date();
+        this.$store.dispatch("insertNewAnimal", {
+          animalFields: animal,
+          animalPhotos: this.imagesList,
+        });
+      } else {
+        animal.creationDate = this.animal.creationDate;
+        console.log(this.imagesList);
+        this.$store.dispatch("updateAnimal", {
+          animalFields: animal,
+          animalPhotos: this.imagesList,
+          oldImgId: this.oldImgId,
+        });
+      }
       this.clearForm();
       this.$store.dispatch("getAnimals");
       this.$router.push("/adminanimals");
+      // this.$store.dispatch("", {
+      //   animalFields: animal,
+      // });
     },
     async openToast(msg, response) {
       const toast = await toastController.create({
@@ -356,7 +409,8 @@ export default {
       this.isOpen = false;
     },
     clearForm() {
-      (this.name = ""),
+      (this.id = undefined),
+        (this.name = ""),
         (this.age = undefined),
         (this.location = undefined),
         (this.sex = undefined),
@@ -365,6 +419,7 @@ export default {
         (this.imagesList = []),
         (this.adoptionType = undefined),
         (this.size = undefined);
+      this.oldImgId = [];
     },
   },
 };
@@ -425,5 +480,13 @@ ion-icon {
 
 .icon-trash {
   color: white;
+}
+
+.delete {
+
+
+  bottom: 90px;
+  --background: var(--ion-color-danger-tint);
+  --color: var(--ion-color-dark);
 }
 </style>

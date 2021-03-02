@@ -58,6 +58,7 @@ const routes = [
   },
   {
     path: '/editanimal/:id',
+    name: 'EditAnimal',
     component: () => import('@/views/AddNewAnimal.vue')
   }
 ]

@@ -19,7 +19,6 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const storage = firebase.storage();
 
-
 async function getCollectionFromCollection(from_collection, collection, doc_id) {
     const collectionRef = db
         .collection(from_collection)
@@ -29,12 +28,11 @@ async function getCollectionFromCollection(from_collection, collection, doc_id) 
     const snapshot = await collectionRef.get();
 
     const images = snapshot.docs.map((doc) => ({
+        id: doc.id,
         ...doc.data(),
     }));
 
     return images;
-
-    // console.log("firebase: getCollectionFromCollection " + collection + " from " + from_collection, images);
 }
 
 async function updateName(newName) {
@@ -79,13 +77,31 @@ async function addNewDocument(data, collection) {
 }
 
 async function updateDocument(id, data, collection) {
+    
     const ref = db.collection(collection).doc(id);
 
-    await ref.update({
-        ...data
+    return ref.update({
+        name : data.name,
+        age : data.age,
+        description : data.description,
+        adoptionType : data.adoptionType,
+        location : data.location,
+        sex : data.sex,
+        size : data.size,
+        species : data.species
     })
 
-    return ref
+}
+
+async function deleteDocument(id){
+    const ref = db.collection('animals').doc(id);
+
+    console.log('animal deleted')
+
+    return ref.update({
+        disable : true,
+        disableDate : new Date
+    })
 }
 
 async function addFavorite(id, id_user) {
@@ -119,6 +135,7 @@ async function setPictureToAnimal(id_animal, picture) {
     return id
 }
 
+
 async function createNewUser(email, password) {
     const newUser = await firebase
         .auth()
@@ -138,6 +155,18 @@ function getCurrentUser() {
     return user
 }
 
+async function deleteDocumentFromAnimalPhoto(idPhoto, idAnimal){
+console.log("delete"+idAnimal,idPhoto)
+    db.collection('animals')
+        .doc(idAnimal)
+        .collection('images')
+        .doc(idPhoto).delete().then(() => {
+            console.log("Image deleted");
+        }).catch((error) => {
+            console.error("Error removing document: ", error);
+        });
+}
+
 
 export {
     getData,
@@ -150,7 +179,9 @@ export {
     logInUser,
     getCurrentUser,
     setPictureToAnimal,
-    getDataById
+    getDataById,
+    deleteDocument,
+    deleteDocumentFromAnimalPhoto
 }
 
 //Create function recieves user and password and create such user in the database. If everythuing goes well it should updateProfile
