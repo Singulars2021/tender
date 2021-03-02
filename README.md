@@ -10,6 +10,20 @@ npm install -g @ionic/cli
 npm install
 ```
 
+### Construido con :wrench:
+  + JS frameworks (VueJS, Ionic) 
+  + Estilos principales (Css, scooped, etc)
+  + Firebase para registro & autentificación de usuarios [Firebase](https://firebase.google.com/?hl=es)
+  + Enviar emails de reportes de usuarios [Emailjs](https://www.emailjs.com/)
+  +  Gestión de errores (Sentry)
+
+### Framework utilizado y justificación
+  + Permite la posibilidad de obtener una applicación híbrida.
+  + Escogido por el diseño e interfaz que ofrece ya que otorga gran variedad de utilidades, símbolos, iconos, y otros recursos. 
+  + que hacen que la aparaiencia se a ligera y eficaz.
+  + Relativa comodidad en la comunicación entre componentes .
+
+
 ### Compiles and hot-reloads for development
 ```
 ionic serve
@@ -21,5 +35,57 @@ ionic build
 ```
 
 
-### Ionic Documentation
-See [here](https://ionicframework.com/docs/).
+## Ionic & Vue's Documentation
+
+[Ionic](https://ionicframework.com/docs/).
+
+[Vue](https://v3.vuejs.org/).
+
+
+### Descripción de la aplicación
+Hasta ahora, desde que una persona decide que quiere adoptar una mascota hasta que lo consigue, puede pasar una gran cantidad de tiempo. ¿Dónde buscas? ¿Qué tipo de confianza te transmiten los diferentes portales de internet en los que encuentras anuncios? ¿Por qué es un proceso tan complicado y que te toma tanto tiempo?
+
+Tender pretende ser una aplicación para promover y fomentar la adopción de animales, así como para facilitar el acceso al cuidado temporal de mascotas. Todo ello a través de una experiencia de usuario divertida, amena y segura; para que todos los usuarios puedan encontrar la mascota que mejor se adapta a sus recursos y estilo de vida - si es que desean incluir un nuevo integrante a la família - o, por el otro lado, encontrar a una persona cerca de ti que esté dispuesta a encargarse de tu mascota temporalmente si te tienes de desplazar o no vas a poder hacerlo durante un período de tiempo.
+
+
+### Prototipo del diseño
+[Frigma](https://www.figma.com/file/aUHXVXsho6ZdnWUjd6bmgi/Tinder-Mockup-for-Sketch?node-id=0%3A1)
+
+
+### Detalles dela arquitectura 
+
+
+## Wiki
+
+
+## Autores :black_nib:
+
+El equipo que ha hecho posible este proyecto.
+
+    Óscar Miras - Formador y project manager.Escribe los requisitos en servilletas! - omiras 🧙
+    Pedro Ninci - - pppeedrito 🐍
+    Lenny Cala -   - LennyCC  🤹🏻
+    Xiande - - Xiande-zx 🙊
+    Sergi Justiniano - homell100 -  🙉
+    Maria Canals-  - maria-canals 🙈
+    Clàudia Ballano -  - claudiaballano 🔮
+    Silvia Gutierrez - silviagb2 -  🙏🏻
+    Oscar Farré - wildkur 🤸🏻
+    Alba Guzman -  - aguzsol 🤵🏻
+    Dídac Perez -  - didac3141592 🕵🏻
+    Marc Bellido - - mbellydo 😅
+    Eduard Garcia -  - GoatBass 💻
+    Diego Lajusticia - -  diegolajus 😅
+
+
+
+
+
+
+
+
+
+
+
+
+
