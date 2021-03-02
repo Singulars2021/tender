@@ -2,13 +2,28 @@
   <ion-page>
     <ion-content class="ion-padding">
       <ion-searchbar @ionChange="ionChange($event)"></ion-searchbar>
+      <ion-text>Nuevos me gustas </ion-text>
+      <ion-list lines="none" class="favorite-animals-list">
+      <ion-item  v-for="animal in searchedAnimal" :key="animal.id">
+        <div class="favorite-animals-item" @click="chat(animal.id,animal.userId)">
+          <ion-avatar slot="start">
+            <img :src="animal.pictures[0]"
+            />
+          </ion-avatar>
+          <ion-label>
+            <h2>{{ animal.name }}</h2>
+          </ion-label>
+        </div>
+        </ion-item>
+      </ion-list>
       <ion-list>
-        <ion-icon :icon="heart" />
-        <ion-list-header>Favoritos</ion-list-header>
+        <ion-list-header>Mensajes
+          <ion-badge>{{messageCount}}</ion-badge>
+        </ion-list-header>
         <ion-item v-for="animal in searchedAnimal" :key="animal.id">
           <ion-avatar slot="start">
             <img
-              src="https://images.unsplash.com/photo-1579833098880-e52055f43cad?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=750&q=800"
+              :src="animal.pictures[0]"
             />
           </ion-avatar>
           <ion-label>
@@ -21,8 +36,6 @@
 </template>
 
 <script>
-import { heart } from "ionicons/icons";
-
 import {
   IonPage,
   IonList,
@@ -32,7 +45,9 @@ import {
   IonListHeader,
   IonAvatar,
   IonContent,
-  IonIcon,
+  IonBadge,
+  IonText
+
 } from "@ionic/vue";
 
 export default {
@@ -46,29 +61,20 @@ export default {
     IonListHeader,
     IonAvatar,
     IonContent,
-    IonIcon,
-  },
-  setup() {
-    return {
-      heart,
-    };
+    IonBadge,
+    IonText
+
   },
   data() {
     return {
-      animalsList: [
-        { id: "0", name: "Linn" },
-        { id: "1", name: "Gata" },
-        { id: "2", name: "Linda" },
-        { id: "3", name: "Max" },
-        { id: "4", name: "Gato" },
-        { id: "5", name: "Tortuga" },
-        { id: "6", name: "Desi" },
-      ],
-      searchedAnimal: [],
+      searchedAnimal:[],
+      messageCount:0,
     };
   },
 created(){
-  this.searchedAnimal= [...this.animalsList ]
+
+  this.searchedAnimal= this.$store.getters.getFavoriteAnimals
+  
 },
   methods: {
     ionChange(event) {
@@ -86,11 +92,42 @@ created(){
           this.searchedAnimal = this.animalsList
         }
     },
+    chat(animalId,userId){
+      this.$router.push(`/chat/${animalId}`)
+      console.log(userId)
+    }
   },
+  computed:{
+    animalList(){
+      return this.$store.getters.getFavoriteAnimals
+    }
+  }
 };
 </script>
 <style scoped>
 ion-icon {
   margin-left: 15px;
+}
+ion-list-header,ion-text {
+  color: #ed576b;
+  font-size: 18px;
+  padding-left:0;
+  font-weight: 700;
+}
+
+ion-badge{
+  margin-left:0.5rem;
+  background-color: #ed576b
+}
+.favorite-animals-list{
+  display: flex;
+  flex-direction: row;
+  margin-top:0.5rem;
+}
+.favorite-animals-item{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 </style>

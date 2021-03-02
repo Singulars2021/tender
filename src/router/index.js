@@ -29,7 +29,7 @@ const routes = [
         component: () => import('@/views/AddNewAnimal.vue')
       },
       {
-        path: 'chat',
+        path: 'liked-animals',
         component: () => import('@/views/FavouriteAnimals.vue')
       },
 
@@ -55,6 +55,12 @@ const routes = [
     path: '/signin',
     name: 'login',
     component: () => import('@/views/SignInView.vue')
+  },
+  {
+    path:'/chat/:id',
+    props:true,
+    component:()=> import('@/views/Chat.vue')
+    
   }
 ]
 

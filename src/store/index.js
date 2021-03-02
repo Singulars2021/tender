@@ -9,7 +9,7 @@ const store = createStore({
       description: 'Loving Canela',
       location: 1,
       phoneNumber: '+3466677788',
-      favoriteAnimalsId: [],
+      favoriteAnimals: [],
       removedAnimalsId: []
     },
     animals: [],
@@ -30,8 +30,8 @@ const store = createStore({
     getLoggedUser(state) {
       return state.loggedUser
     },
-    getFavoriteAnimalsId(state) {
-      return state.loggedUser.favoriteAnimalsId
+    getFavoriteAnimals(state) {
+      return state.loggedUser.favoriteAnimals
     },
     getRemovedAnimalsId(state) {
       return state.loggedUser.removedAnimalsId
@@ -66,17 +66,16 @@ const store = createStore({
       console.dir(state.loggedUser)
     },
     addFavoriteAnimal(state, payload) {
-      state.loggedUser.favoriteAnimalsId.push(payload)
+      state.loggedUser.favoriteAnimals.push(payload)
     },
     addRemovedAnimal(state, payload) {
       state.loggedUser.removedAnimalsId.push(payload)
     },
     updateAnimals(state, payload) {
       state.animals.splice(payload, 1)
-      console.log(state.animals);
     },
-    setFavoriteAnimalsId(state, payload) {
-      state.loggedUser.favoriteAnimalsId = payload;
+    setFavoriteAnimals(state, payload) {
+      state.loggedUser.favoriteAnimals.push(payload);
     },
     setRemovedAnimalsId(state, payload) {
       state.loggedUser.removedAnimalsId = payload;
@@ -109,11 +108,12 @@ const store = createStore({
 
 
     },
-    addFavoriteAnimal(context, payload) {
-      const animalId = payload
+    async addFavoriteAnimal(context, payload) {
+      const animal = payload
+      const animalId=payload.id
       const userId = context.getters.getUserId
-      addFavorite(animalId, userId)
-      context.commit('addFavoriteAnimal', animalId)
+      await addFavorite(animalId, userId)
+      context.commit('addFavoriteAnimal', animal)
     },
     async addRemovedAnimal(context, payload) {
       const animalId = payload
@@ -175,22 +175,19 @@ const store = createStore({
 
         });
       }
-
-      if (favoriteAnimalsId) {
-        context.commit('setFavoriteAnimalsId', favoriteAnimalsId);
-        favoriteAnimalsId.forEach(animalId => {
-          const index = animals.findIndex(animal => animal.id == animalId);
-          animals.splice(index, 1)
-        });
-      }
-
       for (const animal in animals) {
         const photos = await getCollectionFromCollection("animals", "images", animals[animal].id);
 
         for (const photo in photos)
           animals[animal]["pictures"].push(photos[photo].image);
       }
-
+      if (favoriteAnimalsId) {
+        favoriteAnimalsId.forEach(animalId => {
+          const index = animals.findIndex(animal => animal.id == animalId);
+          context.commit('setFavoriteAnimals', animals[index]);
+          animals.splice(index, 1)
+        });
+      }
       // updates the data in the app
       context.commit('setAnimals', animals)
     },

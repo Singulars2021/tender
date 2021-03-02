@@ -1,7 +1,7 @@
 <template>
   <ion-slide>
     <div class="overdrop" v-show="displayLogo">
-      <img class="logo" src="../../public/assets/tender.png" alt="" />
+      <img class="logo" :src="imageAnimation" alt="" />
     </div>
     <animal-card :animal="animal"></animal-card>
 
@@ -13,7 +13,7 @@
         </ion-fab-button>
       </ion-fab>
       <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-        <ion-fab-button @click="onFavorite(animal.id)">
+        <ion-fab-button @click="onFavorite(animal)">
           <ion-icon :icon="heartOutline"></ion-icon>
         </ion-fab-button>
       </ion-fab>
@@ -45,43 +45,69 @@ export default {
     return {
       heartOutline,
       removeOutline,
-      logoAnimationDuration: 0.25 * this.animationDuration,
+      logoAnimationDuration: this.animationDuration,
       displayLogo: false,
+      imageAnimation:null,
     };
   },
   methods: {
-    onFavorite(animalId) {
+    onFavorite(animal) {
+      this.imageAnimation="../assets/heart_green.svg"
       this.displayLogo = true;
       const logo = document.querySelector("img.logo");
-      console.log(logo)
+      console.log(this.imageAnimation)
       const logoAnimation = createAnimation()
         .addElement(logo)
         .duration(this.logoAnimationDuration)
         .keyframes([
-          { offset: 0, transform: "scale(1)", opacity: "0" },
-          { offset: 0.25, opacity: "1" },
+          { offset: 0, transform: "scale(0)", opacity: "1" },
+          { offset: 0.10, transform: "scale(1)"},
+          { offset: 0.15, transform: "scale(0.90) translateY(0)" },
+          {
+            offset: 0.25,
+            transform: "scale(0.90) translateY(-100px)",
+          },
           {
             offset: 1,
-            opacity: "0",
+            transform: "scale(0.90) translateY(-1000px)",
           },
         ]);
 
       logoAnimation.play();
 
-      this.$emit("favoriteSelected", animalId);
+      this.$emit("favoriteSelected", animal.id);
 
       const that = this;
 
       setTimeout(function () {
-        that.$store.dispatch("addFavoriteAnimal", animalId);
-        that.$store.dispatch("updateAnimals", animalId);
+        that.$store.dispatch("addFavoriteAnimal", animal);
+        that.$store.dispatch("updateAnimals", animal.id);
       }, that.animationDuration);
     },
     onRemove(animalId) {
-      this.$emit("removeSelected", animalId);
-
+      this.displayLogo = true;
+      this.imageAnimation="../assets/heart_grey.svg"
+      const logo = document.querySelector("img.logo");
       const that = this;
+      const logoAnimation = createAnimation()
+        .addElement(logo)
+        .duration(this.logoAnimationDuration)
+        .keyframes([
+          { offset: 0, transform: "scale(0)", opacity: "1" },
+          { offset: 0.10, transform: "scale(1)"},
+          { offset: 0.15, transform: "scale(0.90) translateY(0)" },
+          {
+            offset: 0.25,
+            transform: "scale(0.90) translateY(100px)",
+          },
+          {
+            offset: 1,
+            transform: "scale(0.90) translateY(1000px)",
+          },
+        ]);
 
+      logoAnimation.play();
+      this.$emit("removeSelected", animalId);
       setTimeout(function () {
         that.$store.dispatch("addRemovedAnimal", animalId);
         that.$store.dispatch("updateAnimals", animalId);
@@ -98,6 +124,7 @@ ion-fab {
 img {
   width: 20%;
 }
+
 
 .overdrop {
   position: absolute;

@@ -8,8 +8,8 @@
         <ion-tab-button tab="animal-slider" href="/animals/slider">
           <ion-icon :icon="layersOutline" />
         </ion-tab-button>
-        <ion-tab-button tab="chat-center" href="/animals/chat">
-          <ion-icon size="large" src="../../assets/cat.svg" />
+        <ion-tab-button tab="chat-center" href="/animals/liked-animals">
+          <img src="../../public/assets/cat.svg" alt=""/>
         </ion-tab-button>
         <!-- <ion-tab-button tab="admin-animals" href="/animals/adminAnimals">
           <ion-icon :icon="ellipsisVerticalOutline" />

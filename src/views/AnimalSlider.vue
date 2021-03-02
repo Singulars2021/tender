@@ -47,6 +47,7 @@ export default {
   created() {
     // Example about how to update app's state
     this.$store.dispatch("getAnimals");
+    console.log('favoriteanimals:',this.$store.getters.getFavoriteAnimals)
 
     console.log("created");
   },
@@ -70,7 +71,7 @@ export default {
         .duration(this.animationDuration)
         .keyframes([
           { offset: 0, transform: "scale(1)", opacity: "1" },
-          { offset: 0.15, transform: "scale(0.90) translateY(0)" },
+          { offset: 0.15, transform: "scale(0.90) translateY(0)", opacity: "0.3" },
           {
             offset: 0.25,
             transform: "scale(0.90) translateY(-100px)",
@@ -95,14 +96,14 @@ export default {
 
       console.log("index", indexToAnimate);
 
-      const slide = slides[indexToAnimate].children[0];
+      const slide = slides[indexToAnimate].children[1];
 
       const likedAnimation = createAnimation()
         .addElement(slide)
         .duration(this.animationDuration)
         .keyframes([
           { offset: 0, transform: "scale(1)", opacity: "1" },
-          { offset: 0.15, transform: "scale(0.90) translateY(0)" },
+          { offset: 0.15, transform: "scale(0.90) translateY(0)",opacity:0.3 },
           {
             offset: 0.25,
             transform: "scale(0.90) translateY(100px)",
@@ -130,7 +131,7 @@ export default {
   },
   data() {
     return {
-      animationDuration: 1000,
+      animationDuration: 800,
       animalSliderOptions: {
         loop: false,
         initialSlide: 0,
