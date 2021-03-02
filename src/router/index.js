@@ -11,7 +11,6 @@ const routes = [
     path: '/adminanimals',
     component: () => import('@/views/AdminAnimals.vue')
   },
-
   {
     path: '/animals/',
     component: TabsAnimals,
@@ -59,7 +58,8 @@ const routes = [
     path: '/signin',
     name: 'login',
     component: () => import('@/views/SignInView.vue')
-  }
+  },
+
 ]
 
 const router = createRouter({

@@ -12,7 +12,7 @@ const store = createStore({
     },
     animals: [],
     animalSearchFilters: [],
-    reports:[],
+    reports: [],
   },
   getters: {
     getUserId(state) {
@@ -22,6 +22,10 @@ const store = createStore({
     getAllAnimals(state) {
       return state.animals
     },
+    getMyAnimals(state, getters) {
+      return state.animals.filter(animal => animal.userId === getters.getUserId)
+    }
+    ,
     getFilters(state) {
       return state.animalSearchFilters
     },
@@ -29,7 +33,7 @@ const store = createStore({
     getLoggedUser(state) {
       return state.loggedUser
     },
-    getReports(state){
+    getReports(state) {
       return state.reports
     }
   },
@@ -61,10 +65,10 @@ const store = createStore({
       state.loggedUser = payload
       console.dir(state.loggedUser)
     },
-    insertReport(state, payload){
+    insertReport(state, payload) {
       state.reports.push(payload)
     },
-    setReports(state, payload){
+    setReports(state, payload) {
       state.reports = payload
     }
   },
@@ -166,7 +170,7 @@ const store = createStore({
 
       context.commit('updateUserInfo', payload)
     },
-    async updateReports(context, payload){
+    async updateReports(context, payload) {
       const reportFields = {
         userId: context.getters.getUserId,
         ...payload.reportFields
