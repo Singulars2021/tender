@@ -51,7 +51,8 @@ ionic build
 ### Prototipo del diseño
 <a href="https://www.figma.com/file/aUHXVXsho6ZdnWUjd6bmgi/Tinder-Mockup-for-Sketch?node-id=0%3A1"><img src="https://i.ibb.co/8gg5QZ9/figma1.jpg" alt="figma1" border="0"></a>
 
-<a href="https://www.figma.com/file/aUHXVXsho6ZdnWUjd6bmgi/Tinder-Mockup-for-Sketch?node-id=0%3A1"><img src="https://i.ibb.co/k5wJnCn/chatforreadme.jpg" alt="chatforreadme" border="0"></a>
+
+<a href="https://www.figma.com/file/aUHXVXsho6ZdnWUjd6bmgi/Tinder-Mockup-for-Sketch?node-id=0%3A1"><img src="https://i.ibb.co/4KX2yry/chatforreadme.jpg" alt="chatforreadme" border="0"></a>
 
 
 
