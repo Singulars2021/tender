@@ -1,5 +1,10 @@
 # Tender
 
+### Descripción de la aplicación
+Hasta ahora, desde que una persona decide que quiere adoptar una mascota hasta que lo consigue, puede pasar una gran cantidad de tiempo. ¿Dónde buscas? ¿Qué tipo de confianza te transmiten los diferentes portales de internet en los que encuentras anuncios? ¿Por qué es un proceso tan complicado y que te toma tanto tiempo?
+
+Tender pretende ser una aplicación para promover y fomentar la adopción de animales, así como para facilitar el acceso al cuidado temporal de mascotas. Todo ello a través de una experiencia de usuario divertida, amena y segura; para que todos los usuarios puedan encontrar la mascota que mejor se adapta a sus recursos y estilo de vida - si es que desean incluir un nuevo integrante a la família - o, por el otro lado, encontrar a una persona cerca de ti que esté dispuesta a encargarse de tu mascota temporalmente si te tienes de desplazar o no vas a poder hacerlo durante un período de tiempo.
+
 ## First time - install Ionic Cli
 ```
 npm install -g @ionic/cli
@@ -42,11 +47,6 @@ ionic build
 [Vue](https://v3.vuejs.org/).
 
 
-### Descripción de la aplicación
-Hasta ahora, desde que una persona decide que quiere adoptar una mascota hasta que lo consigue, puede pasar una gran cantidad de tiempo. ¿Dónde buscas? ¿Qué tipo de confianza te transmiten los diferentes portales de internet en los que encuentras anuncios? ¿Por qué es un proceso tan complicado y que te toma tanto tiempo?
-
-Tender pretende ser una aplicación para promover y fomentar la adopción de animales, así como para facilitar el acceso al cuidado temporal de mascotas. Todo ello a través de una experiencia de usuario divertida, amena y segura; para que todos los usuarios puedan encontrar la mascota que mejor se adapta a sus recursos y estilo de vida - si es que desean incluir un nuevo integrante a la família - o, por el otro lado, encontrar a una persona cerca de ti que esté dispuesta a encargarse de tu mascota temporalmente si te tienes de desplazar o no vas a poder hacerlo durante un período de tiempo.
-
 
 ### Prototipo del diseño
 [Figma](https://www.figma.com/file/aUHXVXsho6ZdnWUjd6bmgi/Tinder-Mockup-for-Sketch?node-id=0%3A1)
@@ -54,7 +54,7 @@ Tender pretende ser una aplicación para promover y fomentar la adopción de ani
 
 ### Detalles dela arquitectura 
 
-<a href="https://ibb.co/qMJ4DBk"><img src="https://i.ibb.co/27ZLFqg/tenderph.jpg" alt="tenderph" border="0"></a>
+<a href="https://ibb.co/znXNvy8"><img src="https://i.ibb.co/bWs79SH/tender-front-back-tech.jpg" alt="tender-front-back-tech" border="0"></a>
 
 
 ## Wiki
