@@ -2,32 +2,36 @@
   <ion-page>
     <ion-content class="ion-padding">
       <ion-searchbar @ionChange="ionChange($event)"></ion-searchbar>
-      <ion-text>Nuevos me gustas </ion-text>
-      <ion-list lines="none" class="favorite-animals-list">
-      <ion-item  v-for="animal in searchedAnimal" :key="animal.id">
-        <div class="favorite-animals-item" @click="chat(animal.id,animal.userId)">
-          <ion-avatar slot="start">
-            <img :src="animal.pictures[0]"
-            />
-          </ion-avatar>
-          <ion-label>
-            <h2>{{ animal.name }}</h2>
-          </ion-label>
+      <ion-text>Me gustas </ion-text>
+        <div class="favorite-animals-list scroll" scrollX="true" >
+        <div  v-for="animal in searchedAnimal" :key="animal.id">
+          <div class="favorite-animals-item" @click="chat(animal.id,animal.userId)">
+            <ion-avatar slot="start">
+              <img :src="animal.pictures[0]"
+              />
+            </ion-avatar>
+            <ion-label>
+              <h4>{{ animal.name }}</h4>
+            </ion-label>
+          </div>
+          </div>
         </div>
-        </ion-item>
-      </ion-list>
       <ion-list>
         <ion-list-header>Mensajes
           <ion-badge>{{messageCount}}</ion-badge>
         </ion-list-header>
-        <ion-item v-for="animal in searchedAnimal" :key="animal.id">
-          <ion-avatar slot="start">
-            <img
+        <ion-item class="chat-separated" v-for="animal in searchedAnimal" :key="animal.id">
+          <ion-avatar  slot="start">
+            <img 
               :src="animal.pictures[0]"
             />
           </ion-avatar>
           <ion-label>
-            <h2>{{ animal.name }}</h2>
+            <div class="info-chat">
+              <h2>{{ animal.name }}</h2>
+              <ion-icon :icon="ellipse"></ion-icon>
+            </div>
+            <p>Último mensaje recibido</p>
           </ion-label>
         </ion-item>
       </ion-list>
@@ -36,6 +40,7 @@
 </template>
 
 <script>
+import { ellipse } from "ionicons/icons";
 import {
   IonPage,
   IonList,
@@ -46,7 +51,8 @@ import {
   IonAvatar,
   IonContent,
   IonBadge,
-  IonText
+  IonText,
+  IonIcon
 
 } from "@ionic/vue";
 
@@ -62,13 +68,15 @@ export default {
     IonAvatar,
     IonContent,
     IonBadge,
-    IonText
+    IonText,
+    IonIcon
 
   },
   data() {
     return {
       searchedAnimal:[],
       messageCount:0,
+      ellipse
     };
   },
 created(){
@@ -105,6 +113,20 @@ created(){
 };
 </script>
 <style scoped>
+h2,h4{
+  color: #27303B;
+}
+ion-avatar{
+  width:85px !important;  
+  height : 85px !important;  
+  max-width: 85px !important;  
+  max-height: 985px !important; 
+  margin-bottom:10px;
+  margin-top:10px
+}
+.chat-separated{
+  margin-bottom: 0.9rem
+}
 ion-icon {
   margin-left: 15px;
 }
@@ -128,6 +150,24 @@ ion-badge{
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
+  margin-left: 0.8rem;
+  margin-top: 0.3rem;
+}
+.scroll{
+  overflow: auto;
+}
+ion-icon{
+  color:#ed576b;
+  font-size: 10px;
+  margin: 0;
+  margin-left:5px;
+  padding: 0;
+
+}
+.info-chat{
+  display:flex;
+  flex-direction: row;
   align-items: center;
 }
 </style>
