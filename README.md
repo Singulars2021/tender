@@ -54,7 +54,7 @@ ionic build
 
 
 
-<a href="https://www.figma.com/file/aUHXVXsho6ZdnWUjd6bmgi/Tinder-Mockup-for-Sketch?node-id=0%3A1"><img src="https://i.ibb.co/smBcfc9/roy.jpg" alt="roy" border="0"></a>
+
 
 <a href="https://www.figma.com/file/aUHXVXsho6ZdnWUjd6bmgi/Tinder-Mockup-for-Sketch?node-id=0%3A1"><img src="https://i.ibb.co/KFLfVH8/3pets.jpg" alt="3pets" border="0"></a>
 
@@ -71,20 +71,20 @@ ionic build
 
 El equipo que ha hecho posible este proyecto.
 
-    Óscar Miras -  - omiras 🧙
-    Pedro Ninci - - pppeedrito 🐍
-    Lenny Cala -   - LennyCC  🤹🏻
-    Xiande - - Xiande-zx 🙊
-    Sergi Justiniano - homell100 -  🙉
-    Maria Canals-  - maria-canals 🙈
-    Clàudia Ballano -  - claudiaballano 🔮
-    Silvia Gutierrez - silviagb2 -  🙏🏻
-    Oscar Farré - wildkur 🤸🏻
-    Alba Guzman -  - aguzsol 🤵🏻
-    Dídac Perez -  - didac3141592 🕵🏻
-    Marc Bellido - - mbellydo 😅
-    Eduard Garcia -  - GoatBass 💻
-    Diego Lajusticia - -  diegolajus 😅
+    Óscar Miras - - omiras 
+    Pedro Ninci - - pppeedrito 
+    Lenny Cala - - LennyCC  
+    Xiande - - Xiande-zx 
+    Sergi Justiniano - - homell100   
+    Maria Canals - - maria-canals 
+    Clàudia Ballano -  - claudiaballano 
+    Silvia Gutierrez - - silviagb2   
+    Oscar Farré - wildkur 
+    Alba Guzman -  - aguzsol 
+    Dídac Perez -  - didac3141592 
+    Marc Bellido - - mbellydo 
+    Eduard Garcia -  - GoatBass 
+    Diego Lajusticia - -  diegolajus 
 
 
 
