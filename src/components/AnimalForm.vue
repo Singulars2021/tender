@@ -346,7 +346,8 @@ export default {
         location: this.location,
         description: this.description,
         creationDate: null,
-        disableDate: null
+        disableDate: null,
+        disable: false
       };
 
       if (!this.animal) {

@@ -2,7 +2,7 @@
   <ion-card>
     <ion-slides :options="animalPicturesSliderOptions" pager="true">
       <ion-slide v-for="picture in animal.pictures" :key="picture">
-        <img :src="picture" />
+        <img :src="picture.image" />
       </ion-slide>
     </ion-slides>
     <ion-card-header>
