@@ -165,7 +165,7 @@ async function deleteDocument(id){
     })
 }
 
-async function addFavorite(id, id_user) {
+async function addFavorite(id, id_animal) {
     const ref = db.collection("animals").doc(id);
 
     return ref.update({
@@ -251,6 +251,7 @@ export {
     updateDocument,
     getCollectionFromCollection,
     addFavorite,
+    addRemoved,
     createNewUser,
     updateName,
     logInUser,
