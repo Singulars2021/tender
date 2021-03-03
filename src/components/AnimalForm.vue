@@ -1,4 +1,5 @@
 <template>
+<span>
   <form action="" class="ion-padding" @submit.prevent="addAnimal">
     <ion-list>
       <!-- Image item -->
@@ -194,6 +195,8 @@
   <div v-if="animal">
     <cta-button @click="eliminar" class="delete">Eliminar</cta-button>
   </div>
+</span>
+  
 </template>
 
 <script>
