@@ -1,20 +1,21 @@
 import { createStore } from 'vuex'
-import { 
+import {
   addNewDocument,
   getCollectionFromCollection,
   getData,
   setPictureToAnimal,
-  updateDocument, 
-  createNewUser, 
-  updateName, 
+  updateDocument,
+  createNewUser,
+  updateName,
   logInUser,
-  logOutUser, 
+  logOutUser,
   getCurrentUser,
   recoverPassword,
-  addNewDocumentWithId, 
-  getDataById, 
-  deleteDocument, 
-  deleteDocumentFromAnimalPhoto } from '../firebaseConfig.js'
+  addNewDocumentWithId,
+  getDataById,
+  deleteDocument,
+  deleteDocumentFromAnimalPhoto
+} from '../firebaseConfig.js'
 
 const store = createStore({
   state: {
@@ -90,15 +91,15 @@ const store = createStore({
     signinMutation(state, payload) {
       state.loggedUser = payload
     },
-    setLoggedUser(state, payload){
-      console.log('State.users: ',state.users)
-      const user = state.users.filter((user)=> user.id == payload );
+    setLoggedUser(state, payload) {
+      console.log('State.users: ', state.users)
+      const user = state.users.filter((user) => user.id == payload);
       console.log('SetLoggedUser: ', user[0])
       state.loggedUser = user[0];
       //recuperar todos los datos del usuario con el id payload.id
       // db.collection(collection).doc(id)
     },
-    setUsers(state, payload){
+    setUsers(state, payload) {
       state.users = payload
       console.dir(state.loggedUser)
     },
@@ -139,7 +140,7 @@ const store = createStore({
     //     })
     //   })
     // },
-    async loadData(context){
+    async loadData(context) {
       //Se va a encargar de inicializar el state de nuestra aplicación
       const users = await getData('users');
       const result = users.map((user) => {
@@ -162,7 +163,7 @@ const store = createStore({
       const payloadMutation = {
         // id: user.uid,
         email: user.email
-      }  
+      }
       context.commit("signinMutation", payloadMutation)
     },
     async signup(context, payload) {
@@ -180,10 +181,10 @@ const store = createStore({
 
 
     },
-    async logOutUser(){
+    async logOutUser() {
       logOutUser()
     },
-    async restorePassword(_, payload){
+    async restorePassword(_, payload) {
       await recoverPassword(payload.email)
     },
     // Will update the animal to mark it as favorite by the logged user. First idea is to have an array of users who have favorited this animal. It may have some security implications, tough. For example, an expermineted user could be able to retrieve all the ids of the users that have favorited an animal
@@ -278,7 +279,7 @@ const store = createStore({
 
       context.commit('setFilters', Filters)
     },
-    async setLoggedUser(context, payload){
+    async setLoggedUser(context, payload) {
       const id = payload.id
       context.commit("setLoggedUser", id)
     },
@@ -297,7 +298,7 @@ const store = createStore({
 
       context.commit('updateUserInfo', payload)
     },
-    async getUserId(){
+    async getUserId() {
       const user = await getCurrentUser()
       const id = user.uid
       console.log("User inside getUserId action", user)
@@ -322,5 +323,5 @@ const store = createStore({
 })
 
 export default store
-    
+
 
