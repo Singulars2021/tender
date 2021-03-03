@@ -19,29 +19,45 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const storage = firebase.storage();
 
-
 async function getCollectionFromCollection(from_collection, collection, doc_id) {
     const collectionRef = db
         .collection(from_collection)
         .doc(doc_id)
         .collection(collection);
-
+    console.log("get collction from collection: ", doc_id)
     const snapshot = await collectionRef.get();
 
     const images = snapshot.docs.map((doc) => ({
+        id: doc.id,
         ...doc.data(),
     }));
 
-    return images;
+    console.log("images from collection:", images)
 
-    // console.log("firebase: getCollectionFromCollection " + collection + " from " + from_collection, images);
+    return images;
 }
 
 async function updateName(newName) {
-    const user = getCurrentUser()
+    const user = await getCurrentUser()
     await user.updateProfile({
         displayName: newName
     })
+}
+
+function getSyncData(collection, cb) {
+    console.log('getSync_Data initial')
+    let data;
+    db.collection(collection)
+    .onSnapshot((querySnapshot) => {
+        console.log('New changes!!')
+        data = querySnapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+            pictures: [],
+        }));
+        console.log("All the data is formed: ", data)
+        cb(data)
+    });
 }
 
 async function getData(collection) {
@@ -86,6 +102,15 @@ export async function getFavoriteAnimalsId(user_id) {
 }
 
 
+async function getDataById(id, collection) {
+    const docRef = db
+        .collection(collection).doc(id);
+
+    const doc = await docRef.get()
+
+    return doc.data()
+}
+
 async function addNewDocument(data, collection) {
     const ref = await db.collection(collection)
         .add({
@@ -93,6 +118,13 @@ async function addNewDocument(data, collection) {
         })
     console.log("firebase: addNewDocument")
     return ref.id
+}
+
+async function addNewDocumentWithId(data, collection, id){
+    await db.collection(collection).doc(id)
+        .set({
+            ...data
+        })
 }
 
 async function updateDocument(id, data, collection) {
@@ -105,8 +137,36 @@ async function updateDocument(id, data, collection) {
     return ref
 }
 
-async function addFavorite(id_animal, id_user) {
-    const ref = db.collection("users").doc(id_user);
+async function updateAnimalDocument(id, data, collection) {
+    
+    const ref = db.collection(collection).doc(id);
+
+    return ref.update({
+        name : data.name,
+        age : data.age,
+        description : data.description,
+        adoptionType : data.adoptionType,
+        location : data.location,
+        sex : data.sex,
+        size : data.size,
+        species : data.species
+    })
+
+}
+
+async function deleteDocument(id){
+    const ref = db.collection('animals').doc(id);
+
+    console.log('animal deleted')
+
+    return ref.update({
+        disable : true,
+        disableDate : new Date
+    })
+}
+
+async function addFavorite(id, id_user) {
+    const ref = db.collection("animals").doc(id);
 
     return ref.update({
         favoriteAnimalsId:firebase.firestore.FieldValue.arrayUnion(id_animal)
@@ -144,6 +204,7 @@ async function setPictureToAnimal(id_animal, picture) {
     return id
 }
 
+
 async function createNewUser(email, password) {
     const newUser = await firebase
         .auth()
@@ -153,17 +214,56 @@ async function createNewUser(email, password) {
 }
 
 async function logInUser(email, password) {
-    await firebase
-        .auth()
-        .signInWithEmailAndPassword(email, password)
+    await firebase.auth().signInWithEmailAndPassword(email, password);    
 }
 
-function getCurrentUser() {
-    const user = firebase.auth().currentUser
-    return user
+async function logOutUser(){
+    console.log("Logging out User")
+    firebase.auth().signOut();
+}
+
+async function getCurrentUser() {
+    const user = await firebase.auth().currentUser
+    return user  
+}
+
+async function recoverPassword(emailAddress){
+    await firebase.auth().sendPasswordResetEmail(emailAddress);
+    
+}
+
+async function deleteDocumentFromAnimalPhoto(idPhoto, idAnimal){
+console.log("delete"+idAnimal,idPhoto)
+    db.collection('animals')
+        .doc(idAnimal)
+        .collection('images')
+        .doc(idPhoto).delete().then(() => {
+            console.log("Image deleted");
+        }).catch((error) => {
+            console.error("Error removing document: ", error);
+        });
 }
 
 
-export { getData, addNewDocument, updateDocument, getCollectionFromCollection, addFavorite, createNewUser, updateName, logInUser, getCurrentUser, setPictureToAnimal, addRemoved}
+export {
+    getData,
+    addNewDocument,
+    updateDocument,
+    getCollectionFromCollection,
+    addFavorite,
+    createNewUser,
+    updateName,
+    logInUser,
+    logOutUser,
+    getCurrentUser,
+    setPictureToAnimal,
+    recoverPassword,
+    addNewDocumentWithId,
+    getDataById,
+    deleteDocument,
+    deleteDocumentFromAnimalPhoto,
+    updateAnimalDocument,
+    getSyncData
+}
 
 //Create function recieves user and password and create such user in the database. If everythuing goes well it should updateProfile
