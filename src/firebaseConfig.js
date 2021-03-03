@@ -76,6 +76,32 @@ async function getData(collection) {
     return data
 }
 
+export async function getRemovedAnimalsId(user_id) {
+    const docRef = db
+    .collection("users")
+    .doc(user_id)
+
+    const snapshot = await docRef.get()
+
+    const data = snapshot.data().removedAnimalsId;
+
+    return data;
+}
+
+
+export async function getFavoriteAnimalsId(user_id) {
+    const docRef = db
+    .collection("users")
+    .doc(user_id)
+
+    const snapshot = await docRef.get()
+
+    const data = snapshot.data().favoriteAnimalsId;
+
+    return data;
+}
+
+
 async function getDataById(id, collection) {
     const docRef = db
         .collection(collection).doc(id);
@@ -139,11 +165,19 @@ async function deleteDocument(id){
     })
 }
 
-async function addFavorite(id, id_user) {
+async function addFavorite(id, id_animal) {
     const ref = db.collection("animals").doc(id);
 
     return ref.update({
-        favorite: firebase.firestore.FieldValue.arrayUnion(id_user)
+        favoriteAnimalsId:firebase.firestore.FieldValue.arrayUnion(id_animal)
+    })
+
+}
+async function addRemoved(id_animal, id_user) {
+    const ref = db.collection("users").doc(id_user);
+
+    return ref.update({
+        removedAnimalsId:firebase.firestore.FieldValue.arrayUnion(id_animal)
     })
 
 }
@@ -217,6 +251,7 @@ export {
     updateDocument,
     getCollectionFromCollection,
     addFavorite,
+    addRemoved,
     createNewUser,
     updateName,
     logInUser,

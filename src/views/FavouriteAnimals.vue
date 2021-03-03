@@ -2,17 +2,36 @@
   <ion-page>
     <ion-content class="ion-padding">
       <ion-searchbar @ionChange="ionChange($event)"></ion-searchbar>
+      <ion-text>Me gustas </ion-text>
+        <div class="favorite-animals-list scroll" scrollX="true" >
+        <div  v-for="animal in searchedAnimal" :key="animal.id">
+          <div class="favorite-animals-item" @click="chat(animal.id,animal.userId)">
+            <ion-avatar slot="start">
+              <img :src="animal.pictures[0]"
+              />
+            </ion-avatar>
+            <ion-label>
+              <h4>{{ animal.name }}</h4>
+            </ion-label>
+          </div>
+          </div>
+        </div>
       <ion-list>
-        <ion-icon :icon="heart" />
-        <ion-list-header>Favoritos</ion-list-header>
-        <ion-item v-for="animal in searchedAnimal" :key="animal.id">
-          <ion-avatar slot="start">
-            <img
-              src="https://images.unsplash.com/photo-1579833098880-e52055f43cad?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=750&q=800"
+        <ion-list-header>Mensajes
+          <ion-badge>{{messageCount}}</ion-badge>
+        </ion-list-header>
+        <ion-item class="chat-separated" v-for="animal in searchedAnimal" :key="animal.id">
+          <ion-avatar  slot="start">
+            <img 
+              :src="animal.pictures[0]"
             />
           </ion-avatar>
           <ion-label>
-            <h2>{{ animal.name }}</h2>
+            <div class="info-chat">
+              <h2>{{ animal.name }}</h2>
+              <ion-icon :icon="ellipse"></ion-icon>
+            </div>
+            <p>Último mensaje recibido</p>
           </ion-label>
         </ion-item>
       </ion-list>
@@ -21,8 +40,7 @@
 </template>
 
 <script>
-import { heart } from "ionicons/icons";
-
+import { ellipse } from "ionicons/icons";
 import {
   IonPage,
   IonList,
@@ -32,7 +50,10 @@ import {
   IonListHeader,
   IonAvatar,
   IonContent,
-  IonIcon,
+  IonBadge,
+  IonText,
+  IonIcon
+
 } from "@ionic/vue";
 
 export default {
@@ -46,29 +67,22 @@ export default {
     IonListHeader,
     IonAvatar,
     IonContent,
-    IonIcon,
-  },
-  setup() {
-    return {
-      heart,
-    };
+    IonBadge,
+    IonText,
+    IonIcon
+
   },
   data() {
     return {
-      animalsList: [
-        { id: "0", name: "Linn" },
-        { id: "1", name: "Gata" },
-        { id: "2", name: "Linda" },
-        { id: "3", name: "Max" },
-        { id: "4", name: "Gato" },
-        { id: "5", name: "Tortuga" },
-        { id: "6", name: "Desi" },
-      ],
-      searchedAnimal: [],
+      searchedAnimal:[],
+      messageCount:0,
+      ellipse
     };
   },
 created(){
-  this.searchedAnimal= [...this.animalsList ]
+
+  this.searchedAnimal= this.$store.getters.getFavoriteAnimals
+  
 },
   methods: {
     ionChange(event) {
@@ -86,11 +100,74 @@ created(){
           this.searchedAnimal = this.animalsList
         }
     },
+    chat(animalId,userId){
+      this.$router.push(`/chat/${animalId}`)
+      console.log(userId)
+    }
   },
+  computed:{
+    animalList(){
+      return this.$store.getters.getFavoriteAnimals
+    }
+  }
 };
 </script>
 <style scoped>
+h2,h4{
+  color: #27303B;
+}
+ion-avatar{
+  width:85px !important;  
+  height : 85px !important;  
+  max-width: 85px !important;  
+  max-height: 985px !important; 
+  margin-bottom:10px;
+  margin-top:10px
+}
+.chat-separated{
+  margin-bottom: 0.9rem
+}
 ion-icon {
   margin-left: 15px;
+}
+ion-list-header,ion-text {
+  color: #ed576b;
+  font-size: 18px;
+  padding-left:0;
+  font-weight: 700;
+}
+
+ion-badge{
+  margin-left:0.5rem;
+  background-color: #ed576b
+}
+.favorite-animals-list{
+  display: flex;
+  flex-direction: row;
+  margin-top:0.5rem;
+}
+.favorite-animals-item{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: 0.8rem;
+  margin-top: 0.3rem;
+}
+.scroll{
+  overflow: auto;
+}
+ion-icon{
+  color:#ed576b;
+  font-size: 10px;
+  margin: 0;
+  margin-left:5px;
+  padding: 0;
+
+}
+.info-chat{
+  display:flex;
+  flex-direction: row;
+  align-items: center;
 }
 </style>

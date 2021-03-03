@@ -1,6 +1,10 @@
 import { createStore } from 'vuex'
 import {
   addNewDocument,
+  addFavorite,
+  addRemoved,
+  getFavoriteAnimalsId,
+  getRemovedAnimalsId,
   getCollectionFromCollection,
   getData,
   setPictureToAnimal,
@@ -56,6 +60,9 @@ const store = createStore({
     getLoggedUser(state) {
       return state.loggedUser
     },
+    getFavoriteAnimals(state) {
+      return state.loggedUser.favoriteAnimals
+    },
     getAnimalBy(state) {
       return state.animal
     },
@@ -105,6 +112,10 @@ const store = createStore({
       state.users = payload
       console.dir(state.loggedUser)
     },
+    addFavoriteAnimal(state, payload) {
+      state.loggedUser.favoriteAnimals.push(payload)
+    },
+
     setAnimalById(state, payload) {
       state.animal = payload
       console.log(state.animal)
@@ -116,6 +127,16 @@ const store = createStore({
         }
       }
     },
+    updateAnimals(state, payload) {
+      state.animals.splice(payload, 1)
+    },
+    setFavoriteAnimals(state, payload) {
+      state.loggedUser.favoriteAnimals.push(payload);
+    },
+    setRemovedAnimalsId(state, payload) {
+      state.loggedUser.removedAnimalsId = payload;
+    },
+
     deleteDocument(state, payload) {
       for (var i = 0; i < state.length; i++) {
         if (state[i].id == payload) {
@@ -130,6 +151,7 @@ const store = createStore({
     setReports(state, payload) {
       state.reports = payload
     }
+
   },
   actions: {
     // getUser(){
@@ -183,6 +205,27 @@ const store = createStore({
 
 
     },
+    async addFavoriteAnimal(context, payload) {
+      const animal = payload
+      const animalId = payload.id
+      const userId = context.getters.getUserId
+      await addFavorite(animalId, userId)
+      context.commit('addFavoriteAnimal', animal)
+    },
+    async addRemovedAnimal(context, payload) {
+      const animalId = payload
+      const userId = context.getters.getUserId
+      await addRemoved(animalId, userId)
+      context.commit('addRemovedAnimal', animalId)
+    },
+    updateAnimals(context, payload) {
+      const animalId = payload
+      const allAnimals = context.getters.getAllAnimals
+      console.log(allAnimals)
+      const indexToDelete = allAnimals.findIndex((animal) => animal.id == animalId)
+      context.commit('updateAnimals', indexToDelete)
+    },
+
     async logOutUser() {
       logOutUser()
     },
@@ -266,70 +309,86 @@ const store = createStore({
       // const animals = await getData('animals');
       getSyncData('animals', async (animals) => {
 
+        const userId = context.getters.getUserId;
+
+        const removedAnimalsId = await getRemovedAnimalsId(userId);
+        const favoriteAnimalsId = await getFavoriteAnimalsId(userId);
+
+        if (removedAnimalsId) {
+          context.commit('setRemovedAnimalsId', removedAnimalsId);
+          removedAnimalsId.forEach(animalId => {
+            const index = animals.findIndex(animal => animal.id == animalId);
+            animals.splice(index, 1)
+
+          });
+        }
         for (const animal in animals) {
           const photos = await getCollectionFromCollection("animals", "images", animals[animal].id);
 
-          for (const photo in photos) {
-            animals[animal]["pictures"].push(photos[photo]);
-          }
+          for (const photo in photos)
+            animals[animal]["pictures"].push(photos[photo].image);
+        }
+        if (favoriteAnimalsId) {
+          favoriteAnimalsId.forEach(animalId => {
+            const index = animals.findIndex(animal => animal.id == animalId);
+            context.commit('setFavoriteAnimals', animals[index]);
+            animals.splice(index, 1)
+          });
         }
 
         context.commit('setAnimals', animals)
 
       })
+      // updates the data in the app
+    },
+    updateFilters(context, payload) {
+      const Filters = payload.filterFields
 
+      console.log(Filters)
 
+      context.commit('setFilters', Filters)
+    },
+    async setLoggedUser(context, payload) {
+      const id = payload.id
+      context.commit("setLoggedUser", id)
+    },
+    //Update user
+    async updateUser(context, payload) {
+      const id = context.getters.getLoggedUser.id
+      //Actualizar la colecion users, con nuevos datos (payload)
+      const updatedInfo = {
+        name: payload.name,
+        description: payload.description,
+        phoneNumber: payload.phoneNumber,
+        location: payload.location
+      }
+      console.log(updatedInfo)
+      await updateDocument(id, updatedInfo, 'users')
 
-    // updates the data in the app
-  },
-  updateFilters(context, payload) {
-    const Filters = payload.filterFields
+      context.commit('updateUserInfo', payload)
+    },
+    async getUserId() {
+      const user = await getCurrentUser()
+      const id = user.uid
+      console.log("User inside getUserId action", user)
+      console.log("Id inside getUserId action", id)
+      return id
+    },
+    async updateReports(context, payload) {
+      const reportFields = {
+        userId: context.getters.getUserId,
+        ...payload.reportFields
+      }
 
-    console.log(Filters)
+      const id = await addNewDocument(reportFields, 'reports')
 
-    context.commit('setFilters', Filters)
-  },
-  async setLoggedUser(context, payload) {
-    const id = payload.id
-    context.commit("setLoggedUser", id)
-  },
-  //Update user
-  async updateUser(context, payload) {
-    const id = context.getters.getLoggedUser.id
-    //Actualizar la colecion users, con nuevos datos (payload)
-    const updatedInfo = {
-      name: payload.name,
-      description: payload.description,
-      phoneNumber: payload.phoneNumber,
-      location: payload.location
+      console.log(reportFields)
+
+      reportFields.id = id
+
+      context.commit('setReports', reportFields)
     }
-    console.log(updatedInfo)
-    await updateDocument(id, updatedInfo, 'users')
-
-    context.commit('updateUserInfo', payload)
-  },
-  async getUserId() {
-    const user = await getCurrentUser()
-    const id = user.uid
-    console.log("User inside getUserId action", user)
-    console.log("Id inside getUserId action", id)
-    return id
-  },
-  async updateReports(context, payload) {
-    const reportFields = {
-      userId: context.getters.getUserId,
-      ...payload.reportFields
-    }
-
-    const id = await addNewDocument(reportFields, 'reports')
-
-    console.log(reportFields)
-
-    reportFields.id = id
-
-    context.commit('setReports', reportFields)
   }
-}
 })
 
 export default store
