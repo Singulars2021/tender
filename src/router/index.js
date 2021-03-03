@@ -5,7 +5,7 @@ import TabsAnimals from '../views/TabsAnimals.vue'
 const routes = [
   {
     path: '/',
-    redirect: '/animals/slider'
+    redirect: '/signin'
   },
   {
     path: '/adminanimals',
@@ -21,6 +21,7 @@ const routes = [
       },
       {
         path: 'slider',
+        name: 'slider',
         component: () => import('@/views/AnimalSlider.vue')
       },
       {
@@ -48,7 +49,12 @@ const routes = [
   },
   {
     path: '/profile',
+    name: 'profile',
     component: () => import('@/views/EditProfile.vue')
+  },
+  {
+    path: '/firststeps',
+    component: () => import('@/views/FirstSteps.vue')
   },
   {
     path: '/signup',
@@ -59,7 +65,15 @@ const routes = [
     name: 'login',
     component: () => import('@/views/SignInView.vue')
   },
-
+  {
+    path: '/forgot-password',
+    component: () => import('@/views/ForgotPassword.vue')
+  },
+  {
+    path: '/editanimal/:id',
+    name: 'EditAnimal',
+    component: () => import('@/views/AddNewAnimal.vue')
+  }
 ]
 
 const router = createRouter({

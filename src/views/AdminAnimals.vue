@@ -17,7 +17,7 @@
             <img src="/assets/avatar.png" />
           </ion-avatar>
           <ion-label class="perfil">
-            <h1>Mi nombre</h1>
+            <h1>{{ user.name }}</h1>
             <p>Editar mi perfil</p>
           </ion-label>
           </div>
@@ -29,11 +29,11 @@
           </div>
           </div>
         </ion-item> 
-        <!-- <router-link to="/filters"> -->
+         <router-link to="/filters"> 
           <ctb-button>AJUSTES BÚSQUEDA</ctb-button>
         
       <ion-item-divider></ion-item-divider>
-        <!-- </router-link> -->
+        </router-link>
       </div>      
       <div class="animals-list">
         <h3>Tus animales</h3>

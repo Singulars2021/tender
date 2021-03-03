@@ -7,7 +7,7 @@
           <admin-card
             class="admin-card"
             @click="$emit('edit-animal', animal.id)"
-            :img="animal.pictures[0]"
+            :img="animal.pictures[0].image"
             :name="animal.name"
             :id="animal.id"
           ></admin-card>

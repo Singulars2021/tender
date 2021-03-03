@@ -1,6 +1,7 @@
 <template>
   <ion-page>
     <ion-content :fullscreen="true">
+      <router-link to="/profile">Profile</router-link>
       <div class="spinner-container" v-if="animals.length == 0">
         <ion-spinner color="primary"></ion-spinner>
       </div>
@@ -55,11 +56,11 @@ export default {
   },
   created() {
     // Example about how to update app's state
-    this.$store.dispatch("getAnimals");
+   // this.$store.dispatch("getAnimals");
     console.log("created");
   },
   // Ionic hook executed everytime the user changes to this view
-  ionViewWillEnter() {
+  async ionViewWillEnter() {
     console.log("ionViewWillEnter");
     // this.animals = this.$store.getters.getAllAnimals;
 
@@ -81,7 +82,7 @@ export default {
       heartOutline,
       removeOutline,
     };
-  },
+  }
 };
 </script>
 
