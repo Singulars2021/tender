@@ -60,7 +60,8 @@ firebase.auth().onAuthStateChanged(async user => {
       email: user.email,
       name: user.displayName
     }
-    store.dispatch("setLoggedUser", payload)
+    await store.dispatch("loadData")
+    await store.dispatch("setLoggedUser", payload)
   }
   if (!app) {
     app = createApp(App)
@@ -68,7 +69,7 @@ firebase.auth().onAuthStateChanged(async user => {
       .use(router)
       .use(store);
     app.component('content-container', ContentContainer);
-
+    
     router.isReady().then(() => {
       app.mount('#app');
     })

@@ -1,5 +1,5 @@
 import { createStore } from 'vuex'
-import { addNewDocument, getCollectionFromCollection, getData, setPictureToAnimal, updateDocument, createNewUser, updateName, logInUser, logOutUser, getCurrentUser, recoverPassword } from '../firebaseConfig.js'
+import { addNewDocument, getCollectionFromCollection, getData, setPictureToAnimal, updateDocument, createNewUser, updateName, logInUser, logOutUser, getCurrentUser, recoverPassword, addNewDocumentWithId } from '../firebaseConfig.js'
 
 const store = createStore({
   state: {
@@ -11,6 +11,7 @@ const store = createStore({
     //   phoneNumber: '+3466677788'
     // },
     loggedUser: null,
+    users: [],
     animals: [],
     animalSearchFilters: []
   },
@@ -58,7 +59,15 @@ const store = createStore({
       state.loggedUser = payload
     },
     setLoggedUser(state, payload){
-      state.loggedUser = payload
+      console.log('State.users: ',state.users)
+      const user = state.users.filter((user)=> user.id == payload );
+      console.log('SetLoggedUser: ', user[0])
+      state.loggedUser = user[0];
+      //recuperar todos los datos del usuario con el id payload.id
+      // db.collection(collection).doc(id)
+    },
+    setUsers(state, payload){
+      state.users = payload
     }
   },
   actions: {
@@ -72,12 +81,28 @@ const store = createStore({
     //     })
     //   })
     // },
+    async loadData(context){
+      //Se va a encargar de inicializar el state de nuestra aplicación
+      const users = await getData('users');
+      const result = users.map((user) => {
+        return {
+          id: user.id,
+          name: user.name,
+          description: user.description,
+          email: user.email,
+          location: user.location,
+          phoneNumber: user.phoneNumber
+        }
+      });
+      console.log(result)
+      context.commit('setUsers', result)
+    },
     async signin(context, payload) {
 
       await logInUser(payload.email, payload.password)
       const user = await getCurrentUser()
       const payloadMutation = {
-        id: user.uid,
+        // id: user.uid,
         email: user.email
       }  
       context.commit("signinMutation", payloadMutation)
@@ -88,11 +113,11 @@ const store = createStore({
       await updateName(payload.name)
       const user = await getCurrentUser()
       const payloadMutation = {
-        id: user.uid,
+        // id: user.uid,
         name: user.displayName,
         email: user.email
       }
-      await addNewDocument(payloadMutation, "users")
+      await addNewDocumentWithId(payloadMutation, "users", user.uid)
       context.commit("signinMutation", payloadMutation)
 
 
@@ -161,7 +186,8 @@ const store = createStore({
       context.commit('setFilters', Filters)
     },
     async setLoggedUser(context, payload){
-      context.commit("setLoggedUser", payload)
+      const id = payload.id
+      context.commit("setLoggedUser", id)
     },
     //Update user
     async updateUser(context, payload) {

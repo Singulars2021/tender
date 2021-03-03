@@ -69,7 +69,7 @@ import { chevronBackOutline, heart } from "ionicons/icons";
 import BackButton from '../ui/BackButton.vue';
 import CtaButton from '../ui/CtaButton.vue';
 import {clearStorage} from '../utils/storePassword.js';
-import {getCurrentUser} from '../firebaseConfig.js';
+// import {getCurrentUser} from '../firebaseConfig.js';
 
 import {
   IonPage,
@@ -123,12 +123,15 @@ export default {
       }
   },
   async ionViewWillEnter(){
-      const userLogged = await getCurrentUser()     
+      const userLogged = this.$store.getters.getLoggedUser 
 
-      this.newName = userLogged.displayName
+      this.newName = userLogged.name
       this.newBio = userLogged.description
       this.newPhone = userLogged.phoneNumber
       this.newLocation = userLogged.location
+      console.log('UserLogged.uid: ', userLogged.uid)
+      console.log('getter getUserId: ', this.$store.getters.getUserId)
+
   },
   methods: {
       someClick(){
@@ -151,7 +154,7 @@ export default {
           };
 
           const toast = await toastController.create({
-            color: 'dark',
+            color: 'success',
             duration: 2000,
             message: 'Profile Saved Succesfully!',
             showCloseButton: true,

@@ -70,6 +70,13 @@ async function addNewDocument(data, collection) {
     return ref.id
 }
 
+async function addNewDocumentWithId(data, collection, id){
+    await db.collection(collection).doc(id)
+        .set({
+            ...data
+        })
+}
+
 async function updateDocument(id, data, collection) {
     const ref = db.collection(collection).doc(id);
 
@@ -139,6 +146,6 @@ async function recoverPassword(emailAddress){
 }
 
 
-export { getData, addNewDocument, updateDocument, getCollectionFromCollection, addFavorite, createNewUser, updateName, logInUser, logOutUser, getCurrentUser, setPictureToAnimal, recoverPassword }
+export { getData, addNewDocument, updateDocument, getCollectionFromCollection, addFavorite, createNewUser, updateName, logInUser, logOutUser, getCurrentUser, setPictureToAnimal, recoverPassword, addNewDocumentWithId }
 
 //Create function recieves user and password and create such user in the database. If everythuing goes well it should updateProfile
