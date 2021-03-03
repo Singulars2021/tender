@@ -324,7 +324,7 @@ export default {
                 console.log('Confirm Cancel:', blah)
               },
             },{
-              text: 'Delete',
+              text: 'Eliminar',
               handler: () => {
                 this.$store.dispatch("removeAnimal", this.animal.id);
       this.$router.push("/adminanimals");
