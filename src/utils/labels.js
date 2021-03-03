@@ -301,4 +301,4 @@ const reportOptions = [
 ]
 
 
-export { provinces, sex, species, age, adoptionType, reportOptions }
+export { provinces, sex, species, age, adoptionType, reportOptions,size }
