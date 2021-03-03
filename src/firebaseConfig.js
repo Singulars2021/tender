@@ -36,7 +36,7 @@ async function getCollectionFromCollection(from_collection, collection, doc_id) 
 }
 
 async function updateName(newName) {
-    const user = getCurrentUser()
+    const user = await getCurrentUser()
     await user.updateProfile({
         displayName: newName
     })
@@ -74,6 +74,13 @@ async function addNewDocument(data, collection) {
         })
     console.log("firebase: addNewDocument")
     return ref.id
+}
+
+async function addNewDocumentWithId(data, collection, id){
+    await db.collection(collection).doc(id)
+        .set({
+            ...data
+        })
 }
 
 async function updateDocument(id, data, collection) {
@@ -145,14 +152,22 @@ async function createNewUser(email, password) {
 }
 
 async function logInUser(email, password) {
-    await firebase
-        .auth()
-        .signInWithEmailAndPassword(email, password)
+    await firebase.auth().signInWithEmailAndPassword(email, password);    
 }
 
-function getCurrentUser() {
-    const user = firebase.auth().currentUser
-    return user
+async function logOutUser(){
+    console.log("Logging out User")
+    firebase.auth().signOut();
+}
+
+async function getCurrentUser() {
+    const user = await firebase.auth().currentUser
+    return user  
+}
+
+async function recoverPassword(emailAddress){
+    await firebase.auth().sendPasswordResetEmail(emailAddress);
+    
 }
 
 async function deleteDocumentFromAnimalPhoto(idPhoto, idAnimal){
@@ -177,8 +192,11 @@ export {
     createNewUser,
     updateName,
     logInUser,
+    logOutUser,
     getCurrentUser,
     setPictureToAnimal,
+    recoverPassword,
+    addNewDocumentWithId,
     getDataById,
     deleteDocument,
     deleteDocumentFromAnimalPhoto

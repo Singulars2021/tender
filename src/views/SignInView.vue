@@ -26,9 +26,15 @@ import {
 } from "@ionic/vue";
 
 import SignInComponent from "@/components/SignInComponent.vue";
+// import { getCurrentUser } from '../firebaseConfig';
 
 
 export default {
+  data(){
+    return {
+      user: undefined
+    }
+  },
   name: "sign-in",
   components: {
     IonHeader,
@@ -38,5 +44,11 @@ export default {
     IonPage,
     SignInComponent
   },
+  // async beforeRouteEnter (to, from, next){
+  //     const user = getCurrentUser()
+  //     console.log('Before Route User: ', user)
+  //     if (to.name == 'login' && user) next({ name: 'slider' });
+  //     else next();
+  // }
 };
 </script>
