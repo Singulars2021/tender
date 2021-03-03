@@ -2,12 +2,12 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-buttons slot="start">
+        <!-- <ion-buttons slot="start">
           <ion-button  class="btn-back" @click="goBack">
             <ion-icon :icon="chevronBackOutline" ></ion-icon>
           </ion-button>
-        </ion-buttons>
-        <!-- <back-button href="/animals/slider"></back-button> -->
+        </ion-buttons> -->
+        <back-button href="" @click="goBack"></back-button>
         <ion-title>Editar Perfil</ion-title>
       </ion-toolbar>
     </ion-header>
@@ -39,7 +39,10 @@
             <ion-input class="secondary-label" type="text" pattern="(\+34|0034|34)?[ -]*(6|7)[ -]*([0-9][ -]*){8}" v-model="newPhone"></ion-input>
           </ion-item>
         </ion-list>
-        <ion-button class="btn" type="submit" expand="block" fill="solid">GUARDAR</ion-button>
+        <!-- <ion-button class="btn" type="submit" expand="block" fill="solid">GUARDAR</ion-button> -->
+        <ion-item>
+          <cta-button>GUARDAR</cta-button>
+        </ion-item>
       </form>
        <ion-list class="list">
             <ion-item @click="someClick">
@@ -55,7 +58,7 @@
                 <ion-icon name="chevron-forward" end></ion-icon>
             </ion-item> -->
        </ion-list>
-        <a>Log out</a>
+        <a href="" @click="logOutUser">Log out</a>
     </ion-content>
   </ion-page>
 </template>
@@ -63,7 +66,11 @@
 <script>
 import { provinces } from "../utils/labels";
 import { chevronBackOutline, heart } from "ionicons/icons";
-// import BackButton from '../ui/BackButton.vue'
+import BackButton from '../ui/BackButton.vue';
+import CtaButton from '../ui/CtaButton.vue';
+import {clearStorage} from '../utils/storePassword.js';
+// import {getCurrentUser} from '../firebaseConfig.js';
+
 import {
   IonPage,
   IonHeader,
@@ -77,10 +84,10 @@ import {
   IonSelect,
   IonSelectOption,
   IonTextarea,
-  IonButton,
-  IonButtons,
+  // IonButton,
+  // IonButtons,
   IonIcon,
-  toastController,
+  toastController
 } from "@ionic/vue";
 
 export default {
@@ -98,10 +105,11 @@ export default {
     IonSelect,
     IonSelectOption,
     IonTextarea,
-    IonButton,
-    IonButtons,
+    // IonButton,
+    // IonButtons,
     IonIcon,
-    // BackButton
+    BackButton,
+    CtaButton
   },
   data(){
       return {
@@ -114,17 +122,28 @@ export default {
           provincesLabels: provinces
       }
   },
-  ionViewWillEnter(){
-      const userLogged = this.$store.getters.getLoggedUser
+  async ionViewWillEnter(){
+      const userLogged = this.$store.getters.getLoggedUser 
 
       this.newName = userLogged.name
       this.newBio = userLogged.description
       this.newPhone = userLogged.phoneNumber
       this.newLocation = userLogged.location
+      console.log('UserLogged.uid: ', userLogged.uid)
+      console.log('getter getUserId: ', this.$store.getters.getUserId)
+
   },
   methods: {
       someClick(){
           console.log('Works');
+      },
+      async logOutUser(){
+        try{
+          this.$store.dispatch('logOutUser')
+        }catch(error){
+          console.log(error)
+        }
+        clearStorage();
       },
       async updateUserInfo(){
           const newInfo = {
@@ -135,7 +154,7 @@ export default {
           };
 
           const toast = await toastController.create({
-            color: 'dark',
+            color: 'success',
             duration: 2000,
             message: 'Profile Saved Succesfully!',
             showCloseButton: true,
@@ -148,7 +167,7 @@ export default {
       },
       goBack(){
         //This makes us go back
-        history.back();
+        this.$router.replace('/animals/slider'); //Esto debería ir a adminAnimals
       }
   }
 };

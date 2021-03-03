@@ -84,7 +84,8 @@ export default {
         console.log("Error", error)
         return
       }
-      this.$router.push('/profile/')
+      //this.$router.push('/profile/')
+      this.$router.push('/firststeps')
     }
   }
 };
