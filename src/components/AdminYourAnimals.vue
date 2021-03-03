@@ -13,14 +13,14 @@
           ></admin-card>
         </div>
       </ion-col>
-    </ion-row>
+    </ion-row>   
   </ion-grid>
 </template>
 
 <script>
 import AdminCard from "./AdminCard.vue";
 import { chevronForwardOutline, addCircleOutline } from "ionicons/icons";
-import { IonGrid, IonRow, IonCol } from "@ionic/vue";
+import { IonGrid,  IonCol, IonRow } from "@ionic/vue";
 export default {
   emits: ["edit-animal"],
   props: ["animalsCreated"],
@@ -97,9 +97,6 @@ ion-label {
 ion-avatar {
   margin: 0px;
 }
-ion-card {
-  margin: 0px;
-  margin-top: 15px;
-  border-radius: 15px;
-}
+
+
 </style>

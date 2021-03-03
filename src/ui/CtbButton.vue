@@ -17,9 +17,12 @@ export default {
 
 <style scoped>
 ion-button{
-    --background: var(--ion-color-secondary);
     --color:var(--ion-color-dark);
+    --background: white;
     --border-radius: 29.5px;
+    --border-color: var(--ion-color-secondary);
+    --border-width: 2px;
+    --border-style: solid;
     font-weight:700;
     --padding-bottom:20px;
     --padding-top:20px; 
