@@ -51,6 +51,10 @@ const routes = [
     component: () => import('@/views/EditProfile.vue')
   },
   {
+    path: '/firststeps',
+    component: () => import('@/views/FirstSteps.vue')
+  },
+  {
     path: '/signup',
     component: () => import('@/views/SignUpView.vue')
   },
