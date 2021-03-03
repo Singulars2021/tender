@@ -56,7 +56,7 @@ export default {
   },
   created() {
     // Example about how to update app's state
-    this.$store.dispatch("getAnimals");
+   // this.$store.dispatch("getAnimals");
     console.log("created");
   },
   // Ionic hook executed everytime the user changes to this view

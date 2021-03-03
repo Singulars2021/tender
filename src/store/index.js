@@ -14,7 +14,9 @@ import {
   addNewDocumentWithId,
   getDataById,
   deleteDocument,
-  deleteDocumentFromAnimalPhoto
+  deleteDocumentFromAnimalPhoto,
+  updateAnimalDocument,
+  getSyncData
 } from '../firebaseConfig.js'
 
 const store = createStore({
@@ -140,7 +142,7 @@ const store = createStore({
     //     })
     //   })
     // },
-    async loadData(context) {
+    async loadUsers(context) {
       //Se va a encargar de inicializar el state de nuestra aplicación
       const users = await getData('users');
       const result = users.map((user) => {
@@ -198,6 +200,7 @@ const store = createStore({
     // },
     // Will insert a new animal in the firebase app and then the app state must be updated. I think we may use most of the data structure that AnimalForm is already building. We'll have to take a look about how to relate the photos to the animal
     async insertNewAnimal(context, payload) {
+      console.log('Calling insertNewAninal action with payload:', payload)
       const animalFields = {
         userId: context.getters.getUserId,
         ...payload.animalFields
@@ -206,11 +209,13 @@ const store = createStore({
 
       const id = await addNewDocument(animalFields, 'animals')
 
+      console.log('isnertnewAnimal:photos:', animalPhotos)
       for (let i = 0; i < animalPhotos.length; i++) {
         await setPictureToAnimal(id, animalPhotos[i]);
       }
 
       animalFields.id = id;
+      console.log('isnertnewAnimal:animalFields:', animalFields)
       context.commit('insertAnimal', animalFields)
     },
     // Action to update an animal by its id (change description, name, etc.)
@@ -219,10 +224,10 @@ const store = createStore({
       const animalPhotos = payload.animalPhotos;
       const oldImgId = payload.oldImgId
 
-      const id = payload.animalFields.id
+      const id = payload.animalId
       const animalPhotosId = []
 
-      await updateDocument(id, payload.animalFields, 'animals')
+      await updateAnimalDocument(id, payload.animalFields, 'animals')
 
       for (let i = 0; i < animalPhotos.length; i++) {
         animalPhotosId.push(animalPhotos[i].id)
@@ -258,68 +263,73 @@ const store = createStore({
     // Retrieves all the animals from database, no filters
     async getAnimals(context) {
       // Get all the data from the collection named 'animals'
-      const animals = await getData('animals');
+      // const animals = await getData('animals');
+      getSyncData('animals', async (animals) => {
 
-      for (const animal in animals) {
-        const photos = await getCollectionFromCollection("animals", "images", animals[animal].id);
+        for (const animal in animals) {
+          const photos = await getCollectionFromCollection("animals", "images", animals[animal].id);
 
-        for (const photo in photos) {
-          animals[animal]["pictures"].push(photos[photo]);
+          for (const photo in photos) {
+            animals[animal]["pictures"].push(photos[photo]);
+          }
         }
 
-      }
+        context.commit('setAnimals', animals)
 
-      // updates the data in the app
-      context.commit('setAnimals', animals)
-    },
-    updateFilters(context, payload) {
-      const Filters = payload.filterFields
+      })
 
-      console.log(Filters)
 
-      context.commit('setFilters', Filters)
-    },
-    async setLoggedUser(context, payload) {
-      const id = payload.id
-      context.commit("setLoggedUser", id)
-    },
-    //Update user
-    async updateUser(context, payload) {
-      const id = context.getters.getLoggedUser.id
-      //Actualizar la colecion users, con nuevos datos (payload)
-      const updatedInfo = {
-        name: payload.name,
-        description: payload.description,
-        phoneNumber: payload.phoneNumber,
-        location: payload.location
-      }
-      console.log(updatedInfo)
-      await updateDocument(id, updatedInfo, 'users')
 
-      context.commit('updateUserInfo', payload)
-    },
-    async getUserId() {
-      const user = await getCurrentUser()
-      const id = user.uid
-      console.log("User inside getUserId action", user)
-      console.log("Id inside getUserId action", id)
-      return id
-    },
-    async updateReports(context, payload) {
-      const reportFields = {
-        userId: context.getters.getUserId,
-        ...payload.reportFields
-      }
+    // updates the data in the app
+  },
+  updateFilters(context, payload) {
+    const Filters = payload.filterFields
 
-      const id = await addNewDocument(reportFields, 'reports')
+    console.log(Filters)
 
-      console.log(reportFields)
-
-      reportFields.id = id
-
-      context.commit('setReports', reportFields)
+    context.commit('setFilters', Filters)
+  },
+  async setLoggedUser(context, payload) {
+    const id = payload.id
+    context.commit("setLoggedUser", id)
+  },
+  //Update user
+  async updateUser(context, payload) {
+    const id = context.getters.getLoggedUser.id
+    //Actualizar la colecion users, con nuevos datos (payload)
+    const updatedInfo = {
+      name: payload.name,
+      description: payload.description,
+      phoneNumber: payload.phoneNumber,
+      location: payload.location
     }
+    console.log(updatedInfo)
+    await updateDocument(id, updatedInfo, 'users')
+
+    context.commit('updateUserInfo', payload)
+  },
+  async getUserId() {
+    const user = await getCurrentUser()
+    const id = user.uid
+    console.log("User inside getUserId action", user)
+    console.log("Id inside getUserId action", id)
+    return id
+  },
+  async updateReports(context, payload) {
+    const reportFields = {
+      userId: context.getters.getUserId,
+      ...payload.reportFields
+    }
+
+    const id = await addNewDocument(reportFields, 'reports')
+
+    console.log(reportFields)
+
+    reportFields.id = id
+
+    context.commit('setReports', reportFields)
   }
+}
 })
 
 export default store

@@ -24,13 +24,15 @@ async function getCollectionFromCollection(from_collection, collection, doc_id) 
         .collection(from_collection)
         .doc(doc_id)
         .collection(collection);
-
+    console.log("get collction from collection: ", doc_id)
     const snapshot = await collectionRef.get();
 
     const images = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
     }));
+
+    console.log("images from collection:", images)
 
     return images;
 }
@@ -40,6 +42,22 @@ async function updateName(newName) {
     await user.updateProfile({
         displayName: newName
     })
+}
+
+function getSyncData(collection, cb) {
+    console.log('getSync_Data initial')
+    let data;
+    db.collection(collection)
+    .onSnapshot((querySnapshot) => {
+        console.log('New changes!!')
+        data = querySnapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+            pictures: [],
+        }));
+        console.log("All the data is formed: ", data)
+        cb(data)
+    });
 }
 
 async function getData(collection) {
@@ -84,6 +102,16 @@ async function addNewDocumentWithId(data, collection, id){
 }
 
 async function updateDocument(id, data, collection) {
+    const ref = db.collection(collection).doc(id);
+
+    await ref.update({
+        ...data
+    })
+
+    return ref
+}
+
+async function updateAnimalDocument(id, data, collection) {
     
     const ref = db.collection(collection).doc(id);
 
@@ -199,7 +227,9 @@ export {
     addNewDocumentWithId,
     getDataById,
     deleteDocument,
-    deleteDocumentFromAnimalPhoto
+    deleteDocumentFromAnimalPhoto,
+    updateAnimalDocument,
+    getSyncData
 }
 
 //Create function recieves user and password and create such user in the database. If everythuing goes well it should updateProfile

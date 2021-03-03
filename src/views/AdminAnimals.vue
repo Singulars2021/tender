@@ -8,8 +8,8 @@
             <img src="/assets/avatar.png" />
           </ion-avatar>
           <ion-label>
-            <h2>Tu nombre</h2>
-            <p>Ver mi perfil</p>
+            <h2>{{ user.name }}</h2>
+            <p>Editar perfil</p>
           </ion-label>
           <router-link to="/profile">
             <ion-button>
@@ -17,17 +17,17 @@
             </ion-button>
           </router-link>
         </ion-item>
-        <!-- <router-link to="/fitlers"> -->
+        <router-link to="/filters"> 
         <ion-button type="" expand="block" fill="solid"
           >Ajustes búsqueda</ion-button
         >
-        <!-- </router-link> -->
+        </router-link> 
       </div>
       <div class="animals-list">
         <h1>Tus animales</h1>
-        <ion-button>
+        <!-- <ion-button>
           <ion-icon :icon="chevronForwardOutline" />
-        </ion-button>
+        </ion-button> -->
       </div>
       <!--Your animals list -->
       <admin-your-animals
