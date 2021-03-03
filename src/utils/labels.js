@@ -236,10 +236,6 @@ const age = [
     {
         value: 3,
         label: 'Senior'
-    },
-    {
-        value: 4,
-        label: 'No lo sé'
     }
 ]
 
@@ -263,7 +259,46 @@ const adoptionType = [
         value: 1,
         label: 'Permanente'
     }
+    
+]
+const size = [
+    {
+        value: 0,
+        label: 'Pequeño',
+    },
+    {
+        value: 1,
+        label: 'Mediano'
+    },
+    {
+        value: 2,
+        label: 'Grande'
+    }
+    
+]
+
+const reportOptions = [
+    {
+        value: 0,
+        label: 'Spam',
+    },
+    {
+        value: 1,
+        label: 'Contenido inapropiado'
+    },
+    {
+        value: 2,
+        label: 'Maltrato animal'
+    },
+    {
+        value: 3,
+        label: 'Incita a la compraventa'
+    },
+    {
+        value: 4,
+        label: 'Información engañosa o errónea'
+    }
 ]
 
 
-export { provinces, sex, species, age, adoptionType }
+export { provinces, sex, species, age, adoptionType, reportOptions,size }

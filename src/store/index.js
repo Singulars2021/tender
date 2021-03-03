@@ -1,5 +1,20 @@
 import { createStore } from 'vuex'
-import { addNewDocument, getCollectionFromCollection, getData, setPictureToAnimal, updateDocument, createNewUser, updateName, logInUser, logOutUser, getCurrentUser, recoverPassword, addNewDocumentWithId } from '../firebaseConfig.js'
+import { 
+  addNewDocument,
+  getCollectionFromCollection,
+  getData,
+  setPictureToAnimal,
+  updateDocument, 
+  createNewUser, 
+  updateName, 
+  logInUser,
+  logOutUser, 
+  getCurrentUser,
+  recoverPassword,
+  addNewDocumentWithId, 
+  getDataById, 
+  deleteDocument, 
+  deleteDocumentFromAnimalPhoto } from '../firebaseConfig.js'
 
 const store = createStore({
   state: {
@@ -13,7 +28,11 @@ const store = createStore({
     loggedUser: null,
     users: [],
     animals: [],
-    animalSearchFilters: []
+    animalSearchFilters: [],
+    animal: {
+
+    },
+    reports: [],
   },
   getters: {
     getUserId(state) {
@@ -23,12 +42,25 @@ const store = createStore({
     getAllAnimals(state) {
       return state.animals
     },
+    getMyAnimals(state, getters) {
+      return state.animals.filter(animal => animal.userId === getters.getUserId)
+    }
+    ,
     getFilters(state) {
       return state.animalSearchFilters
     },
     //Getter of users
     getLoggedUser(state) {
       return state.loggedUser
+    },
+    getAnimalBy(state) {
+      return state.animal
+    },
+    getAnimalById: (state) => (id) => {
+      return state.animals.find(animal => animal.id === id)
+    },
+    getReports(state) {
+      return state.reports
     }
   },
   // Mutations must update the app's state. Every time we retrieve data from the database, these data must be loaded somewhere in our app state management. Because we are using Vuex of our app, we must use a mutation to alter the state, never alter it directly in an action of inside a component.
@@ -68,6 +100,32 @@ const store = createStore({
     },
     setUsers(state, payload){
       state.users = payload
+      console.dir(state.loggedUser)
+    },
+    setAnimalById(state, payload) {
+      state.animal = payload
+      console.log(state.animal)
+    },
+    updateAnAnimal(state, payload) {
+      for (var i = 0; i < state.length; i++) {
+        if (state[i].id == payload.id) {
+          state[i] = payload
+        }
+      }
+    },
+    deleteDocument(state, payload) {
+      for (var i = 0; i < state.length; i++) {
+        if (state[i].id == payload) {
+          state[i].disable = true
+          state[i].disableDate = new Date()
+        }
+      }
+    },
+    insertReport(state, payload) {
+      state.reports.push(payload)
+    },
+    setReports(state, payload) {
+      state.reports = payload
     }
   },
   actions: {
@@ -155,13 +213,46 @@ const store = createStore({
       context.commit('insertAnimal', animalFields)
     },
     // Action to update an animal by its id (change description, name, etc.)
-    async updateAnimal() {
+    async updateAnimal(context, payload) {
 
+      const animalPhotos = payload.animalPhotos;
+      const oldImgId = payload.oldImgId
 
+      const id = payload.animalFields.id
+      const animalPhotosId = []
+
+      await updateDocument(id, payload.animalFields, 'animals')
+
+      for (let i = 0; i < animalPhotos.length; i++) {
+        animalPhotosId.push(animalPhotos[i].id)
+        if (oldImgId.includes(animalPhotos[i].id)) {
+          console.log('la imagen ya esta')
+        } else {
+          await setPictureToAnimal(id, animalPhotos[i]);
+        }
+      }
+
+      for (let i = 0; i < oldImgId.length; i++) {
+        if (!animalPhotosId.includes(oldImgId[i])) {
+          await deleteDocumentFromAnimalPhoto(oldImgId[i], id)
+        }
+      }
+
+      context.commit('updateAnAnimal', payload)
     },
     // Action to remove the animal from the firebase database. Caution! Usually, we do not remove data from databases. It is better to set a new field such as "removalDate"; so if it has a value, we know that this animal should not be retrieved from firebase anymore (we'll have to change the getters to take this info into account)
-    async removeAnimal() {
+    async removeAnimal(context, payload) {
 
+      await deleteDocument(payload)
+
+      context.commit('deleteDocument', payload)
+
+    },
+
+    async getAnimal(context, payload) {
+      const animal = await getDataById(payload, 'animals')
+
+      context.commit('setAnimalById', animal)
     },
     // Retrieves all the animals from database, no filters
     async getAnimals(context) {
@@ -171,8 +262,10 @@ const store = createStore({
       for (const animal in animals) {
         const photos = await getCollectionFromCollection("animals", "images", animals[animal].id);
 
-        for (const photo in photos)
-          animals[animal]["pictures"].push(photos[photo].image);
+        for (const photo in photos) {
+          animals[animal]["pictures"].push(photos[photo]);
+        }
+
       }
 
       // updates the data in the app
@@ -210,6 +303,20 @@ const store = createStore({
       console.log("User inside getUserId action", user)
       console.log("Id inside getUserId action", id)
       return id
+    },
+    async updateReports(context, payload) {
+      const reportFields = {
+        userId: context.getters.getUserId,
+        ...payload.reportFields
+      }
+
+      const id = await addNewDocument(reportFields, 'reports')
+
+      console.log(reportFields)
+
+      reportFields.id = id
+
+      context.commit('setReports', reportFields)
     }
   }
 })
