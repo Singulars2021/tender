@@ -44,9 +44,7 @@ ionic build
 
 ## Ionic & Vue's Documentation
 
-[Ionic](https://ionicframework.com/docs/).
-
-[Vue](https://v3.vuejs.org/).
+[Ionic](https://ionicframework.com/docs/) & [Vue](https://v3.vuejs.org/).
 
 
 
