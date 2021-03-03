@@ -362,7 +362,6 @@ export default {
       }
 
       const animal = {
-        id: this.id,
         name: this.name,
         age: this.age,
         sex: this.sex,
@@ -389,10 +388,11 @@ export default {
           animalFields: animal,
           animalPhotos: this.imagesList,
           oldImgId: this.oldImgId,
+          animalId: this.id
         });
       }
       this.clearForm();
-      this.$store.dispatch("getAnimals");
+      //this.$store.dispatch("getAnimals");
       this.$router.push("/adminanimals");
       // this.$store.dispatch("", {
       //   animalFields: animal,

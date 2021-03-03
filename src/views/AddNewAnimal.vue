@@ -42,7 +42,7 @@ export default {
     }
   },
    async ionViewWillEnter() {
-     await this.$store.dispatch("getAnimals");
+     //await this.$store.dispatch("getAnimals");
      if(this.$route.params.id){
        this.animal = this.$store.getters.getAnimalById(this.$route.params.id)
      }
