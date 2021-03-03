@@ -70,7 +70,7 @@ The team that made this possible.
     Óscar Miras - - omiras 
     Pedro Ninci - - pppeedrito 
     Lenny Cala - - LennyCC  
-    Xiande - - Xiande-zx 
+    Xiande Qiu - - Xiande-zx 
     Sergi Justiniano - - homell100   
     Maria Canals - - maria-canals 
     Clàudia Ballano -  - claudiaballano 
