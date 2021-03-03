@@ -1,36 +1,35 @@
 <template>
   <ion-page>
     <ion-header>
-      <ion-toolbar>
-        <back-button href="/animals/slider"></back-button>
-        <ion-title>Ajustes búsqueda</ion-title>
-      </ion-toolbar>
+      <ion-title size="large">Report Animal</ion-title>
     </ion-header>
     <ion-content>
-        <search-settings></search-settings>
+        <report-form :animalId="$route.params.id" ></report-form>
     </ion-content>
   </ion-page>
 </template>
 
 <script>
-import SearchSettings from "@/components/SearchSettings.vue";
+import ReportForm from "@/components/ReportForm.vue";
 import { IonPage, IonHeader, IonTitle, IonContent } from "@ionic/vue";
-import BackButton from '../ui/BackButton.vue';
 
 export default {
   name: "search-animal",
   components: {
-      SearchSettings,
+    ReportForm,
     IonHeader,
     IonTitle,
     IonContent,
     IonPage,
-    BackButton,
   },
   data() {
     return {};
   },
+  ionViewWillEnter(){
+    console.log(this.$route.params.id)
+  }
 };
 </script>
+
 <style scoped>
 </style>

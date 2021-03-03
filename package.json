@@ -16,6 +16,7 @@
     "@ionic/vue-router": "^5.4.0",
     "cordova-plugin-x-toast": "^2.7.2",
     "core-js": "^3.6.5",
+    "emailjs-com": "^2.6.4",
     "firebase": "^8.2.9",
     "vue": "^3.0.5",
     "vue-router": "^4.0.0-0",

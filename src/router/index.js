@@ -11,7 +11,6 @@ const routes = [
     path: '/adminanimals',
     component: () => import('@/views/AdminAnimals.vue')
   },
-
   {
     path: '/animals/',
     component: TabsAnimals,
@@ -40,12 +39,20 @@ const routes = [
     component: () => import('@/views/SearchAnimals.vue')
   },
   {
+    path: '/report/:id',
+    component: () => import('@/views/ReportAnimal.vue')
+  },
+  {
     path: '/form',
     component: () => import('@/views/AddNewAnimal.vue')
   },
   {
     path: '/profile',
     component: () => import('@/views/EditProfile.vue')
+  },
+  {
+    path: '/firststeps',
+    component: () => import('@/views/FirstSteps.vue')
   },
   {
     path: '/signup',

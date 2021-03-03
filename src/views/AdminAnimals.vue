@@ -17,11 +17,11 @@
             </ion-button>
           </router-link>
         </ion-item>
-        <router-link to="/fitlers">
-          <ion-button type="" expand="block" fill="solid"
-            >Ajustes búsqueda</ion-button
-          >
-        </router-link>
+        <!-- <router-link to="/fitlers"> -->
+        <ion-button type="" expand="block" fill="solid"
+          >Ajustes búsqueda</ion-button
+        >
+        <!-- </router-link> -->
       </div>
       <div class="animals-list">
         <h1>Tus animales</h1>
@@ -29,7 +29,11 @@
           <ion-icon :icon="chevronForwardOutline" />
         </ion-button>
       </div>
-      <admin-your-animals :animalsCreated="animalsCreated"></admin-your-animals>
+      <!--Your animals list -->
+      <admin-your-animals
+        :animalsCreated="animals"
+        @edit-animal="editAnimal"
+      ></admin-your-animals>
     </ion-content>
     <router-link to="/animals/add">
       <ion-fab-button>
@@ -54,33 +58,28 @@ import {
 } from "@ionic/vue";
 
 export default {
+  created() {
+    this.$store.dispatch("getAnimals");
+  },
+  computed: {
+    animals() {
+      return this.$store.getters.getMyAnimals;
+    },
+    user() {
+      return this.$store.getters.getLoggedUser;
+    },
+  },
   data() {
     return {
-      animalsCreated: [
-        {
-          img:
-            "https://images.unsplash.com/photo-1601758003839-512c0f4159e5?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=750&q=80",
-          name: "Marcos",
-        },
-        {
-          img:
-            "https://images.unsplash.com/photo-1536910467852-a6fded0c5c47?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=750&q=80",
-          name: "Roberta",
-        },
-        {
-          img:
-            "https://images.unsplash.com/photo-1511275539165-cc46b1ee89bf?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=750&q=80",
-          name: "Simba",
-        },
-        {
-          img:
-            "https://images.unsplash.com/photo-1579833098880-e52055f43cad?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=750&q=800",
-          name: "Margarita",
-        },
-      ],
       chevronForwardOutline,
       addCircleOutline,
     };
+  },
+  methods: {
+    editAnimal(id) {
+      this.$router.push({ name: "EditAnimal", params: { id: id } });
+      console.log("Este es el ID del animal clickado", id);
+    },
   },
   components: {
     IonFabButton,
@@ -92,10 +91,6 @@ export default {
     IonLabel,
     IonContent,
     AdminYourAnimals,
-    // IonGrid,
-    // IonRow,
-    // IonCol,
-    // AdminCard,
   },
 };
 </script>
