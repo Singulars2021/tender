@@ -24,7 +24,7 @@ async function getCollectionFromCollection(from_collection, collection, doc_id) 
         .collection(from_collection)
         .doc(doc_id)
         .collection(collection);
-    console.log("get collction from collection: ", doc_id)
+    // console.log("get collction from collection: ", doc_id)
     const snapshot = await collectionRef.get();
 
     const images = snapshot.docs.map((doc) => ({
@@ -32,7 +32,7 @@ async function getCollectionFromCollection(from_collection, collection, doc_id) 
         ...doc.data(),
     }));
 
-    console.log("images from collection:", images)
+    // console.log("images from collection:", images)
 
     return images;
 }

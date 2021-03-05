@@ -125,7 +125,8 @@ export default {
   },
   computed: {
     animals() {
-      return this.$store.getters.getAllAnimals;
+      console.log('AnimalSlider computed: ', this.$store.getters.getFilteredAnimals)
+      return this.$store.getters.getFilteredAnimals;
     },
   },
   data() {
