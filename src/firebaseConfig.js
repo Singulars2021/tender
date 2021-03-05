@@ -165,8 +165,8 @@ async function deleteDocument(id){
     })
 }
 
-async function addFavorite(id, id_animal) {
-    const ref = db.collection("animals").doc(id);
+async function addFavorite(id_animal, id_user) {
+    const ref = db.collection("users").doc(id_user);
 
     return ref.update({
         favoriteAnimalsId:firebase.firestore.FieldValue.arrayUnion(id_animal)
@@ -223,7 +223,7 @@ async function logOutUser(){
 }
 
 async function getCurrentUser() {
-    const user = await firebase.auth().currentUser
+    const user = firebase.auth().currentUser
     return user  
 }
 

@@ -36,14 +36,14 @@
     </ion-card-content>
     <div>
       <ion-chip color="dark" id="footer-chip" class="adoption-type-chip">
-        <ion-label>{{ animal.adoptionType }}</ion-label>
+        <ion-label>{{ getAdoptionTypeLabel(animal.adoptionType) }}</ion-label>
       </ion-chip>
     </div>
   </ion-card>
 </template>
 
 <script>
-import { provinces, sex, age, species } from "../utils/labels.js";
+import { provinces, sex, age, species, adoptionType } from "../utils/labels.js";
 import {
   IonSlides,
   IonSlide,
@@ -95,6 +95,9 @@ export default {
       // console.log(this.speciesLabels[value].label);
       return this.speciesLabels[value].label;
     },
+    getAdoptionTypeLabel(value) {
+      return this.adoptionTypeLabels[value].label;
+    },
     getAgeLabel(value) {
       // console.log(this.ageLabels[value].label);
       return this.ageLabels[value].label;
@@ -111,7 +114,7 @@ export default {
             text: "Denunciar",
             role: "destructive",
             handler: () => {
-              this.$router.push("/report/"+id)
+              this.$router.push({ name: "report-animal", params: {id: id} });
               console.log("Denunciar clicked");
             },
           },
@@ -154,6 +157,7 @@ export default {
       speciesLabels: species,
       provincesLabels: provinces,
       ageLabels: age,
+      adoptionTypeLabels: adoptionType,
     };
   },
 };
