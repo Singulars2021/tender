@@ -46,6 +46,7 @@
                 :value="province.value"
                 >{{ province.label }}
               </ion-select-option>
+              <ion-select-option value=""></ion-select-option>
             </ion-select>
           </ion-item>
           <ion-item>
@@ -130,19 +131,26 @@ export default {
     BackButton,
     CtaButton,
   },
-  data() {
-    return {
-      newPhone: undefined,
-      newName: undefined,
-      newLocation: undefined,
-      newBio: undefined,
-      chevronBackOutline,
-      heart,
-      provincesLabels: provinces,
-    };
+  data(){
+      return {
+          newPhone: "",
+          newName: undefined,
+          newLocation: "",
+          newBio: "",
+          chevronBackOutline,
+          heart,
+          provincesLabels: provinces
+      }
   },
-  async ionViewWillEnter() {
-    const userLogged = this.$store.getters.getLoggedUser;
+  async ionViewWillEnter(){
+      const userLogged = this.$store.getters.getLoggedUser 
+
+      this.newName = userLogged.name
+      this.newBio = userLogged.description || ""
+      this.newPhone = userLogged.phoneNumber || ""
+      this.newLocation = userLogged.location || ""
+      console.log('UserLogged.uid: ', userLogged.uid)
+      console.log('getter getUserId: ', this.$store.getters.getUserId)
 
     this.newName = userLogged.name;
     this.newBio = userLogged.description;

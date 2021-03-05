@@ -32,10 +32,10 @@ const store = createStore({
     //   location: 1,
     //   phoneNumber: '+3466677788'
     // },
-    loggedUser: null,
+    loggedUser: undefined,
     users: [],
     animals: [],
-    animalSearchFilters: [],
+    animalSearchFilters: {},
     animal: {
 
     },
@@ -48,6 +48,46 @@ const store = createStore({
     // Knowking that the state of our app is always updated (or it should be); we may write all the getters that we need here to retrieve any sort of info, such all the animals, filter animals by some criteria, retrieve information about the logged user, etc
     getAllAnimals(state) {
       return state.animals
+    },
+    getFilteredAnimals(state, getters){
+      const allAnimals = getters.getAllAnimals;
+      const filters = state.animalSearchFilters;
+
+      console.log('getFiltered getter', allAnimals);
+      console.log('Filters:', filters)
+
+      if(!filters){
+        console.log('Empty Filter')
+        return allAnimals
+      }
+
+
+
+     const result =  allAnimals.filter(animal => {
+        return (filters.species == undefined || filters.species == animal.species) && 
+               (filters.sex == undefined || filters.sex == animal.sex) && 
+               (filters.adoptionType == undefined || filters.adoptionType == animal.adoptionType) && 
+               (filters.location == undefined || filters.location == animal.location) && 
+               (filters.age == undefined || filters.age == animal.age)
+      })
+
+      return result
+
+      // }else {
+      //   return allAnimals.filter(animal => {
+      //     if(filters.species == animal.species){
+      //       return animal
+      //     } else if(filters.sex == animal.sex){
+      //       return animal
+      //     } else if(filters.adoptionType == animal.adoptionType){
+      //       return animal
+      //     } else if(filters.location == animal.location){
+      //       return animal
+      //     }  else if(filters.age == animal.age){
+      //       return animal
+      //     }
+      // })}
+      
     },
     getMyAnimals(state, getters) {
       return state.animals.filter(animal => animal.userId === getters.getUserId)
@@ -71,7 +111,10 @@ const store = createStore({
     },
     getReports(state) {
       return state.reports
-    }
+    },
+    getUserById: (state) => (id) => {
+      return state.users.find(user => user.id === id)
+    },
   },
   // Mutations must update the app's state. Every time we retrieve data from the database, these data must be loaded somewhere in our app state management. Because we are using Vuex of our app, we must use a mutation to alter the state, never alter it directly in an action of inside a component.
   mutations: {
@@ -135,9 +178,9 @@ const store = createStore({
     updateAnimals(state, payload) {
       state.animals.splice(payload, 1)
     },
-    setFavoriteAnimals(state, payload) {
-      state.loggedUser.favoriteAnimals.push(payload);
-    },
+    // setFavoriteAnimals(state, payload) {
+    //   state.loggedUser.favoriteAnimals.push(payload);
+    // },
     setRemovedAnimalsId(state, payload) {
       state.loggedUser.removedAnimalsId = payload;
     },
