@@ -31,10 +31,10 @@
       </ion-list>
       <!-- Forget Password Link -->
       <p class="forgot-password text-right mt-2 mb-4">
-        <router-link to="/forgot-password">Forgot password ?</router-link>
+        <router-link :to="{name: 'forgot-password'}">Forgot password ?</router-link>
       </p>
       <p class="not-account text-right mt-2 mb-4">
-        <router-link to="/signup">Don't you have an account yet?</router-link>
+        <router-link :to="{name: 'sign-up'}">Don't you have an account yet?</router-link>
       </p>
     </form>
   </div>
@@ -74,7 +74,7 @@ export default {
   async created() {
     const user = await getCurrentUser();
     if (user) {
-      console.log("User credentials", user.email, user.password)
+      console.log("User credentials", user.email, user.password);
       this.user.email = user.email;
       this.user.password = user.password;
       this.userLogin();
@@ -101,7 +101,7 @@ export default {
         this.openToast(error.message);
         return;
       }
-      this.$router.replace("/animals/slider");
+      this.$router.push({ name: "slider", replace: true });
       // setStoragePassword(payload)
     },
   },

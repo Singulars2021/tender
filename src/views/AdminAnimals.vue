@@ -1,40 +1,43 @@
 <template>
   <ion-page>
-     <ion-header>
+    <ion-header>
       <ion-toolbar>
-        <back-button href="/animals/slider"></back-button>
         <ion-title>Mi perfil</ion-title>
-      </ion-toolbar>      
+      </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
       <div class="header">
         <!-- <img class="logo" src="/assets/tender.png" /> -->
-      
+
         <ion-item>
           <div class="flexcontent">
-          <div class="myname">
-          <ion-avatar slot="start">
-            <img src="/assets/avatar.png" />
-          </ion-avatar>
-          <ion-label class="perfil">
-            <h1>{{ user.name }}</h1>
-            <p>Editar mi perfil</p>
-          </ion-label>
+            <div class="myname">
+              <ion-avatar slot="start">
+                <img src="/assets/avatar.png" />
+              </ion-avatar>
+              <ion-label class="perfil">
+                <h1>{{ user.name }}</h1>
+                <p>Editar mi perfil</p>
+              </ion-label>
+            </div>
+            <div>
+              <router-link :to="{ name: 'profile' }">
+                <ion-icon
+                  color="dark"
+                  name="chevron-forward"
+                  class="forward"
+                ></ion-icon>
+                <!-- <ion-icon :icon="chevronForwardOutline" /> -->
+              </router-link>
+            </div>
           </div>
-          <div >
-          <router-link to="/profile">            
-              <ion-icon color="dark" name="chevron-forward"  class="forward"></ion-icon>
-              <!-- <ion-icon :icon="chevronForwardOutline" /> -->            
-          </router-link>
-          </div>
-          </div>
-        </ion-item> 
-         <router-link to="/filters"> 
+        </ion-item>
+        <router-link :to="{ name: 'filters' }">
           <ctb-button>AJUSTES BÚSQUEDA</ctb-button>
-        
-      <ion-item-divider></ion-item-divider>
+
+          <ion-item-divider></ion-item-divider>
         </router-link>
-      </div>      
+      </div>
       <div class="animals-list">
         <h3>Tus animales</h3>
         <!-- <ion-button>
@@ -47,7 +50,7 @@
         @edit-animal="editAnimal"
       ></admin-your-animals>
     </ion-content>
-    <router-link to="/form">
+    <router-link :to="{ name: 'animal-form' }">
       <ion-fab-button color="secondary">
         <ion-icon :icon="addOutline"> </ion-icon>
       </ion-fab-button>
@@ -59,7 +62,6 @@
 import AdminYourAnimals from "../components/AdminYourAnimals.vue";
 import { chevronForwardOutline, addOutline } from "ionicons/icons";
 import { IonPage, IonHeader, IonTitle, IonContent } from "@ionic/vue";
-import BackButton from '../ui/BackButton.vue';
 
 import {
   IonFabButton,
@@ -69,13 +71,13 @@ import {
   IonItem,
   IonLabel,
   IonToolbar,
-  IonItemDivider
+  IonItemDivider,
 } from "@ionic/vue";
-import CtbButton from '../ui/CtbButton.vue';
+import CtbButton from "../ui/CtbButton.vue";
 
 export default {
   ionViewWillEnter() {
-    console.log("GettersgetMyanimals",this.$store.getters.getMyAnimals)
+    console.log("GettersgetMyanimals", this.$store.getters.getMyAnimals);
   },
   computed: {
     animals() {
@@ -108,18 +110,16 @@ export default {
     IonContent,
     IonToolbar,
     AdminYourAnimals,
-    BackButton,
     IonHeader,
     IonTitle,
     CtbButton,
-    IonItemDivider
+    IonItemDivider,
   },
 };
 </script>
 
 
 <style scoped>
-
 ion-button {
   width: fit-content;
   margin: 1rem;
@@ -136,14 +136,13 @@ a {
 }
 
 p {
-  
   font-size: 1.2rem;
 }
 .md h3 {
-     margin: 15px 18.5px 0px 18.5px;
+  margin: 15px 18.5px 0px 18.5px;
 }
-.ios h3{
-     margin: 15px 25.8px -15px 25.8px;
+.ios h3 {
+  margin: 15px 25.8px -15px 25.8px;
 }
 .animals-list {
   width: 95%;
@@ -161,12 +160,10 @@ p {
 ion-fab-button {
   margin: 42%;
   margin-bottom: 15%;
-  
 }
 .perfil {
   margin-left: 1rem;
   margin-right: 0.5rem;
-  
 }
 
 ion-avatar {
@@ -179,14 +176,13 @@ ion-card {
 }
 ion-item-divider {
   margin-top: 0px;
-  min-height: 0.70rem;
+  min-height: 0.7rem;
 }
 
 ion-item {
   margin-top: 20px;
   margin-bottom: 5px;
   width: 100vw;
-
 }
 .myname {
   display: flex;

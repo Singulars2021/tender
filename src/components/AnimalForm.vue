@@ -1,202 +1,205 @@
 <template>
-<span>
-  <form action="" class="ion-padding" @submit.prevent="addAnimal">
-    <ion-list>
-      <!-- Image item -->
-      <ion-item v-if="imagesList.length == 0">
-        <div class="image">
-          <!-- <ion-icon :icon="imagesOutline" size="large" @click="takePicture"></ion-icon> -->
-          <img
-            src="../../public/assets/add-image-icon.svg"
-            alt="svg add image"
-            width="100"
-            height="100"
-            @click="takePicture"
-          />
-        </div>
-      </ion-item>
-      <ion-item v-else>
-        <div class="image">
-          <ion-grid>
-            <ion-row>
-              <ion-col v-for="index in 5" :key="index">
-                <ion-icon
-                  :icon="imageOutline"
-                  size="large"
-                  @click="takePicture"
-                  v-if="index > imagesList.length"
-                ></ion-icon>
-                <div class="preview" v-else>
-                  <img
-                    :src="imagesList[index - 1].preview"
-                    @click="setOpen(index)"
-                  />
-                </div>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-          <ion-modal
-            :is-open="isOpen"
-            @onDidDismiss="setClose"
-            css-class="image-modal"
-          >
-            <div>
-              <div>
-                <img class="image-preview" :src="imageToPreview" />
-              </div>
-              <ion-fab vertical="bottom" horizontal="center">
-                <ion-fab-button color="danger">
+  <span>
+    <form action="" class="ion-padding" @submit.prevent="addAnimal">
+      <ion-list>
+        <!-- Image item -->
+        <ion-item v-if="imagesList.length == 0">
+          <div class="image">
+            <!-- <ion-icon :icon="imagesOutline" size="large" @click="takePicture"></ion-icon> -->
+            <img
+              src="../../public/assets/add-image-icon.svg"
+              alt="svg add image"
+              width="100"
+              height="100"
+              @click="takePicture"
+            />
+          </div>
+        </ion-item>
+        <ion-item v-else>
+          <div class="image">
+            <ion-grid>
+              <ion-row>
+                <ion-col v-for="index in 5" :key="index">
                   <ion-icon
-                    class="icon-trash"
-                    :icon="trash"
+                    :icon="imageOutline"
                     size="large"
-                    @click="deleteImage()"
+                    @click="takePicture"
+                    v-if="index > imagesList.length"
                   ></ion-icon>
-                </ion-fab-button>
-              </ion-fab>
-            </div>
-          </ion-modal>
-        </div>
-        <p v-if="error">{{ error }}</p>
-      </ion-item>
+                  <div class="preview" v-else>
+                    <img
+                      :src="imagesList[index - 1].preview"
+                      @click="setOpen(index)"
+                    />
+                  </div>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+            <ion-modal
+              :is-open="isOpen"
+              @onDidDismiss="setClose"
+              css-class="image-modal"
+            >
+              <div>
+                <div>
+                  <img class="image-preview" :src="imageToPreview" />
+                </div>
+                <ion-fab vertical="bottom" horizontal="center">
+                  <ion-fab-button color="danger">
+                    <ion-icon
+                      class="icon-trash"
+                      :icon="trash"
+                      size="large"
+                      @click="deleteImage()"
+                    ></ion-icon>
+                  </ion-fab-button>
+                </ion-fab>
+              </div>
+            </ion-modal>
+          </div>
+          <p v-if="error">{{ error }}</p>
+        </ion-item>
 
-      <!-- Name item -->
-      <ion-item>
-        <ion-label position="fixed">Nombre</ion-label>
-        <ion-input v-model="name" type="text" @ionBlur="onFormEdit"></ion-input>
-      </ion-item>
-      <!-- Species Item -->
-      <ion-item>
-        <ion-label>Especie</ion-label>
-        <ion-select
-          v-model="species"
-          okText="Aceptar"
-          cancelText="Cancelar"
-          @ionChange="onFormEdit"
-        >
-          <ion-select-option
-            v-for="specie in speciesLabels"
-            :key="specie.value"
-            :value="specie.value"
-            >{{ specie.label }}</ion-select-option
+        <!-- Name item -->
+        <ion-item>
+          <ion-label position="fixed">Nombre</ion-label>
+          <ion-input
+            v-model="name"
+            type="text"
+            @ionBlur="onFormEdit"
+          ></ion-input>
+        </ion-item>
+        <!-- Species Item -->
+        <ion-item>
+          <ion-label>Especie</ion-label>
+          <ion-select
+            v-model="species"
+            okText="Aceptar"
+            cancelText="Cancelar"
+            @ionChange="onFormEdit"
           >
-        </ion-select>
-      </ion-item>
-      <!-- Age item -->
-      <ion-item>
-        <ion-label>Edad</ion-label>
-        <ion-select
-          v-model="age"
-          okText="Aceptar"
-          cancelText="Cancelar"
-          @ionChange="onFormEdit"
-        >
-          <ion-select-option
-            v-for="age in ageLabels"
-            :key="age.value"
-            :value="age.value"
-            >{{ age.label }}</ion-select-option
+            <ion-select-option
+              v-for="specie in speciesLabels"
+              :key="specie.value"
+              :value="specie.value"
+              >{{ specie.label }}</ion-select-option
+            >
+          </ion-select>
+        </ion-item>
+        <!-- Age item -->
+        <ion-item>
+          <ion-label>Edad</ion-label>
+          <ion-select
+            v-model="age"
+            okText="Aceptar"
+            cancelText="Cancelar"
+            @ionChange="onFormEdit"
           >
-        </ion-select>
-      </ion-item>
-      <!-- Sex item -->
-      <ion-item>
-        <ion-label>Sexo</ion-label>
-        <ion-select
-          v-model="sex"
-          okText="Aceptar"
-          cancelText="Cancelar"
-          @ionChange="onFormEdit"
-        >
-          <ion-select-option
-            v-for="sex in sexLabels"
-            :key="sex.value"
-            :value="sex.value"
-            >{{ sex.label }}</ion-select-option
+            <ion-select-option
+              v-for="age in ageLabels"
+              :key="age.value"
+              :value="age.value"
+              >{{ age.label }}</ion-select-option
+            >
+          </ion-select>
+        </ion-item>
+        <!-- Sex item -->
+        <ion-item>
+          <ion-label>Sexo</ion-label>
+          <ion-select
+            v-model="sex"
+            okText="Aceptar"
+            cancelText="Cancelar"
+            @ionChange="onFormEdit"
           >
-        </ion-select>
-      </ion-item>
+            <ion-select-option
+              v-for="sex in sexLabels"
+              :key="sex.value"
+              :value="sex.value"
+              >{{ sex.label }}</ion-select-option
+            >
+          </ion-select>
+        </ion-item>
 
-      <!-- Size item -->
-      <ion-item>
-        <ion-label>Tamaño</ion-label>
-        <ion-select
-          v-model="size"
-          okText="Aceptar"
-          cancelText="Cancelar"
-          @ionChange="onFormEdit"
-          :interface-options="options"
-        >
-          <ion-select-option
-            v-for="size in sizeLabels"
-            :key="size.value"
-            :value="size.value"
-            >{{ size.label }}</ion-select-option
+        <!-- Size item -->
+        <ion-item>
+          <ion-label>Tamaño</ion-label>
+          <ion-select
+            v-model="size"
+            okText="Aceptar"
+            cancelText="Cancelar"
+            @ionChange="onFormEdit"
+            :interface-options="options"
           >
-        </ion-select>
-      </ion-item>
-      <!-- Adoption Type Item -->
-      <ion-item>
-        <ion-label>Tipo de adopción</ion-label>
-        <ion-select
-          v-model="adoptionType"
-          okText="Aceptar"
-          cancelText="Cancelar"
-          @ionChange="onFormEdit"
-          :interface-options="options"
-        >
-          <ion-select-option
-            v-for="adoptionType in adoptionTypeLabels"
-            :key="adoptionType.value"
-            :value="adoptionType.value"
-            >{{ adoptionType.label }}</ion-select-option
+            <ion-select-option
+              v-for="size in sizeLabels"
+              :key="size.value"
+              :value="size.value"
+              >{{ size.label }}</ion-select-option
+            >
+          </ion-select>
+        </ion-item>
+        <!-- Adoption Type Item -->
+        <ion-item>
+          <ion-label>Tipo de adopción</ion-label>
+          <ion-select
+            v-model="adoptionType"
+            okText="Aceptar"
+            cancelText="Cancelar"
+            @ionChange="onFormEdit"
+            :interface-options="options"
           >
-        </ion-select>
-      </ion-item>
-      <!-- Location Item -->
-      <ion-item>
-        <ion-label>Localización</ion-label>
-        <ion-select
-          v-model="location"
-          interface="action-sheet"
-          cancelText="Cancelar"
-          @ionChange="onFormEdit"
-          :interface-options="options"
-        >
-          <ion-select-option
-            v-for="province in provincesLabels"
-            :key="province.value"
-            :value="province.value"
-            >{{ province.label }}</ion-select-option
+            <ion-select-option
+              v-for="adoptionType in adoptionTypeLabels"
+              :key="adoptionType.value"
+              :value="adoptionType.value"
+              >{{ adoptionType.label }}</ion-select-option
+            >
+          </ion-select>
+        </ion-item>
+        <!-- Location Item -->
+        <ion-item>
+          <ion-label>Localización</ion-label>
+          <ion-select
+            v-model="location"
+            interface="action-sheet"
+            cancelText="Cancelar"
+            @ionChange="onFormEdit"
+            :interface-options="options"
           >
-        </ion-select>
-      </ion-item>
-      <!-- Description Item -->
-      <ion-item>
-        <ion-label position="fixed">Descripción</ion-label>
-        <ion-textarea
-          v-model="description"
-          rows="1"
-          auto-grow
-          @ionBlur="onFormEdit"
-        ></ion-textarea>
-      </ion-item>
-    </ion-list>
-    <ion-text v-if="!isFormValid" color="danger">
-      <h4>Por favor, rellena todos los campos antes de guardar.</h4>
-    </ion-text>
-    <div v-if="!animal">
-      <cta-button>GUARDAR</cta-button>
+            <ion-select-option
+              v-for="province in provincesLabels"
+              :key="province.value"
+              :value="province.value"
+              >{{ province.label }}</ion-select-option
+            >
+          </ion-select>
+        </ion-item>
+        <!-- Description Item -->
+        <ion-item>
+          <ion-label position="fixed">Descripción</ion-label>
+          <ion-textarea
+            v-model="description"
+            rows="1"
+            auto-grow
+            @ionBlur="onFormEdit"
+          ></ion-textarea>
+        </ion-item>
+      </ion-list>
+      <ion-text v-if="!isFormValid" color="danger">
+        <h4>Por favor, rellena todos los campos antes de guardar.</h4>
+      </ion-text>
+      <div v-if="!animal">
+        <cta-button>GUARDAR</cta-button>
+      </div>
+      <div v-else>
+        <cta-button class="change">Modificar datos</cta-button>
+      </div>
+    </form>
+    <div v-if="animal">
+      <cta-button @click="eliminar" class="delete">Eliminar</cta-button>
     </div>
-    <div v-else>
-      <cta-button>Cambiar</cta-button>
-    </div>
-  </form>
-  <div v-if="animal">
-    <cta-button @click="eliminar" class="delete">Eliminar</cta-button>
-  </div>
-</span>
-  
+  </span>
 </template>
 
 <script>
@@ -320,25 +323,24 @@ export default {
         message: "Estas seguro que quieres elimnar?",
         buttons: [
           {
-              text: 'Cancel',
-              role: 'cancel',
-              cssClass: 'secondary',
-              handler: blah => {
-                console.log('Confirm Cancel:', blah)
-              },
-            },{
-              text: 'Eliminar',
-              handler: () => {
-                this.$store.dispatch("removeAnimal", this.animal.id);
-      this.$router.push("/adminanimals");
-              },
+            text: "Cancel",
+            role: "cancel",
+            cssClass: "secondary",
+            handler: (blah) => {
+              console.log("Confirm Cancel:", blah);
             },
-          ]
+          },
+          {
+            text: "Eliminar",
+            handler: async () => {
+              await this.$store.dispatch("removeAnimal", this.animal.id);
+              this.$router.push({ name: "admin-animals" });
+            },
+          },
+        ],
       });
-    return alert.present();
-    
-
-      },
+      return alert.present();
+    },
 
     onFormEdit() {
       this.isFormValid = true;
@@ -388,12 +390,12 @@ export default {
           animalFields: animal,
           animalPhotos: this.imagesList,
           oldImgId: this.oldImgId,
-          animalId: this.id
+          animalId: this.id,
         });
       }
       this.clearForm();
       //this.$store.dispatch("getAnimals");
-      this.$router.push("/adminanimals");
+      this.$router.push({ name: "admin-animals" });
       // this.$store.dispatch("", {
       //   animalFields: animal,
       // });
@@ -510,8 +512,13 @@ ion-icon {
 }
 
 .delete {
-  bottom: 90px;
+  bottom: 60px;
   --background: var(--ion-color-danger-tint);
   --color: var(--ion-color-dark);
 }
+
+.change {
+  bottom: 10px;
+}
+
 </style>
