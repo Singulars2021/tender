@@ -2,11 +2,11 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <back-button href="/animals/slider"></back-button>
+        <back-button href=""></back-button>
         <ion-title>Contacto</ion-title>
       </ion-toolbar> 
     </ion-header>
-    <ion-content>
+    <ion-content v-if="$route.params.idUser">
         <contact-info-component :user="$store.getters.getUserById($route.params.idUser)"></contact-info-component>
     </ion-content>
   </ion-page>
