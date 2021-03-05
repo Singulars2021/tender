@@ -79,7 +79,7 @@ export default {
     IonChip,
     IonLabel,
   },
-  props: ["animal"],
+  props: ["animal", "user"],
   methods: {
     openPopover() {
       this.isPopoverOpen = true;
@@ -116,6 +116,16 @@ export default {
             },
           },
           {
+            text: "Contactar",
+            handler: () => {
+              this.$router.push({
+                name:"contact-info",
+                params:{idUser: this.animal.userId} 
+              })
+              console.log("Contactar clicked");
+            },
+          },
+          /*{
             text: "Copiar enlace",
             handler: () => {
               console.log("Copy link clicked");
@@ -126,7 +136,7 @@ export default {
             handler: () => {
               console.log("Share clicked");
             },
-          },
+          },*/
           {
             text: "Cancelar",
             role: "cancel",

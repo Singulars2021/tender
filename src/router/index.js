@@ -40,6 +40,11 @@ const routes = [
     component: () => import('@/views/ReportAnimal.vue')
   },
   {
+    path: '/contactinfo/:idUser',
+    name: 'contact-info',
+    component: () => import('@/views/ContactInfo.vue')
+  },
+  {
     path: '/form',
     component: () => import('@/views/AddNewAnimal.vue')
   },

@@ -32,6 +32,7 @@
                   :value="province.value"
                 >{{ province.label }}
               </ion-select-option>
+              <ion-select-option value=""></ion-select-option>
             </ion-select>
           </ion-item>
           <ion-item>
@@ -113,10 +114,10 @@ export default {
   },
   data(){
       return {
-          newPhone: undefined,
+          newPhone: "",
           newName: undefined,
-          newLocation: undefined,
-          newBio: undefined,
+          newLocation: "",
+          newBio: "",
           chevronBackOutline,
           heart,
           provincesLabels: provinces
@@ -126,9 +127,9 @@ export default {
       const userLogged = this.$store.getters.getLoggedUser 
 
       this.newName = userLogged.name
-      this.newBio = userLogged.description
-      this.newPhone = userLogged.phoneNumber
-      this.newLocation = userLogged.location
+      this.newBio = userLogged.description || ""
+      this.newPhone = userLogged.phoneNumber || ""
+      this.newLocation = userLogged.location || ""
       console.log('UserLogged.uid: ', userLogged.uid)
       console.log('getter getUserId: ', this.$store.getters.getUserId)
 
@@ -152,7 +153,7 @@ export default {
               phoneNumber: this.newPhone,
               location: this.newLocation
           };
-
+          console.log("info user",newInfo)
           const toast = await toastController.create({
             color: 'success',
             duration: 2000,
