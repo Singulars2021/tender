@@ -2,7 +2,7 @@
   <form action="" class="ion-padding" @submit.prevent="updateReports">
     <ion-list>
       <ion-item>
-        <ion-label>Motivo de la denuncia</ion-label>
+        <ion-label>Motivo</ion-label>
         <ion-select
           v-model="reportOptions"
           name="reportOptions"
@@ -185,7 +185,7 @@ ion-select::part(text) {
 
 ion-select {
   max-width: 100%;
-  width: 50%;
+  width: 80%;
   right: auto;
   direction: ltr;
   padding-left: 0;
