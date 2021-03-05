@@ -25,10 +25,6 @@ const routes = [
         component: () => import('@/views/AnimalSlider.vue')
       },
       {
-        path: 'add',
-        component: () => import('@/views/AddNewAnimal.vue')
-      },
-      {
         path: 'liked-animals',
         component: () => import('@/views/FavouriteAnimals.vue')
       },

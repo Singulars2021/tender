@@ -147,7 +147,7 @@ export default {
       this.$store.dispatch("updateFilters", {
         filterFields: filter,
       });
-
+      //console.log("Filtros: ", filter)
       this.$router.push("/animals/slider")
       
       console.log(this.$store.getters.getFilters)

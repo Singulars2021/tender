@@ -47,7 +47,7 @@
         @edit-animal="editAnimal"
       ></admin-your-animals>
     </ion-content>
-    <router-link to="/animals/add">
+    <router-link to="/form">
       <ion-fab-button color="secondary">
         <ion-icon :icon="addOutline"> </ion-icon>
       </ion-fab-button>
@@ -69,12 +69,13 @@ import {
   IonItem,
   IonLabel,
   IonToolbar,
+  IonItemDivider
 } from "@ionic/vue";
 import CtbButton from '../ui/CtbButton.vue';
 
 export default {
-  created() {
-    this.$store.dispatch("getAnimals");
+  ionViewWillEnter() {
+    console.log("GettersgetMyanimals",this.$store.getters.getMyAnimals)
   },
   computed: {
     animals() {
@@ -110,7 +111,8 @@ export default {
     BackButton,
     IonHeader,
     IonTitle,
-    CtbButton
+    CtbButton,
+    IonItemDivider
   },
 };
 </script>

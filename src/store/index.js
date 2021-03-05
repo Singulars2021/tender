@@ -326,7 +326,11 @@ const store = createStore({
           const photos = await getCollectionFromCollection("animals", "images", animals[animal].id);
 
           for (const photo in photos)
-            animals[animal]["pictures"].push(photos[photo].image);
+            animals[animal]["pictures"].push({
+              id: animals[animal].id,
+              image: photos[photo].image
+
+            })
         }
         if (favoriteAnimalsId) {
           favoriteAnimalsId.forEach(animalId => {
