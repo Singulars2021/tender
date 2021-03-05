@@ -1,12 +1,10 @@
 <template>
   <div>
     <form class="ion-padding" @submit.prevent="userLogin">
-      <h3>Sign In</h3>
-
       <ion-list>
         <!-- Email Item -->
         <ion-item class="form-group">
-          <ion-label>Email address</ion-label>
+          <ion-label position="floating">Correo electrónico</ion-label>
           <ion-input
             type="email"
             class="form-control form-control-lg"
@@ -16,7 +14,7 @@
         </ion-item>
         <!-- Password Item -->
         <ion-item class="form-group">
-          <ion-label>Password</ion-label>
+          <ion-label position="floating">Contraseña</ion-label>
           <ion-input
             type="password"
             class="form-control form-control-lg"
@@ -24,17 +22,16 @@
             required
           />
         </ion-item>
-        <!-- Submit Button -->
-        <ion-button type="submit" class="btn btn-dark btn-lg btn-block"
-          >Sign In</ion-button
-        >
-      </ion-list>
-      <!-- Forget Password Link -->
-      <p class="forgot-password text-right mt-2 mb-4">
-        <router-link to="/forgot-password">Forgot password ?</router-link>
+        <p class="forgot-password">
+        <router-link to="/forgot-password">¿Olvidaste tu contraseña?</router-link>
       </p>
-      <p class="not-account text-right mt-2 mb-4">
-        <router-link to="/signup">Don't you have an account yet?</router-link>
+      </ion-list>
+      <!-- Submit Button -->
+      <cta-button-signin
+          >INICIAR SESIÓN</cta-button-signin>
+      <!-- Forget Password Link -->  
+      <p class="no-account">¿No tienes cuenta?
+        <router-link to="/signup">Crear cuenta</router-link>
       </p>
     </form>
   </div>
@@ -49,11 +46,11 @@ import {
   IonItem,
   IonLabel,
   IonInput,
-  IonButton,
   toastController,
 } from "@ionic/vue";
 
 import { getCurrentUser } from "../firebaseConfig.js";
+import CtaButtonSignin from "../ui/CtaButtonSignin.vue";
 
 export default {
   data() {
@@ -69,7 +66,7 @@ export default {
     IonItem,
     IonLabel,
     IonInput,
-    IonButton,
+    CtaButtonSignin,
   },
   async created() {
     const user = await getCurrentUser();
@@ -107,3 +104,29 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+p{
+  font-size: 0.85rem;
+}
+
+a{
+  text-decoration: none;
+}
+
+.forgot-password{
+  float: right;
+}
+
+.no-account{
+   --padding-bottom:20px;
+    --padding-top:20px; 
+    position: fixed;
+    bottom: 35px;
+    margin: 0;
+    left: 16px;
+    right: 16px;
+    text-align: center;
+}
+
+</style>
