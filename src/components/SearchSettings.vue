@@ -73,11 +73,17 @@
     <ion-list>
       <ion-item>
         <ion-label>Tipo de adopcion</ion-label>
-        <ion-select v-model="adoptionType"  okText="Aceptar" cancelText="Cancelar">
-          <ion-select-option 
+        <ion-select
+          v-model="adoptionType"
+          okText="Aceptar"
+          cancelText="Cancelar"
+        >
+          <ion-select-option
             v-for="adoptionType in adoptionTypeLabels"
             :key="adoptionType.value"
-            :value="adoptionType.value">{{adoptionType.label}}</ion-select-option>
+            :value="adoptionType.value"
+            >{{ adoptionType.label }}</ion-select-option
+          >
           <ion-select-option value="">Cualquiera</ion-select-option>
         </ion-select>
       </ion-item>
@@ -101,7 +107,7 @@ import {
   //IonRange,
   toastController,
 } from "@ionic/vue";
-import CtaButton from '../ui/CtaButton.vue';
+import CtaButton from "../ui/CtaButton.vue";
 
 export default {
   components: {
@@ -113,7 +119,7 @@ export default {
     IonSelect,
     IonSelectOption,
     //IonIcon,
-    CtaButton,    //IonRange,
+    CtaButton, //IonRange,
   },
   data() {
     return {
@@ -143,14 +149,14 @@ export default {
         location: this.location,
         adoptionType: this.adoptionType,
       };
- 
+
       this.$store.dispatch("updateFilters", {
         filterFields: filter,
       });
       //console.log("Filtros: ", filter)
-      this.$router.push("/animals/slider")
-      
-      console.log(this.$store.getters.getFilters)
+      this.$router.push({ name: "slider" });
+
+      console.log(this.$store.getters.getFilters);
     },
     async openToast(msg, response) {
       const toast = await toastController.create({
@@ -166,11 +172,11 @@ export default {
 </script>
 
 <style scoped>
-form{
+form {
   margin-top: 10px;
 }
 
-ion-list{
+ion-list {
   padding: 0;
 }
 

@@ -1,36 +1,52 @@
 <template>
-    <div >
-        <form class="ion-padding" @submit.prevent="userRegistration">
-            <h3>Sign Up</h3>
+  <div>
+    <form class="ion-padding" @submit.prevent="userRegistration">
+      <h3>Sign Up</h3>
 
-            <ion-list>
-                <!-- Name Item --> 
-                <ion-item class="form-group">
-                    <ion-label>Name</ion-label>
-                    <ion-input type="text" class="form-control form-control-lg" v-model="user.name" required/>
-                <!-- Email Item -->     
-                </ion-item>
-                <ion-item class="form-group">
-                    <ion-label>Email</ion-label>
-                    <ion-input type="email" class="form-control form-control-lg" v-model="user.email" required/>
-                </ion-item>
-                <!-- Password Item --> 
-                <ion-item class="form-group">
-                    <ion-label>Password</ion-label>
-                    <ion-input type="password" pattern='^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$' class="form-control form-control-lg" v-model="user.password" required/>
-                </ion-item>
-            </ion-list>
+      <ion-list>
+        <!-- Name Item -->
+        <ion-item class="form-group">
+          <ion-label>Name</ion-label>
+          <ion-input
+            type="text"
+            class="form-control form-control-lg"
+            v-model="user.name"
+            required
+          />
+          <!-- Email Item -->
+        </ion-item>
+        <ion-item class="form-group">
+          <ion-label>Email</ion-label>
+          <ion-input
+            type="email"
+            class="form-control form-control-lg"
+            v-model="user.email"
+            required
+          />
+        </ion-item>
+        <!-- Password Item -->
+        <ion-item class="form-group">
+          <ion-label>Password</ion-label>
+          <ion-input
+            type="password"
+            pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
+            class="form-control form-control-lg"
+            v-model="user.password"
+            required
+          />
+        </ion-item>
+      </ion-list>
 
-            <ion-button type="submit" class="btn btn-dark btn-lg btn-block">
-               Sign Up
-            </ion-button>
+      <ion-button type="submit" class="btn btn-dark btn-lg btn-block">
+        Sign Up
+      </ion-button>
 
-            <p class="forgot-password text-right">
-                Already registered 
-                <router-link :to="{name: 'login'}">sign in</router-link>
-            </p>
-        </form>
-    </div>
+      <p class="forgot-password text-right">
+        Already registered
+        <router-link :to="{ name: 'login' }">sign in</router-link>
+      </p>
+    </form>
+  </div>
 </template>
 
 
@@ -41,17 +57,17 @@ import {
   IonLabel,
   IonInput,
   IonButton,
-  toastController
+  toastController,
 } from "@ionic/vue";
 
 export default {
   data() {
     return {
-        user: {
-        name: '',
-        email: '',
-        password: ''
-      }
+      user: {
+        name: "",
+        email: "",
+        password: "",
+      },
     };
   },
   components: {
@@ -59,7 +75,7 @@ export default {
     IonItem,
     IonLabel,
     IonInput,
-    IonButton
+    IonButton,
   },
   methods: {
     async openToast(msg) {
@@ -75,18 +91,18 @@ export default {
       const payload = {
         email: this.user.email,
         password: this.user.password,
-        name: this.user.name
+        name: this.user.name,
+      };
+      try {
+        await this.$store.dispatch("signup", payload);
+      } catch (error) {
+        this.openToast(error.message);
+        console.log("Error", error);
+        return;
       }
-      try{
-        await this.$store.dispatch("signup", payload)
-      }catch(error){
-        this.openToast(error.message)
-        console.log("Error", error)
-        return
-      }
-      //this.$router.push('/profile/')
-      this.$router.push('/firststeps')
-    }
-  }
+      console.log("before route push to first steps");
+      this.$router.push({ name: "first-steps" });
+    },
+  },
 };
 </script>

@@ -76,6 +76,7 @@ export default {
       logoAnimation.play();
 
       this.$emit("favoriteSelected", animal.id);
+      console.log('favoriteSelected, payload animal: ', animal)
 
       const that = this;
 

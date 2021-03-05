@@ -8,16 +8,12 @@ const routes = [
     redirect: '/signin'
   },
   {
-    path: '/adminanimals',
-    component: () => import('@/views/AdminAnimals.vue')
-  },
-  {
-    path: '/animals/',
+    path: '/main/',
     component: TabsAnimals,
     children: [
       {
         path: '',
-        redirect: '/animals/slider'
+        redirect: '/main/slider'
       },
       {
         path: 'slider',
@@ -26,21 +22,29 @@ const routes = [
       },
       {
         path: 'liked-animals',
+        name: 'liked-animals',
         component: () => import('@/views/FavouriteAnimals.vue')
       },
-
+      {
+        path: 'admin-animals',
+        name: 'admin-animals',
+        component: () => import('@/views/AdminAnimals.vue')
+      }
     ]
   },
   {
     path: '/filters',
+    name: 'filters',
     component: () => import('@/views/SearchAnimals.vue')
   },
   {
     path: '/report/:id',
+    name: 'report-animal',
     component: () => import('@/views/ReportAnimal.vue')
   },
   {
     path: '/form',
+    name: 'animal-form',
     component: () => import('@/views/AddNewAnimal.vue')
   },
   {
@@ -50,10 +54,12 @@ const routes = [
   },
   {
     path: '/firststeps',
+    name: 'first-steps',
     component: () => import('@/views/FirstSteps.vue')
   },
   {
     path: '/signup',
+    name: 'sign-up',
     component: () => import('@/views/SignUpView.vue')
   },
   {
@@ -63,6 +69,7 @@ const routes = [
   },
   {
     path: '/forgot-password',
+    name: 'forgot-password',
     component: () => import('@/views/ForgotPassword.vue')
   },
   {

@@ -1,6 +1,6 @@
 <template>
   <form action="" class="ion-padding" @submit.prevent="redirectToPage">
-    <ion-text class="ion-text-right">Para empezar quiero...</ion-text>   
+    <ion-text class="ion-text-right">Para empezar quiero...</ion-text>
     <ion-list>
       <ion-item>
         <ion-radio-group v-model="option" @ionChange="redirectOptions($event)">
@@ -50,34 +50,34 @@ export default {
     };
   },
   methods: {
-    redirectOptions(e){
-      console.log(e.detail.value)
-      this.value = e.detail.value
+    redirectOptions(e) {
+      console.log(e.detail.value);
+      this.value = e.detail.value;
     },
-    redirectToPage(){
+    redirectToPage() {
       if (this.value == "adoptar") {
-        this.$router.push("/animals/slider")
+        this.$router.push({ name: "slider" });
       } else {
-        this.$router.push("/form")
+        this.$router.push({ name: "animal-form" });
       }
-    }
+    },
   },
 };
 </script>
 
 <style scoped>
-  form{
-    font-family: 'Quicksand', sans-serif;
-    margin-top: 5em;
-    margin-left: 1em;
-  }
-  ion-text{
-    font-size: 3em;
-  }
-  ion-list{
-    margin-top: 1.5em;
-  }
-  ion-item{
-    --inner-border-width: 0;
-  }
+form {
+  font-family: "Quicksand", sans-serif;
+  margin-top: 5em;
+  margin-left: 1em;
+}
+ion-text {
+  font-size: 3em;
+}
+ion-list {
+  margin-top: 1.5em;
+}
+ion-item {
+  --inner-border-width: 0;
+}
 </style>
