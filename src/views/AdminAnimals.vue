@@ -14,7 +14,7 @@
           <div class="flexcontent">
           <div class="myname">
           <ion-avatar slot="start">
-            <img src="/assets/avatar.png" />
+            <img src="/assets/user.svg" />
           </ion-avatar>
           <ion-label class="perfil">
             <h1>{{ user.name }}</h1>
@@ -178,6 +178,7 @@ ion-card {
 ion-item-divider {
   margin-top: 0px;
   min-height: 0.70rem;
+  width: 100vw;
 }
 
 ion-item {

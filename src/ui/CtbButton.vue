@@ -26,9 +26,6 @@ ion-button{
     font-weight:700;
     --padding-bottom:20px;
     --padding-top:20px; 
-    bottom: 30px;
-    margin: 0;
-    left: 16px;
-    right: 16px;
+    margin: 15px auto 15px auto !important;
 }
 </style>
