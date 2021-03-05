@@ -1,9 +1,9 @@
 <template>
   <!--animals grid-->
-  <ion-grid>
+  <ion-grid v-if="animalsCreated.lenght!=0">
     <ion-row>
       <ion-col>
-        <div v-for="animal in animalsCreated" :key="animal.name">
+        <div v-for="animal in animalsCreated" :key="animal.id">
           <admin-card
             class="admin-card"
             @click="$emit('edit-animal', animal.id)"

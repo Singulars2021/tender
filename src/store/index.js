@@ -169,10 +169,11 @@ const store = createStore({
     },
     updateAnAnimal(state, payload) {
       for (var i = 0; i < state.length; i++) {
-        if (state[i].id == payload.id) {
-          state[i] = payload
+        if (state.animals[i].id == payload.id) {
+          state.animals[i] = payload
         }
       }
+      console.log(state)
     },
     updateAnimals(state, payload) {
       state.animals.splice(payload, 1)
@@ -322,6 +323,8 @@ const store = createStore({
       const id = payload.animalId
       const animalPhotosId = []
 
+      payload.animalFields.pictures = payload.animalPhotos
+
       await updateAnimalDocument(id, payload.animalFields, 'animals')
 
       for (let i = 0; i < animalPhotos.length; i++) {
@@ -333,13 +336,16 @@ const store = createStore({
         }
       }
 
+
       for (let i = 0; i < oldImgId.length; i++) {
         if (!animalPhotosId.includes(oldImgId[i])) {
+          console.log("delete animal photo")
           await deleteDocumentFromAnimalPhoto(oldImgId[i], id)
         }
       }
+      
 
-      context.commit('updateAnAnimal', payload)
+      context.commit('updateAnAnimal', payload.animalFields)
     },
     // Action to remove the animal from the firebase database. Caution! Usually, we do not remove data from databases. It is better to set a new field such as "removalDate"; so if it has a value, we know that this animal should not be retrieved from firebase anymore (we'll have to change the getters to take this info into account)
     async removeAnimal(context, payload) {
@@ -384,9 +390,8 @@ const store = createStore({
 
           for (const photo in photos)
             animals[animal]["pictures"].push({
-              id: animals[animal].id,
+              id: photos[photo].id,
               image: photos[photo].image
-
             })
         }
         if (favoriteAnimalsId) {

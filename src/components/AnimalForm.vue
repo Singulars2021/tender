@@ -375,6 +375,7 @@ export default {
         creationDate: null,
         disableDate: null,
         disable: false,
+        updateDate: null
       };
 
       if (!this.animal) {

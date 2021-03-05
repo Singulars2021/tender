@@ -24,7 +24,6 @@ async function getCollectionFromCollection(from_collection, collection, doc_id) 
         .collection(from_collection)
         .doc(doc_id)
         .collection(collection);
-    // console.log("get collction from collection: ", doc_id)
     const snapshot = await collectionRef.get();
 
     const images = snapshot.docs.map((doc) => ({
@@ -32,7 +31,6 @@ async function getCollectionFromCollection(from_collection, collection, doc_id) 
         ...doc.data(),
     }));
 
-    // console.log("images from collection:", images)
 
     return images;
 }
@@ -48,16 +46,16 @@ function getSyncData(collection, cb) {
     console.log('getSync_Data initial')
     let data;
     db.collection(collection)
-    .onSnapshot((querySnapshot) => {
-        console.log('New changes!!')
-        data = querySnapshot.docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
-            pictures: [],
-        }));
-        console.log("All the data is formed: ", data)
-        cb(data)
-    });
+        .onSnapshot((querySnapshot) => {
+            console.log('New changes!!')
+            data = querySnapshot.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data(),
+                pictures: [],
+            }));
+            console.log("All the data is formed: ", data)
+            cb(data)
+        });
 }
 
 async function getData(collection) {
@@ -78,8 +76,8 @@ async function getData(collection) {
 
 export async function getRemovedAnimalsId(user_id) {
     const docRef = db
-    .collection("users")
-    .doc(user_id)
+        .collection("users")
+        .doc(user_id)
 
     const snapshot = await docRef.get()
 
@@ -91,8 +89,8 @@ export async function getRemovedAnimalsId(user_id) {
 
 export async function getFavoriteAnimalsId(user_id) {
     const docRef = db
-    .collection("users")
-    .doc(user_id)
+        .collection("users")
+        .doc(user_id)
 
     const snapshot = await docRef.get()
 
@@ -120,7 +118,7 @@ async function addNewDocument(data, collection) {
     return ref.id
 }
 
-async function addNewDocumentWithId(data, collection, id){
+async function addNewDocumentWithId(data, collection, id) {
     await db.collection(collection).doc(id)
         .set({
             ...data
@@ -138,30 +136,31 @@ async function updateDocument(id, data, collection) {
 }
 
 async function updateAnimalDocument(id, data, collection) {
-    
+
     const ref = db.collection(collection).doc(id);
 
     return ref.update({
-        name : data.name,
-        age : data.age,
-        description : data.description,
-        adoptionType : data.adoptionType,
-        location : data.location,
-        sex : data.sex,
-        size : data.size,
-        species : data.species
+        name: data.name,
+        age: data.age,
+        description: data.description,
+        adoptionType: data.adoptionType,
+        location: data.location,
+        sex: data.sex,
+        size: data.size,
+        species: data.species,
+        updateDate : new Date()
     })
 
 }
 
-async function deleteDocument(id){
+async function deleteDocument(id) {
     const ref = db.collection('animals').doc(id);
 
     console.log('animal deleted')
 
     return ref.update({
-        disable : true,
-        disableDate : new Date
+        disable: true,
+        disableDate: new Date
     })
 }
 
@@ -169,7 +168,7 @@ async function addFavorite(id_animal, id_user) {
     const ref = db.collection("users").doc(id_user);
 
     return ref.update({
-        favoriteAnimalsId:firebase.firestore.FieldValue.arrayUnion(id_animal)
+        favoriteAnimalsId: firebase.firestore.FieldValue.arrayUnion(id_animal)
     })
 
 }
@@ -177,7 +176,7 @@ async function addRemoved(id_animal, id_user) {
     const ref = db.collection("users").doc(id_user);
 
     return ref.update({
-        removedAnimalsId:firebase.firestore.FieldValue.arrayUnion(id_animal)
+        removedAnimalsId: firebase.firestore.FieldValue.arrayUnion(id_animal)
     })
 
 }
@@ -214,26 +213,26 @@ async function createNewUser(email, password) {
 }
 
 async function logInUser(email, password) {
-    await firebase.auth().signInWithEmailAndPassword(email, password);    
+    await firebase.auth().signInWithEmailAndPassword(email, password);
 }
 
-async function logOutUser(){
+async function logOutUser() {
     console.log("Logging out User")
     firebase.auth().signOut();
 }
 
 async function getCurrentUser() {
     const user = firebase.auth().currentUser
-    return user  
+    return user
 }
 
-async function recoverPassword(emailAddress){
+async function recoverPassword(emailAddress) {
     await firebase.auth().sendPasswordResetEmail(emailAddress);
-    
+
 }
 
-async function deleteDocumentFromAnimalPhoto(idPhoto, idAnimal){
-console.log("delete"+idAnimal,idPhoto)
+async function deleteDocumentFromAnimalPhoto(idPhoto, idAnimal) {
+    console.log("delete" + idAnimal, idPhoto)
     db.collection('animals')
         .doc(idAnimal)
         .collection('images')
