@@ -3,28 +3,33 @@
     <ion-content class="ion-padding">
       <ion-searchbar @ionChange="ionChange($event)"></ion-searchbar>
       <ion-text>Me gustas </ion-text>
-        <div class="favorite-animals-list scroll" scrollX="true" >
-        <div  v-for="animal in searchedAnimal" :key="animal.id">
-          <div class="favorite-animals-item" @click="chat(animal.id,animal.userId)">
+      <div class="favorite-animals-list scroll" scrollX="true">
+        <div v-for="animal in searchedAnimal" :key="animal.id">
+          <div
+            class="favorite-animals-item"
+            @click="chat(animal.id, animal.userId)"
+          >
             <ion-avatar slot="start">
-              <img :src="animal.pictures[0]"
-              />
+              <img :src="animal.pictures[0].image" />
             </ion-avatar>
             <ion-label>
               <h4>{{ animal.name }}</h4>
             </ion-label>
           </div>
-          </div>
         </div>
+      </div>
       <ion-list>
-        <ion-list-header>Mensajes
-          <ion-badge>{{messageCount}}</ion-badge>
+        <ion-list-header
+          >Mensajes
+          <ion-badge>{{ messageCount }}</ion-badge>
         </ion-list-header>
-        <ion-item class="chat-separated" v-for="animal in searchedAnimal" :key="animal.id">
-          <ion-avatar  slot="start">
-            <img 
-              :src="animal.pictures[0]"
-            />
+        <ion-item
+          class="chat-separated"
+          v-for="animal in searchedAnimal"
+          :key="animal.id"
+        >
+          <ion-avatar slot="start">
+            <img :src="animal.pictures[0].image" />
           </ion-avatar>
           <ion-label>
             <div class="info-chat">
@@ -52,8 +57,7 @@ import {
   IonContent,
   IonBadge,
   IonText,
-  IonIcon
-
+  IonIcon,
 } from "@ionic/vue";
 
 export default {
@@ -69,21 +73,18 @@ export default {
     IonContent,
     IonBadge,
     IonText,
-    IonIcon
-
+    IonIcon,
   },
   data() {
     return {
-      searchedAnimal:[],
-      messageCount:0,
-      ellipse
+      searchedAnimal: [],
+      messageCount: 0,
+      ellipse,
     };
   },
-created(){
-
-  this.searchedAnimal= this.$store.getters.getFavoriteAnimals
-  
-},
+  created() {
+    this.searchedAnimal = this.$store.getters.getFavoriteAnimals;
+  },
   methods: {
     ionChange(event) {
       const searchedInput = event.target.value;
@@ -94,59 +95,64 @@ created(){
             .toLowerCase()
             .startsWith(searchedInput.toLowerCase());
         });
-        
+      } else {
+        this.searchedAnimal = this.animalsList;
       }
-      else{
-          this.searchedAnimal = this.animalsList
-        }
     },
-    chat(animalId,userId){
-      this.$router.push(`/chat/${animalId}`)
-      console.log(userId)
-    }
+    chat(animalId, userId) {
+      console.log(animalId, userId);
+      this.$router.push({
+        name: "contact-info",
+        params: {
+          idUser: userId,
+        },
+      });
+    },
   },
-  computed:{
-    animalList(){
-      return this.$store.getters.getFavoriteAnimals
-    }
-  }
+  computed: {
+    animalList() {
+      return this.$store.getters.getFavoriteAnimals;
+    },
+  },
 };
 </script>
 <style scoped>
-h2,h4{
-  color: #27303B;
+h2,
+h4 {
+  color: #27303b;
 }
-ion-avatar{
-  width:85px !important;  
-  height : 85px !important;  
-  max-width: 85px !important;  
-  max-height: 985px !important; 
-  margin-bottom:10px;
-  margin-top:10px
+ion-avatar {
+  width: 85px !important;
+  height: 85px !important;
+  max-width: 85px !important;
+  max-height: 985px !important;
+  margin-bottom: 10px;
+  margin-top: 10px;
 }
-.chat-separated{
-  margin-bottom: 0.9rem
+.chat-separated {
+  margin-bottom: 0.9rem;
 }
 ion-icon {
   margin-left: 15px;
 }
-ion-list-header,ion-text {
+ion-list-header,
+ion-text {
   color: #ed576b;
   font-size: 18px;
-  padding-left:0;
+  padding-left: 0;
   font-weight: 700;
 }
 
-ion-badge{
-  margin-left:0.5rem;
-  background-color: #ed576b
+ion-badge {
+  margin-left: 0.5rem;
+  background-color: #ed576b;
 }
-.favorite-animals-list{
+.favorite-animals-list {
   display: flex;
   flex-direction: row;
-  margin-top:0.5rem;
+  margin-top: 0.5rem;
 }
-.favorite-animals-item{
+.favorite-animals-item {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -154,19 +160,18 @@ ion-badge{
   margin-left: 0.8rem;
   margin-top: 0.3rem;
 }
-.scroll{
+.scroll {
   overflow: auto;
 }
-ion-icon{
-  color:#ed576b;
+ion-icon {
+  color: #ed576b;
   font-size: 10px;
   margin: 0;
-  margin-left:5px;
+  margin-left: 5px;
   padding: 0;
-
 }
-.info-chat{
-  display:flex;
+.info-chat {
+  display: flex;
   flex-direction: row;
   align-items: center;
 }

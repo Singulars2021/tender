@@ -1,5 +1,5 @@
 <template>
-  <form action="" class="ion-padding" @submit.prevent="updateReports">    
+  <form action="" class="ion-padding" @submit.prevent="updateReports">
     <ion-list>
       <ion-item>
         <ion-label>Motivo del reporte</ion-label>
@@ -51,7 +51,7 @@
 
 <script>
 import { reportOptions } from "../utils/labels";
-import emailjs from 'emailjs-com';
+import emailjs from "emailjs-com";
 import {
   IonLabel,
   IonSelect,
@@ -83,11 +83,11 @@ export default {
       reportOptions: undefined,
       reportLabels: reportOptions,
       comments: undefined,
-      service_id: 'service_hk94amm',
-      template_id: 'template_rzxg3ol',
-      user_id: 'user_xX3E3lq1v9QGmRalwlBpi',
-      name: 'Tender',
-      email: 'singutender@gmail.com',
+      service_id: "service_hk94amm",
+      template_id: "template_rzxg3ol",
+      user_id: "user_xX3E3lq1v9QGmRalwlBpi",
+      name: "Tender",
+      email: "singutender@gmail.com",
     };
   },
   methods: {
@@ -97,28 +97,34 @@ export default {
         reportOptions: this.reportOptions,
         comments: this.comments,
       };
- 
+
       this.$store.dispatch("updateReports", {
         reportFields: report,
       });
 
-      this.$router.push("/animals/slider")
-      
-      console.log(this.$store.getters.getReports)
-      
+      this.$router.push({ name: "slider" });
+
+      console.log(this.$store.getters.getReports);
+
       //---------------------------------
       //Steps: https://www.freecodecamp.org/news/send-emails-from-your-vue-application/
       try {
-        emailjs.sendForm(this.service_id, this.template_id, e.target, this.user_id, {
-          name: this.name,
-          email: this.email,
-          userId: this.userId,
-          animalId: this.animalId,
-          reportOptions: this.reportOptions,
-          comments: this.comments
-        })
-      } catch(error) {
-        console.log({error})
+        emailjs.sendForm(
+          this.service_id,
+          this.template_id,
+          e.target,
+          this.user_id,
+          {
+            name: this.name,
+            email: this.email,
+            userId: this.userId,
+            animalId: this.animalId,
+            reportOptions: this.reportOptions,
+            comments: this.comments,
+          }
+        );
+      } catch (error) {
+        console.log({ error });
       }
     },
     async openToast(msg, response) {
@@ -135,7 +141,7 @@ export default {
 </script>
 
 <style scoped>
-  ion-item.hidden{
-    display: none;
-  }
+ion-item.hidden {
+  display: none;
+}
 </style>

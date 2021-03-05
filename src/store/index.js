@@ -111,7 +111,10 @@ const store = createStore({
     },
     getReports(state) {
       return state.reports
-    }
+    },
+    getUserById: (state) => (id) => {
+      return state.users.find(user => user.id === id)
+    },
   },
   // Mutations must update the app's state. Every time we retrieve data from the database, these data must be loaded somewhere in our app state management. Because we are using Vuex of our app, we must use a mutation to alter the state, never alter it directly in an action of inside a component.
   mutations: {
@@ -152,9 +155,13 @@ const store = createStore({
       state.users = payload
       console.dir(state.loggedUser)
     },
-    // addFavoriteAnimal(state, payload) {
-    //   // state.loggedUser.favoriteAnimals.push(payload)
-    // },
+    addFavoriteAnimal(state, payload) {
+      state.loggedUser.favoriteAnimals.push(payload)
+    },
+    addRemovedAnimalId(state, payload) {
+      state.loggedUser.removedAnimalsId.push(payload)
+    },
+
 
     setAnimalById(state, payload) {
       state.animal = payload
@@ -214,7 +221,9 @@ const store = createStore({
           description: user.description,
           email: user.email,
           location: user.location,
-          phoneNumber: user.phoneNumber
+          phoneNumber: user.phoneNumber,
+          favoriteAnimals: [],
+          removedAnimalsId: [],
         }
       });
       console.log(result)
@@ -236,11 +245,12 @@ const store = createStore({
       await updateName(payload.name)
       const user = await getCurrentUser()
       const payloadMutation = {
-        // id: user.uid,
+        id: user.uid,
         name: user.displayName,
         email: user.email
       }
       await addNewDocumentWithId(payloadMutation, "users", user.uid)
+      console.log('before mutation', payloadMutation)
       context.commit("signinMutation", payloadMutation)
 
 
@@ -249,14 +259,16 @@ const store = createStore({
       const animal = payload
       const animalId = payload.id
       const userId = context.getters.getUserId
+
       await addFavorite(animalId, userId)
+
       context.commit('addFavoriteAnimal', animal)
     },
     async addRemovedAnimal(context, payload) {
       const animalId = payload
       const userId = context.getters.getUserId
       await addRemoved(animalId, userId)
-      context.commit('addRemovedAnimal', animalId)
+      context.commit('addRemovedAnimalId', animalId)
     },
     updateAnimals(context, payload) {
       const animalId = payload
@@ -331,7 +343,6 @@ const store = createStore({
     },
     // Action to remove the animal from the firebase database. Caution! Usually, we do not remove data from databases. It is better to set a new field such as "removalDate"; so if it has a value, we know that this animal should not be retrieved from firebase anymore (we'll have to change the getters to take this info into account)
     async removeAnimal(context, payload) {
-
       await deleteDocument(payload)
 
       context.commit('deleteDocument', payload)
@@ -353,6 +364,12 @@ const store = createStore({
 
         const removedAnimalsId = await getRemovedAnimalsId(userId);
         const favoriteAnimalsId = await getFavoriteAnimalsId(userId);
+
+        for (const animal in animals) {
+          if (animals[animal].disable) {
+            animals.splice(animal, 1);
+          }
+        }
 
         if (removedAnimalsId) {
           context.commit('setRemovedAnimalsId', removedAnimalsId);
