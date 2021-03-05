@@ -81,7 +81,11 @@ export default {
   },
   computed: {
     animals() {
-      return this.$store.getters.getMyAnimals;
+      var animals = this.$store.getters.getMyAnimals
+      if(!animals || animals.lenght==0){
+        return []
+      }
+      return animals;
     },
     user() {
       return this.$store.getters.getLoggedUser;
