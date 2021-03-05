@@ -4,6 +4,10 @@
 
 [Web version](https://animalslist-19bbf.web.app/)
 
+## Download the APK and try it
+
+[Apk for Android](https://learningbit.sharepoint.com/sites/Grup4FrontEndDeveloper-SingularsOT11220.04544/Documentos%20compartidos/Tender/app-debug.apk)
+
 ### App description
 
 These days, It can take a long time to adopt a pet. Where should you search it for? What kind of trust do all those pages where you can find them advertised give us? Why is it so hard and time consuming?
