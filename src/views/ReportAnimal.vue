@@ -1,7 +1,10 @@
 <template>
   <ion-page>
     <ion-header>
-      <ion-title size="large">Report Animal</ion-title>
+      <ion-toolbar>
+        <back-button href="/animals/slider"></back-button>
+        <ion-title>Denunciar</ion-title>
+      </ion-toolbar>
     </ion-header>
     <ion-content>
         <report-form :animalId="$route.params.id" ></report-form>
@@ -11,7 +14,8 @@
 
 <script>
 import ReportForm from "@/components/ReportForm.vue";
-import { IonPage, IonHeader, IonTitle, IonContent } from "@ionic/vue";
+import { IonPage, IonHeader, IonTitle, IonContent, IonToolbar } from "@ionic/vue";
+import BackButton from "../ui/BackButton.vue";
 
 export default {
   name: "search-animal",
@@ -21,6 +25,8 @@ export default {
     IonTitle,
     IonContent,
     IonPage,
+    IonToolbar,
+    BackButton
   },
   data() {
     return {};
