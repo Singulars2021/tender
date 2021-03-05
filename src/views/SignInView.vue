@@ -1,7 +1,6 @@
 <template>
   <ion-page>
-        <ion-item
-          lines=“none”>
+        <ion-item>
              <img
               src="../../public/assets/logo_horitzontal.svg"
               alt="tender logo"

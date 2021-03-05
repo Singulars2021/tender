@@ -4,7 +4,7 @@
       <ion-list>
         <!-- Email Item -->
         <ion-item class="form-group">
-          <ion-label position="floating">Correo electrónico</ion-label>
+          <ion-label position="floating">Email</ion-label>
           <ion-input
             type="email"
             class="form-control form-control-lg"
