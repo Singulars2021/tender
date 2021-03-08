@@ -20,7 +20,8 @@ import {
   deleteDocument,
   deleteDocumentFromAnimalPhoto,
   updateAnimalDocument,
-  getSyncData
+  getSyncData,
+  triggerAnimalUpdateDB
 } from '../firebaseConfig.js'
 
 const store = createStore({
@@ -455,6 +456,11 @@ const store = createStore({
       await deleteDocument(payload)
 
       context.commit('deleteDocument', payload)
+
+    },
+
+    async triggerAnimalUpdate(context, payload) {
+      await triggerAnimalUpdateDB(payload)
 
     },
 

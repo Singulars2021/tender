@@ -107,10 +107,11 @@ export default {
   },
   computed: {
     animalList() {
-      console.log("Ejecutando computed de FavoriteAnimals")
+      console.log("Ejecutando computed de FavoriteAnimals:",  this.$store.getters.getFavoriteAnimals)
       return this.$store.getters.getFavoriteAnimals;
     },
   },
+
 };
 </script>
 <style scoped>

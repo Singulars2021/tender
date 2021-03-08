@@ -161,6 +161,16 @@ async function deleteDocument(id) {
     })
 }
 
+async function triggerAnimalUpdateDB(id) {
+    const ref = db.collection('animals').doc(id);
+
+    await ref.update({
+        updatedDate: new Date()
+    })
+
+    return ref
+}
+
 async function addFavorite(id_animal, id_user) {
     const ref = db.collection("users").doc(id_user);
 
@@ -257,7 +267,8 @@ export {
     deleteDocument,
     deleteDocumentFromAnimalPhoto,
     updateAnimalDocument,
-    getSyncData
+    getSyncData,
+    triggerAnimalUpdateDB
 }
 
 //Create function recieves user and password and create such user in the database. If everythuing goes well it should updateProfile

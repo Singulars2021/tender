@@ -80,7 +80,7 @@ export default {
 
       setTimeout(function () {
         that.$store.dispatch("addFavoriteAnimal", animal);
-        that.$store.dispatch("updateAnimals", animal.id);
+        that.$store.dispatch("triggerAnimalUpdate", animal.id);
       }, that.animationDuration);
     },
     onRemove(animalId) {
@@ -109,7 +109,7 @@ export default {
       this.$emit("removeSelected", animalId);
       setTimeout(function () {
         that.$store.dispatch("addRemovedAnimal", animalId);
-        that.$store.dispatch("updateAnimals", animalId);
+        that.$store.dispatch("triggerAnimalUpdate", animalId);
       }, that.animationDuration);
     },
   },
