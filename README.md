@@ -1,8 +1,12 @@
 # Tender
 
-## Current development Web version
+## What is Tender?
 
-[Web version](https://animalslist-19bbf.web.app/)
+Know moure about Tender in this [presentation](https://docs.google.com/presentation/d/1zS7rsPCDawomvT4J5Rb-RysJJJ-m77B5bMpyot9Iduk/edit#slide=id.p) (Spanish)
+
+## Landing page
+
+[Our landing page in Spanish](https://animalslist-19bbf.web.app/)
 
 ## Download the APK and try it
 
