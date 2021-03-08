@@ -11,25 +11,20 @@
 
         <ion-item>
           <div class="flexcontent">
-            <div class="myname">
-              <ion-avatar slot="start">
-                <img src="/assets/avatar.png" />
-              </ion-avatar>
-              <ion-label class="perfil">
-                <h1>{{ user.name }}</h1>
-                <p>Editar mi perfil</p>
-              </ion-label>
-            </div>
-            <div>
-              <router-link :to="{ name: 'profile' }">
-                <ion-icon
-                  color="dark"
-                  name="chevron-forward"
-                  class="forward"
-                ></ion-icon>
-                <!-- <ion-icon :icon="chevronForwardOutline" /> -->
-              </router-link>
-            </div>
+          <div class="myname">
+          <ion-avatar slot="start">
+            <img src="/assets/user.svg" />
+          </ion-avatar>
+          <ion-label class="perfil">
+            <h1>{{ user.name }}</h1>
+            <p>Editar mi perfil</p>
+          </ion-label>
+          </div>
+          <div >
+          <router-link :to="{ name: 'profile' }">            
+              <ion-icon color="dark" name="chevron-forward"  class="forward"></ion-icon>
+              <!-- <ion-icon :icon="chevronForwardOutline" /> -->            
+          </router-link>
           </div>
         </ion-item>
         <router-link :to="{ name: 'filters' }">
@@ -177,7 +172,8 @@ ion-card {
 }
 ion-item-divider {
   margin-top: 0px;
-  min-height: 0.7rem;
+  min-height: 0.70rem;
+  width: 100vw;
 }
 
 ion-item {

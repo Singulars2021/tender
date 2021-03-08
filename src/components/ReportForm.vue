@@ -2,18 +2,23 @@
   <form action="" class="ion-padding" @submit.prevent="updateReports">
     <ion-list>
       <ion-item>
-        <ion-label>Motivo del reporte</ion-label>
+        <ion-label>Motivo</ion-label>
         <ion-select
           v-model="reportOptions"
           name="reportOptions"
           okText="Aceptar"
           cancelText="Cancelar"
+          interface="action-sheet"
+          :interface-options="options"
+
         >
           <ion-select-option
             v-for="report in reportLabels"
             :key="report.value"
             :value="report.value"
-            >{{ report.label }}</ion-select-option
+            >{{ report.label }}
+            
+            </ion-select-option
           >
         </ion-select>
       </ion-item>
@@ -45,19 +50,19 @@
       </ion-item>
     </ion-list>
 
-    <ion-button type="submit" expand="block" fill="solid">Reportar</ion-button>
+    <cta-button>DENUNCIAR</cta-button>
   </form>
 </template>
 
 <script>
 import { reportOptions } from "../utils/labels";
 import emailjs from "emailjs-com";
+import CtaButton from "../ui/CtaButton.vue";
 import {
   IonLabel,
   IonSelect,
   IonSelectOption,
   IonList,
-  IonButton,
   IonItem,
   IonTextarea,
   IonInput,
@@ -70,11 +75,11 @@ export default {
     IonList,
     IonItem,
     IonLabel,
-    IonButton,
     IonSelect,
     IonSelectOption,
     IonInput,
     IonTextarea,
+    CtaButton,
   },
   data() {
     return {
@@ -88,6 +93,9 @@ export default {
       user_id: "user_xX3E3lq1v9QGmRalwlBpi",
       name: "Tender",
       email: "singutender@gmail.com",
+      options: {
+        cssClass: "my-custom-interface",
+      },
     };
   },
   methods: {
@@ -143,4 +151,50 @@ export default {
 ion-item.hidden {
   display: none;
 }
+
+ion-label {
+  font-weight: 700;
+}
+
+ion-list{
+  margin-top: 4rem;
+}
+
+.alert-radio-label.sc-ion-alert-md {
+  white-space: pre-line !important;
+}
+
+.alert-radio-label.sc-ion-alert-ios {
+  white-space: pre-line !important;
+}
+
+
+/* Icon form change */
+ion-select::part(icon) {
+  display: none;
+}
+
+ion-select::part(text) {
+  background-image: url("/chevron-forward-outline.svg");
+  background-position: right;
+  background-repeat: no-repeat;
+  height: 19px;
+}
+
+ion-select {
+  max-width: 100%;
+  width: 80%;
+  right: auto;
+  direction: ltr;
+  padding-left: 0;
+}
+ion-input:part(native) {
+  max-width: 30%;
+  width: 70%;
+  right: auto;
+  direction: ltr;
+  padding-left: 0;
+}
+
+/* End icon form change */
 </style>

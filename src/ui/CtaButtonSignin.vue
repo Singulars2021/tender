@@ -11,21 +11,23 @@ export default {
     components:{
         IonButton,
     },
-  name: "CtbButton",
+  name: "CtaButtonSignin",
 };
 </script>
 
 <style scoped>
 ion-button{
+    --background: var(--ion-color-secondary);
     --color:var(--ion-color-dark);
-    --background: white;
     --border-radius: 29.5px;
-    --border-color: var(--ion-color-secondary);
-    --border-width: 2px;
-    --border-style: solid;
     font-weight:700;
     --padding-bottom:20px;
     --padding-top:20px; 
-    margin: 15px auto 15px auto !important;
+    position: fixed;
+    bottom: 65px;
+    margin: 0;
+    left: 16px;
+    right: 16px;
 }
 </style>
+

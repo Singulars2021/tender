@@ -1,12 +1,11 @@
 <template>
   <div>
     <form class="ion-padding" @submit.prevent="userRegistration">
-      <h3>Sign Up</h3>
-
+      <ion-title>Crear cuenta</ion-title>
       <ion-list>
         <!-- Name Item -->
         <ion-item class="form-group">
-          <ion-label>Name</ion-label>
+          <ion-label position="floating">Nombre</ion-label>
           <ion-input
             type="text"
             class="form-control form-control-lg"
@@ -16,7 +15,7 @@
           <!-- Email Item -->
         </ion-item>
         <ion-item class="form-group">
-          <ion-label>Email</ion-label>
+          <ion-label position="floating">Email</ion-label>
           <ion-input
             type="email"
             class="form-control form-control-lg"
@@ -26,7 +25,7 @@
         </ion-item>
         <!-- Password Item -->
         <ion-item class="form-group">
-          <ion-label>Password</ion-label>
+          <ion-label position="floating">Contraseña</ion-label>
           <ion-input
             type="password"
             pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
@@ -37,27 +36,26 @@
         </ion-item>
       </ion-list>
 
-      <ion-button type="submit" class="btn btn-dark btn-lg btn-block">
-        Sign Up
-      </ion-button>
-
-      <p class="forgot-password text-right">
-        Already registered
-        <router-link :to="{ name: 'login' }">sign in</router-link>
-      </p>
+      <cta-button-signin>CREAR</cta-button-signin>
     </form>
+    <p class="forgot-password">
+      ¿Ya tienes cuenta?
+      <router-link :to="{ name: 'login' }">Entrar</router-link>
+    </p>
   </div>
 </template>
 
 
 <script>
+import CtaButtonSignin from "../ui/CtaButtonSignin.vue";
+
 import {
   IonList,
   IonItem,
   IonLabel,
   IonInput,
-  IonButton,
   toastController,
+  IonTitle,
 } from "@ionic/vue";
 
 export default {
@@ -75,7 +73,8 @@ export default {
     IonItem,
     IonLabel,
     IonInput,
-    IonButton,
+    CtaButtonSignin,
+    IonTitle,
   },
   methods: {
     async openToast(msg) {
@@ -104,3 +103,33 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+form {
+  margin-top: 5rem;
+}
+
+.forgot-password {
+  --padding-bottom: 20px;
+  --padding-top: 20px;
+  position: fixed;
+  bottom: 35px;
+  margin: 0;
+  left: 16px;
+  right: 16px;
+  text-align: center;
+}
+
+p{
+  font-size: 0.85rem;
+}
+
+a{
+  text-decoration: none;
+}
+
+ion-title {
+  font-size: 1.5rem;
+  padding: 0px;
+}
+</style>
