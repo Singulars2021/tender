@@ -3,13 +3,13 @@
     <ion-tabs>
       <ion-tab-bar slot="top">
         <ion-tab-button tab="add-new-animal" href="/animals/add">
-          <ion-icon :icon="settingsOutline" />
+          <ion-icon :icon="settingsSharp" />
         </ion-tab-button>
         <ion-tab-button tab="animal-slider" href="/animals/slider">
-          <ion-icon :icon="layersOutline" />
+          <ion-icon class="logo-tender" src="../../assets/logo_tender_hearts.svg" />
         </ion-tab-button>
         <ion-tab-button tab="chat-center" href="/animals/chat">
-          <ion-icon size="large" src="../../assets/cat.svg" />
+          <ion-icon :icon="heartSharp" />
         </ion-tab-button>
         <!-- <ion-tab-button tab="admin-animals" href="/animals/adminAnimals">
           <ion-icon :icon="ellipsisVerticalOutline" />
@@ -22,9 +22,9 @@
 <script>
 import { IonTabBar, IonTabButton, IonTabs, IonIcon, IonPage } from "@ionic/vue";
 import {
-  settingsOutline,
-  layersOutline,
-  ellipsisVerticalOutline,
+  settingsSharp,
+  heartSharp,
+  //ellipsisVerticalOutline,
 } from "ionicons/icons";
 
 export default {
@@ -32,10 +32,16 @@ export default {
   components: { IonTabs, IonTabBar, IonTabButton, IonIcon, IonPage },
   setup() {
     return {
-      settingsOutline,
-      layersOutline,
-      ellipsisVerticalOutline,
+      settingsSharp,
+      heartSharp,
+      //ellipsisVerticalOutline,
     };
   },
 };
 </script>
+
+<style scoped>
+ion-icon{
+  font-size: 1.6rem;
+}
+</style>
