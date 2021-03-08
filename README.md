@@ -8,10 +8,9 @@ Know moure about Tender in this [presentation](https://docs.google.com/presentat
 
 [Our landing page in Spanish](https://animalslist-19bbf.web.app/)
 
-## Download the APK and try it
+## Web App
 
-[Apk for Android](https://learningbit.sharepoint.com/sites/Grup4FrontEndDeveloper-SingularsOT11220.04544/Documentos%20compartidos/Tender/app-debug.apk)
-
+Last version [8 March](https://tender-e9803.web.app/signin)
 ### App description
 
 These days, It can take a long time to adopt a pet. Where should you search it for? What kind of trust do all those pages where you can find them advertised give us? Why is it so hard and time consuming?
