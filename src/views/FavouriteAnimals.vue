@@ -107,6 +107,7 @@ export default {
   },
   computed: {
     animalList() {
+      console.log("Ejecutando computed de FavoriteAnimals")
       return this.$store.getters.getFavoriteAnimals;
     },
   },

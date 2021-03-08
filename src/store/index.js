@@ -418,7 +418,7 @@ const store = createStore({
       }
 
       animalFields.id = id;
-      context.commit('insertAnimal', animalFields)
+      //context.commit('insertAnimal', animalFields)
     },
     // Action to update an animal by its id (change description, name, etc.)
     async updateAnimal(context, payload) {
