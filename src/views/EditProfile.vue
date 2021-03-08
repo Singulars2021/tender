@@ -2,11 +2,6 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <!-- <ion-buttons slot="start">
-          <ion-button  class="btn-back" @click="goBack">
-            <ion-icon :icon="chevronBackOutline" ></ion-icon>
-          </ion-button>
-        </ion-buttons> -->
         <back-button href="" @click="goBack"></back-button>
         <ion-title>Editar Perfil</ion-title>
       </ion-toolbar>

@@ -60,10 +60,13 @@ const store = createStore({
       })
       // TODO:WE NEED TO map all animals ID
 
-      const dislakedAnimals = getters.getLoggedUserDislakedAnimals
+      const dislakedAnimals = getters.getLoggedUserDislakedAnimalsId
       allAnimals = allAnimals.filter(animal => {
         return dislakedAnimals.indexOf(animal.id) == -1
       })
+
+      console.log("My DISLAKED ANIMALS are: ", dislakedAnimals)
+
 
       // Must remove my own animals
       const myAnimalsId = getters.getMyAnimalsId
@@ -89,7 +92,7 @@ const store = createStore({
       // TODO: remove disliked animals
       // result = result.filter(animal => {
       // })
- 
+
       // TODO: Remove favorited animals
 
       return result
@@ -133,6 +136,8 @@ const store = createStore({
       if (!user || !user.favoriteAnimals) {
         return []
       }
+
+
       return state.animals.filter(animal => {
         return user.favoriteAnimals.indexOf(animal.id) != -1
       })
@@ -152,6 +157,12 @@ const store = createStore({
         return user.removedAnimalsId.indexOf(animal.id) != -1
       })
     },
+    getLoggedUserDislakedAnimalsId(state, getters) {
+      const dislakedAnimals = getters.getLoggedUserDislakedAnimals
+      return dislakedAnimals.map(animal => {
+        return animal.id
+      })
+    },
     getAnimalBy(state) {
       return state.animal
     },
@@ -163,13 +174,13 @@ const store = createStore({
     },
     getUserById: (state) => (id) => {
       console.log("Get users by id", state.users)
-      console.log("Id user",id)
+      console.log("Id user", id)
 
       return state.users.find(user => user.id === id)
     },
     getLoggedUserInfo(state) {
 
-      const user =  state.users.find(user => {
+      const user = state.users.find(user => {
         return state.loggedUser.id == user.id
       })
       return user
@@ -212,10 +223,10 @@ const store = createStore({
       state.loggedUser = payload
     },
     setLoggedUser(state, payload) {
-     // const user = state.users.filter((user) => user.id == payload);
-     // state.loggedUser = user[0];
-     console.log("Set logged user:", payload)
-     state.loggedUser = payload
+      // const user = state.users.filter((user) => user.id == payload);
+      // state.loggedUser = user[0];
+      console.log("Set logged user:", payload)
+      state.loggedUser = payload
       //recuperar todos los datos del usuario con el id payload.id
       // db.collection(collection).doc(id)
     },
@@ -226,16 +237,34 @@ const store = createStore({
     addUser(state, payload) {
       state.users.push(payload)
     },
-    updateUserState(state,payload) {
+    updateUserState(state, payload) {
       let index = state.users.findIndex(user => user.id == payload.id)
       console.log("found index:", index)
       state.users.splice(index, 1, payload)
     },
     addFavoriteAnimal(state, payload) {
-      state.loggedUser.favoriteAnimals.push(payload)
+      const currentUserId = state.loggedUser.id
+      let user = state.users.findIndex(user => user.id == currentUserId)
+
+      if (!user.favoriteAnimals) {
+        user = {
+          ...user,
+          favoriteAnimals: []
+        }
+      }
+      user.favoriteAnimals.push(payload.id)
     },
     addRemovedAnimalId(state, payload) {
-      state.loggedUser.removedAnimalsId.push(payload)
+      const currentUserId = state.loggedUser.id
+      let user = state.users.findIndex(user => user.id == currentUserId)
+      if (!user.removedAnimalsId) {
+        user = {
+          ...user,
+          removedAnimalsId: []
+        }
+      }
+
+      user.removedAnimalsId.push(payload.id)
     },
 
 
@@ -302,12 +331,12 @@ const store = createStore({
         }
 
         if (changeType == "added") {
-           console.log("Added user :", data)
+          console.log("Added user :", data)
           context.commit('addUser', data)
         }
 
         else {
-           console.log("User modified:", data)
+          console.log("User modified:", data)
           context.commit('updateUserState', data)
         }
       });
@@ -338,19 +367,19 @@ const store = createStore({
 
     },
     async addFavoriteAnimal(context, payload) {
-      const animal = payload
+     // const animal = payload
       const animalId = payload.id
       const userId = context.getters.getUserId
 
       await addFavorite(animalId, userId)
 
-      context.commit('addFavoriteAnimal', animal)
+     // context.commit('addFavoriteAnimal', animal)
     },
     async addRemovedAnimal(context, payload) {
       const animalId = payload
       const userId = context.getters.getUserId
       await addRemoved(animalId, userId)
-      context.commit('addRemovedAnimalId', animalId)
+      //context.commit('addRemovedAnimalId', animalId)
     },
     updateAnimals(context, payload) {
       const animalId = payload
@@ -440,27 +469,10 @@ const store = createStore({
       // const animals = await getData('animals');
       getSyncData('animals', async (animal, changeType) => {
 
-        // TODO: Porque se hace una consulta a BBDD si deberiamos tener en
-        // el estado local toda la info de los animales que el usuario ha rechazado? Posiblemente explicar diferencia entre traerse una colección, o traer un array 
-
-        //const userId = context.getters.getUserId;
-        //const removedAnimalsId = await getRemovedAnimalsId(userId);
-        //const favoriteAnimalsId = await getFavoriteAnimalsId(userId);
-
         if (animal.disable) {
           return
         }
 
-        // if (removedAnimalsId) {
-        //   context.commit('setRemovedAnimalsId', removedAnimalsId);
-        //   let mustBeRemoved = removedAnimalsId.some(animalId => {
-        //     return animalId == animal.id
-        //   });
-
-        //   if (mustBeRemoved) {
-        //     return // no insertar el animal
-        //   }
-        // }
         const photos = await getCollectionFromCollection("animals", "images", animal.id);
 
         for (const photo in photos)
@@ -468,13 +480,7 @@ const store = createStore({
             id: photos[photo].id,
             image: photos[photo].image
           })
-        // if (favoriteAnimalsId) {
-        //   favoriteAnimalsId.forEach(animalId => {
-        //     const index = animal.findIndex(animal => animal.id == animalId);
-        //     context.commit('setFavoriteAnimals', animal[index]);
-        //     animal.splice(index, 1)
-        //   });
-        // }
+
 
         if (changeType == "added") {
           console.log("animal added:", animal)

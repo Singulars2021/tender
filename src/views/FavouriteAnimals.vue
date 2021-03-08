@@ -1,15 +1,15 @@
-<template>
+<template v-slot:start>
   <ion-page>
     <ion-content class="ion-padding">
-      <ion-searchbar @ionChange="ionChange($event)"></ion-searchbar>
+      <!-- <ion-searchbar @ionChange="ionChange($event)"></ion-searchbar> -->
       <ion-text>Me gustas </ion-text>
       <div class="favorite-animals-list scroll" scrollX="true">
-        <div v-for="animal in searchedAnimal" :key="animal.id">
+        <div v-for="animal in animalList" :key="animal.id">
           <div
             class="favorite-animals-item"
             @click="chat(animal.id, animal.userId)"
           >
-            <ion-avatar slot="start">
+            <ion-avatar>
               <img :src="animal.pictures[0].image" />
             </ion-avatar>
             <ion-label>
@@ -25,10 +25,10 @@
         </ion-list-header>
         <ion-item
           class="chat-separated"
-          v-for="animal in searchedAnimal"
+          v-for="animal in animalList"
           :key="animal.id"
         >
-          <ion-avatar slot="start">
+          <ion-avatar>
             <img :src="animal.pictures[0].image" />
           </ion-avatar>
           <ion-label>
@@ -51,7 +51,7 @@ import {
   IonList,
   IonItem,
   IonLabel,
-  IonSearchbar,
+  // IonSearchbar,
   IonListHeader,
   IonAvatar,
   IonContent,
@@ -67,7 +67,7 @@ export default {
     IonList,
     IonItem,
     IonLabel,
-    IonSearchbar,
+    // IonSearchbar,
     IonListHeader,
     IonAvatar,
     IonContent,
@@ -77,14 +77,11 @@ export default {
   },
   data() {
     return {
-      searchedAnimal: [],
       messageCount: 0,
       ellipse,
     };
   },
-  ionViewWillEnter() {
-    this.searchedAnimal = this.$store.getters.getFavoriteAnimals;
-  },
+
   methods: {
     ionChange(event) {
       const searchedInput = event.target.value;
