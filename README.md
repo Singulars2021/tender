@@ -10,7 +10,7 @@ Know moure about Tender in this [presentation](https://docs.google.com/presentat
 
 ## Web App
 
-Last version [8 March](https://tender-e9803.web.app/signin)
+Last version [8 March](https://tender-e9803.web.app)
 ### App description
 
 These days, It can take a long time to adopt a pet. Where should you search it for? What kind of trust do all those pages where you can find them advertised give us? Why is it so hard and time consuming?
