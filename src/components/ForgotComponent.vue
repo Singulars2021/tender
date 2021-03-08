@@ -11,8 +11,12 @@
               </ion-item>
             </ion-list>
              <!-- Submit Button -->
-            <cta-button>RECUPERAR CONTRASEÑA</cta-button>
+            <cta-button-signin>RECUPERAR CONTRASEÑA</cta-button-signin>
         </form>
+        <p class="forgot-password">
+        ¿Ya tienes cuenta?
+        <router-link :to="{ name: 'login' }">Entrar</router-link>
+    </p>
     </div>
 </template>
 
@@ -26,7 +30,7 @@ import {
   IonTitle
 } from "@ionic/vue";
 
-import CtaButton from "../ui/CtaButton.vue";
+import CtaButtonSignin from "../ui/CtaButtonSignin.vue";
 
 export default {
   data() {
@@ -41,7 +45,7 @@ export default {
     IonItem,
     IonLabel,
     IonInput,
-    CtaButton,
+    CtaButtonSignin,
     IonTitle
     
   },
@@ -87,6 +91,22 @@ form {
 
 .paragraph {
 line-height: 1.5rem;
+}
+
+.forgot-password {
+  --padding-bottom: 20px;
+  --padding-top: 20px;
+  position: fixed;
+  bottom: 35px;
+  margin: 0;
+  left: 16px;
+  right: 16px;
+  text-align: center;
+  font-size: 0.85rem;
+}
+
+a{
+  text-decoration: none;
 }
 
 </style>
