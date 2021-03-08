@@ -21,12 +21,6 @@ export default {
     IonTitle,
     IonContent,
     IonPage,
-  },
-  data() {
-    return {};
-  },
-  ionViewWillEnter(){
-    console.log(this.$route.params.id)
   }
 };
 </script>

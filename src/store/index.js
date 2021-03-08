@@ -3,10 +3,10 @@ import {
   addNewDocument,
   addFavorite,
   addRemoved,
-  getFavoriteAnimalsId,
-  getRemovedAnimalsId,
+  // getFavoriteAnimalsId,
+  // getRemovedAnimalsId,
   getCollectionFromCollection,
-  getData,
+  // getData,
   setPictureToAnimal,
   updateDocument,
   createNewUser,
@@ -49,27 +49,48 @@ const store = createStore({
     getAllAnimals(state) {
       return state.animals
     },
-    getFilteredAnimals(state, getters){
-      const allAnimals = getters.getAllAnimals;
+    getFilteredAnimals(state, getters) {
+      let allAnimals = getters.getAllAnimals;
       const filters = state.animalSearchFilters;
 
-      console.log('getFiltered getter', allAnimals);
-      console.log('Filters:', filters)
+      const favoriteAnimals = getters.getFavoriteAnimalsId
+      console.log("Favorite animals id", favoriteAnimals)
+      allAnimals = allAnimals.filter(animal => {
+        return favoriteAnimals.indexOf(animal.id) == -1
+      })
+      // TODO:WE NEED TO map all animals ID
 
-      if(!filters){
-        console.log('Empty Filter')
+      const dislakedAnimals = getters.getLoggedUserDislakedAnimals
+      allAnimals = allAnimals.filter(animal => {
+        return dislakedAnimals.indexOf(animal.id) == -1
+      })
+
+      // Must remove my own animals
+      const myAnimalsId = getters.getMyAnimalsId
+      allAnimals = allAnimals.filter(animal => {
+        return myAnimalsId.indexOf(animal.id) == -1
+      })
+      console.log("My animals are: ", myAnimalsId)
+
+      if (!filters) {
         return allAnimals
       }
 
 
 
-     const result =  allAnimals.filter(animal => {
-        return (filters.species == undefined || filters.species == animal.species) && 
-               (filters.sex == undefined || filters.sex == animal.sex) && 
-               (filters.adoptionType == undefined || filters.adoptionType == animal.adoptionType) && 
-               (filters.location == undefined || filters.location == animal.location) && 
-               (filters.age == undefined || filters.age == animal.age)
+      let result = allAnimals.filter(animal => {
+        return (filters.species == undefined || filters.species == animal.species) &&
+          (filters.sex == undefined || filters.sex == animal.sex) &&
+          (filters.adoptionType == undefined || filters.adoptionType == animal.adoptionType) &&
+          (filters.location == undefined || filters.location == animal.location) &&
+          (filters.age == undefined || filters.age == animal.age)
       })
+
+      // TODO: remove disliked animals
+      // result = result.filter(animal => {
+      // })
+ 
+      // TODO: Remove favorited animals
 
       return result
 
@@ -87,12 +108,17 @@ const store = createStore({
       //       return animal
       //     }
       // })}
-      
+
     },
     getMyAnimals(state, getters) {
       return state.animals.filter(animal => animal.userId === getters.getUserId)
-    }
-    ,
+    },
+    getMyAnimalsId(state, getters) {
+      const getMyAnimals = getters.getMyAnimals
+      return getMyAnimals.map(animal => {
+        return animal.id
+      })
+    },
     getFilters(state) {
       return state.animalSearchFilters
     },
@@ -100,8 +126,31 @@ const store = createStore({
     getLoggedUser(state) {
       return state.loggedUser
     },
-    getFavoriteAnimals(state) {
-      return state.loggedUser.favoriteAnimals
+    // by logged user
+    getFavoriteAnimals(state, getters) {
+      const user = getters.getUserById(state.loggedUser.id)
+      console.log("User of favorite animals", user)
+      if (!user || !user.favoriteAnimals) {
+        return []
+      }
+      return state.animals.filter(animal => {
+        return user.favoriteAnimals.indexOf(animal.id) != -1
+      })
+    },
+    getFavoriteAnimalsId(state, getters) {
+      const favoriteAnimals = getters.getFavoriteAnimals
+      return favoriteAnimals.map(animal => {
+        return animal.id
+      })
+    },
+    getLoggedUserDislakedAnimals(state, getters) {
+      const user = getters.getUserById(state.loggedUser.id)
+      if (!user || !user.removedAnimalsId) {
+        return []
+      }
+      return state.animals.filter(animal => {
+        return user.removedAnimalsId.indexOf(animal.id) != -1
+      })
     },
     getAnimalBy(state) {
       return state.animal
@@ -113,8 +162,18 @@ const store = createStore({
       return state.reports
     },
     getUserById: (state) => (id) => {
+      console.log("Get users by id", state.users)
+      console.log("Id user",id)
+
       return state.users.find(user => user.id === id)
     },
+    getLoggedUserInfo(state) {
+
+      const user =  state.users.find(user => {
+        return state.loggedUser.id == user.id
+      })
+      return user
+    }
   },
   // Mutations must update the app's state. Every time we retrieve data from the database, these data must be loaded somewhere in our app state management. Because we are using Vuex of our app, we must use a mutation to alter the state, never alter it directly in an action of inside a component.
   mutations: {
@@ -140,20 +199,37 @@ const store = createStore({
     setAnimals(state, payload) {
       state.animals = payload
     },
+    addAnimal(state, payload) {
+      state.animals.push(payload)
+    },
+    updateStateAnimal(state, payload) {
+      let index = state.animals.findIndex(animal => animal.id == payload.id)
+      console.log("found index:", index)
+      // Sustituye el animal por el nuevo aninal con los datos actualizados de la BBDD
+      state.animals.splice(index, 1, payload)
+    },
     signinMutation(state, payload) {
       state.loggedUser = payload
     },
     setLoggedUser(state, payload) {
-      console.log('State.users: ', state.users)
-      const user = state.users.filter((user) => user.id == payload);
-      console.log('SetLoggedUser: ', user[0])
-      state.loggedUser = user[0];
+     // const user = state.users.filter((user) => user.id == payload);
+     // state.loggedUser = user[0];
+     console.log("Set logged user:", payload)
+     state.loggedUser = payload
       //recuperar todos los datos del usuario con el id payload.id
       // db.collection(collection).doc(id)
     },
     setUsers(state, payload) {
       state.users = payload
       console.dir(state.loggedUser)
+    },
+    addUser(state, payload) {
+      state.users.push(payload)
+    },
+    updateUserState(state,payload) {
+      let index = state.users.findIndex(user => user.id == payload.id)
+      console.log("found index:", index)
+      state.users.splice(index, 1, payload)
     },
     addFavoriteAnimal(state, payload) {
       state.loggedUser.favoriteAnimals.push(payload)
@@ -165,7 +241,6 @@ const store = createStore({
 
     setAnimalById(state, payload) {
       state.animal = payload
-      console.log(state.animal)
     },
     updateAnAnimal(state, payload) {
       for (var i = 0; i < state.length; i++) {
@@ -173,7 +248,6 @@ const store = createStore({
           state.animals[i] = payload
         }
       }
-      console.log(state)
     },
     updateAnimals(state, payload) {
       state.animals.splice(payload, 1)
@@ -214,21 +288,29 @@ const store = createStore({
     // },
     async loadUsers(context) {
       //Se va a encargar de inicializar el state de nuestra aplicación
-      const users = await getData('users');
-      const result = users.map((user) => {
-        return {
+      let data
+      getSyncData('users', async (user, changeType) => {
+        data = {
           id: user.id,
           name: user.name,
           description: user.description,
           email: user.email,
           location: user.location,
           phoneNumber: user.phoneNumber,
-          favoriteAnimals: [],
-          removedAnimalsId: [],
+          favoriteAnimals: user.favoriteAnimalsId,
+          removedAnimalsId: user.removedAnimalsId,
+        }
+
+        if (changeType == "added") {
+           console.log("Added user :", data)
+          context.commit('addUser', data)
+        }
+
+        else {
+           console.log("User modified:", data)
+          context.commit('updateUserState', data)
         }
       });
-      console.log(result)
-      context.commit('setUsers', result)
     },
     async signin(context, payload) {
 
@@ -251,7 +333,6 @@ const store = createStore({
         email: user.email
       }
       await addNewDocumentWithId(payloadMutation, "users", user.uid)
-      console.log('before mutation', payloadMutation)
       context.commit("signinMutation", payloadMutation)
 
 
@@ -274,7 +355,6 @@ const store = createStore({
     updateAnimals(context, payload) {
       const animalId = payload
       const allAnimals = context.getters.getAllAnimals
-      console.log(allAnimals)
       const indexToDelete = allAnimals.findIndex((animal) => animal.id == animalId)
       context.commit('updateAnimals', indexToDelete)
     },
@@ -296,7 +376,6 @@ const store = createStore({
     // },
     // Will insert a new animal in the firebase app and then the app state must be updated. I think we may use most of the data structure that AnimalForm is already building. We'll have to take a look about how to relate the photos to the animal
     async insertNewAnimal(context, payload) {
-      console.log('Calling insertNewAninal action with payload:', payload)
       const animalFields = {
         userId: context.getters.getUserId,
         ...payload.animalFields
@@ -305,13 +384,11 @@ const store = createStore({
 
       const id = await addNewDocument(animalFields, 'animals')
 
-      console.log('isnertnewAnimal:photos:', animalPhotos)
       for (let i = 0; i < animalPhotos.length; i++) {
         await setPictureToAnimal(id, animalPhotos[i]);
       }
 
       animalFields.id = id;
-      console.log('isnertnewAnimal:animalFields:', animalFields)
       context.commit('insertAnimal', animalFields)
     },
     // Action to update an animal by its id (change description, name, etc.)
@@ -329,9 +406,7 @@ const store = createStore({
 
       for (let i = 0; i < animalPhotos.length; i++) {
         animalPhotosId.push(animalPhotos[i].id)
-        if (oldImgId.includes(animalPhotos[i].id)) {
-          console.log('la imagen ya esta')
-        } else {
+        if (!oldImgId.includes(animalPhotos[i].id)) {
           await setPictureToAnimal(id, animalPhotos[i]);
         }
       }
@@ -339,11 +414,10 @@ const store = createStore({
 
       for (let i = 0; i < oldImgId.length; i++) {
         if (!animalPhotosId.includes(oldImgId[i])) {
-          console.log("delete animal photo")
           await deleteDocumentFromAnimalPhoto(oldImgId[i], id)
         }
       }
-      
+
 
       context.commit('updateAnAnimal', payload.animalFields)
     },
@@ -364,59 +438,66 @@ const store = createStore({
     async getAnimals(context) {
       // Get all the data from the collection named 'animals'
       // const animals = await getData('animals');
-      getSyncData('animals', async (animals) => {
+      getSyncData('animals', async (animal, changeType) => {
 
-        const userId = context.getters.getUserId;
+        // TODO: Porque se hace una consulta a BBDD si deberiamos tener en
+        // el estado local toda la info de los animales que el usuario ha rechazado? Posiblemente explicar diferencia entre traerse una colección, o traer un array 
 
-        const removedAnimalsId = await getRemovedAnimalsId(userId);
-        const favoriteAnimalsId = await getFavoriteAnimalsId(userId);
+        //const userId = context.getters.getUserId;
+        //const removedAnimalsId = await getRemovedAnimalsId(userId);
+        //const favoriteAnimalsId = await getFavoriteAnimalsId(userId);
 
-        for (const animal in animals) {
-          if (animals[animal].disable) {
-            animals.splice(animal, 1);
-          }
+        if (animal.disable) {
+          return
         }
 
-        if (removedAnimalsId) {
-          context.commit('setRemovedAnimalsId', removedAnimalsId);
-          removedAnimalsId.forEach(animalId => {
-            const index = animals.findIndex(animal => animal.id == animalId);
-            animals.splice(index, 1)
+        // if (removedAnimalsId) {
+        //   context.commit('setRemovedAnimalsId', removedAnimalsId);
+        //   let mustBeRemoved = removedAnimalsId.some(animalId => {
+        //     return animalId == animal.id
+        //   });
 
-          });
+        //   if (mustBeRemoved) {
+        //     return // no insertar el animal
+        //   }
+        // }
+        const photos = await getCollectionFromCollection("animals", "images", animal.id);
+
+        for (const photo in photos)
+          animal["pictures"].push({
+            id: photos[photo].id,
+            image: photos[photo].image
+          })
+        // if (favoriteAnimalsId) {
+        //   favoriteAnimalsId.forEach(animalId => {
+        //     const index = animal.findIndex(animal => animal.id == animalId);
+        //     context.commit('setFavoriteAnimals', animal[index]);
+        //     animal.splice(index, 1)
+        //   });
+        // }
+
+        if (changeType == "added") {
+          console.log("animal added:", animal)
+          context.commit('addAnimal', animal)
         }
-        for (const animal in animals) {
-          const photos = await getCollectionFromCollection("animals", "images", animals[animal].id);
 
-          for (const photo in photos)
-            animals[animal]["pictures"].push({
-              id: photos[photo].id,
-              image: photos[photo].image
-            })
+        else {
+          console.log("animal changed:", animal)
+          context.commit('updateStateAnimal', animal)
+
         }
-        if (favoriteAnimalsId) {
-          favoriteAnimalsId.forEach(animalId => {
-            const index = animals.findIndex(animal => animal.id == animalId);
-            context.commit('setFavoriteAnimals', animals[index]);
-            animals.splice(index, 1)
-          });
-        }
-
-        context.commit('setAnimals', animals)
-
       })
       // updates the data in the app
     },
     updateFilters(context, payload) {
       const Filters = payload.filterFields
 
-      console.log(Filters)
 
       context.commit('setFilters', Filters)
     },
     async setLoggedUser(context, payload) {
-      const id = payload.id
-      context.commit("setLoggedUser", id)
+      //const id = payload.id
+      context.commit("setLoggedUser", payload)
     },
     //Update user
     async updateUser(context, payload) {
@@ -428,7 +509,6 @@ const store = createStore({
         phoneNumber: payload.phoneNumber,
         location: payload.location
       }
-      console.log(updatedInfo)
       await updateDocument(id, updatedInfo, 'users')
 
       context.commit('updateUserInfo', payload)
@@ -436,8 +516,6 @@ const store = createStore({
     async getUserId() {
       const user = await getCurrentUser()
       const id = user.uid
-      console.log("User inside getUserId action", user)
-      console.log("Id inside getUserId action", id)
       return id
     },
     async updateReports(context, payload) {
@@ -445,11 +523,7 @@ const store = createStore({
         userId: context.getters.getUserId,
         ...payload.reportFields
       }
-
       const id = await addNewDocument(reportFields, 'reports')
-
-      console.log(reportFields)
-
       reportFields.id = id
 
       context.commit('setReports', reportFields)

@@ -60,11 +60,11 @@ firebase.auth().onAuthStateChanged(async user => {
       email: user.email,
       name: user.displayName
     }
-    console.log('Retriving data from DB')
+    await store.dispatch("setLoggedUser", payload)
+
     await store.dispatch("loadUsers")
     await store.dispatch("getAnimals")
 
-    await store.dispatch("setLoggedUser", payload)
   }
   if (!app) {
     app = createApp(App)

@@ -97,10 +97,8 @@ export default {
         await this.$store.dispatch("signup", payload);
       } catch (error) {
         this.openToast(error.message);
-        console.log("Error", error);
         return;
       }
-      console.log("before route push to first steps");
       this.$router.push({ name: "first-steps" });
     },
   },

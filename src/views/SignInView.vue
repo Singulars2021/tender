@@ -43,12 +43,6 @@ export default {
     IonContent,
     IonPage,
     SignInComponent
-  },
-  // async beforeRouteEnter (to, from, next){
-  //     const user = getCurrentUser()
-  //     console.log('Before Route User: ', user)
-  //     if (to.name == 'login' && user) next({ name: 'slider' });
-  //     else next();
-  // }
+  }
 };
 </script>

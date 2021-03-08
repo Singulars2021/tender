@@ -44,11 +44,6 @@ export default {
     IonPage,
     IonSpinner,
   },
-  created() {
-    // Example about how to update app's state
-   // this.$store.dispatch("getAnimals");
-    console.log("created");
-  },
   methods: {
     onFavoriteSelected(animalId) {
       const slides = document.querySelectorAll(".animate");
@@ -59,8 +54,6 @@ export default {
           indexToAnimate = slide;
         }
       }
-
-      console.log("index", indexToAnimate);
 
       const slide = slides[indexToAnimate].children[1];
 
@@ -92,8 +85,6 @@ export default {
         }
       }
 
-      console.log("index", indexToAnimate);
-
       const slide = slides[indexToAnimate].children[1];
 
       const likedAnimation = createAnimation()
@@ -115,16 +106,8 @@ export default {
       likedAnimation.play();
     },
   },
-  // Ionic hook executed everytime the user changes to this view
-  async ionViewWillEnter() {
-    console.log("ionViewWillEnter");
-    // this.animals = this.$store.getters.getAllAnimals;
-
-    // Just a try to check if DB is working. It would be a good idea if this getters fills a computed property for the animal slider, for example
-  },
   computed: {
     animals() {
-      console.log('AnimalSlider computed: ', this.$store.getters.getFilteredAnimals)
       return this.$store.getters.getFilteredAnimals;
     },
   },

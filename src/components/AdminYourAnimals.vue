@@ -7,7 +7,7 @@
           <admin-card
             class="admin-card"
             @click="$emit('edit-animal', animal.id)"
-            :img="animal.pictures[0].image"
+            :img="getMainImage(animal)"
             :name="animal.name"
             :id="animal.id"
           ></admin-card>
@@ -31,17 +31,20 @@ export default {
       addCircleOutline,
     };
   },
-  methods: {
-    editAnimal() {
-      console.log("funciona el emit", "este es el componente");
-    },
-  },
   components: {
     IonGrid,
     IonRow,
     IonCol,
     AdminCard,
   },
+  methods: {
+    getMainImage(animal) {
+      if (!animal.pictures || animal.pictures.length==0) {
+        return '/broken-image.png'
+      }
+      return animal.pictures[0].image
+    }
+  }
 };
 </script>
 

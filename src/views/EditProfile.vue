@@ -131,33 +131,27 @@ export default {
     BackButton,
     CtaButton,
   },
-  data(){
-      return {
-          newPhone: "",
-          newName: undefined,
-          newLocation: "",
-          newBio: "",
-          chevronBackOutline,
-          heart,
-          provincesLabels: provinces
-      }
+  data() {
+    return {
+      newPhone: "",
+      newName: undefined,
+      newLocation: "",
+      newBio: "",
+      chevronBackOutline,
+      heart,
+      provincesLabels: provinces,
+    };
   },
-  async ionViewWillEnter(){
-      const userLogged = this.$store.getters.getLoggedUser 
-
-      this.newName = userLogged.name
-      this.newBio = userLogged.description || ""
-      this.newPhone = userLogged.phoneNumber || ""
-      this.newLocation = userLogged.location || ""
-      console.log('UserLogged.uid: ', userLogged.uid)
-      console.log('getter getUserId: ', this.$store.getters.getUserId)
-
+  async ionViewWillEnter() {
+    const userLogged = this.$store.getters.getLoggedUserInfo;
+    if (!userLogged) {
+      return;
+    }
     this.newName = userLogged.name;
-    this.newBio = userLogged.description;
-    this.newPhone = userLogged.phoneNumber;
-    this.newLocation = userLogged.location;
-    console.log("UserLogged.uid: ", userLogged.uid);
-    console.log("getter getUserId: ", this.$store.getters.getUserId);
+    this.newBio = userLogged.description || "";
+    this.newPhone = userLogged.phoneNumber || "";
+    this.newLocation = userLogged.location || "";
+
   },
   methods: {
     toFavoriteAnimals() {
@@ -187,9 +181,15 @@ export default {
         // position: 'top',
       });
 
-      await toast.present();
-
-      this.$store.dispatch("updateUser", newInfo);
+      // TODO: Esperar que se actualice la info del user. Mostrar un toast danger si existe un error (try catch)
+      try {
+        this.$store.dispatch("updateUser", newInfo);
+        await toast.present();
+      } catch (error) {
+        toast.message = error
+        toast.color = "danger"
+        console.log("Error edit profile: ", error);
+      }
     },
     goBack() {
       //This makes us go back

@@ -51,7 +51,6 @@ export default {
   },
   methods: {
     redirectOptions(e) {
-      console.log(e.detail.value);
       this.value = e.detail.value;
     },
     redirectToPage() {

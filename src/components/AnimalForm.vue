@@ -320,15 +320,12 @@ export default {
         cssClass: "my-custom-class",
         header: "Alert",
         subHeader: "Eliminar",
-        message: "Estas seguro que quieres elimnar?",
+        message: "¿Estás seguro que quieres eliminar?",
         buttons: [
           {
             text: "Cancel",
             role: "cancel",
-            cssClass: "secondary",
-            handler: (blah) => {
-              console.log("Confirm Cancel:", blah);
-            },
+            cssClass: "secondary"
           },
           {
             text: "Eliminar",
@@ -345,8 +342,7 @@ export default {
     onFormEdit() {
       this.isFormValid = true;
     },
-    addAnimal(e) {
-      console.log(e);
+    async addAnimal() {
       this.isFormValid = true;
       if (
         this.name.trim == "" ||
@@ -380,14 +376,16 @@ export default {
 
       if (!this.animal) {
         animal.creationDate = new Date();
-        this.$store.dispatch("insertNewAnimal", {
+        // TODO: Esperar a que se inserte con await ?
+
+        await this.$store.dispatch("insertNewAnimal", {
           animalFields: animal,
           animalPhotos: this.imagesList,
         });
       } else {
         animal.creationDate = this.animal.creationDate;
-        console.log(this.imagesList);
-        this.$store.dispatch("updateAnimal", {
+        // TODO: Esperar a que se actualice con await
+        await this.$store.dispatch("updateAnimal", {
           animalFields: animal,
           animalPhotos: this.imagesList,
           oldImgId: this.oldImgId,
@@ -395,11 +393,8 @@ export default {
         });
       }
       this.clearForm();
-      //this.$store.dispatch("getAnimals");
       this.$router.push({ name: "admin-animals" });
-      // this.$store.dispatch("", {
-      //   animalFields: animal,
-      // });
+
     },
     async openToast(msg, response) {
       const toast = await toastController.create({

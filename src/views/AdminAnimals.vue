@@ -76,15 +76,13 @@ import {
 import CtbButton from "../ui/CtbButton.vue";
 
 export default {
-  ionViewWillEnter() {
-    console.log("GettersgetMyanimals", this.$store.getters.getMyAnimals);
-  },
   computed: {
     animals() {
       var animals = this.$store.getters.getMyAnimals
       if(!animals || animals.lenght==0){
         return []
       }
+      console.log("returned animals in admin:", animals)
       return animals;
     },
     user() {
@@ -100,7 +98,6 @@ export default {
   methods: {
     editAnimal(id) {
       this.$router.push({ name: "EditAnimal", params: { id: id } });
-      console.log("Este es el ID del animal clickado", id);
     },
   },
   components: {

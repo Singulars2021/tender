@@ -104,7 +104,6 @@ export default {
 
       this.$router.push({ name: "slider" });
 
-      console.log(this.$store.getters.getReports);
 
       //---------------------------------
       //Steps: https://www.freecodecamp.org/news/send-emails-from-your-vue-application/

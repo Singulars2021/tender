@@ -27,12 +27,6 @@ export default {
     IonPage,
     BackButton,
     IonToolbar,
-  },
-  data() {
-    return {};
-  },
-  ionViewWillEnter(){
-    console.log("user:", this.$route.params)
   }
 };
 </script>

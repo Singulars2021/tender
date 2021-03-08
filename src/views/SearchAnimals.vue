@@ -14,7 +14,7 @@
 
 <script>
 import SearchSettings from "@/components/SearchSettings.vue";
-import { IonPage, IonHeader, IonTitle, IonContent } from "@ionic/vue";
+import { IonPage, IonHeader, IonTitle, IonContent, IonToolbar } from "@ionic/vue";
 import BackButton from '../ui/BackButton.vue';
 
 export default {
@@ -26,6 +26,7 @@ export default {
     IonContent,
     IonPage,
     BackButton,
+    IonToolbar
   },
   data() {
     return {};

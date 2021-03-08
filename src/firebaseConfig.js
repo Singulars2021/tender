@@ -4,7 +4,7 @@ import 'firebase/firestore'
 import 'firebase/storage'
 
 
-// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
     apiKey: "AIzaSyBYJhYEmSUXj9J5Tnr7DUExS3hKge6YdN8",
     authDomain: "animalslist-19bbf.firebaseapp.com",
@@ -12,8 +12,9 @@ const firebaseConfig = {
     projectId: "animalslist-19bbf",
     storageBucket: "animalslist-19bbf.appspot.com",
     messagingSenderId: "711463254165",
-    appId: "1:711463254165:web:2f6a32583db2a7b8fd039c"
-};
+    appId: "1:711463254165:web:2f6a32583db2a7b8fd039c",
+    measurementId: "G-VRBJYNJMGE"
+  };
 
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
@@ -43,19 +44,19 @@ async function updateName(newName) {
 }
 
 function getSyncData(collection, cb) {
-    console.log('getSync_Data initial')
-    let data;
+    let data
+
     db.collection(collection)
-        .onSnapshot((querySnapshot) => {
-            console.log('New changes!!')
-            data = querySnapshot.docs.map((doc) => ({
-                id: doc.id,
-                ...doc.data(),
+    .onSnapshot((snapshot) => {
+        snapshot.docChanges().forEach((change) => {
+            data = {
+                id: change.doc.id,
+                ...change.doc.data(),
                 pictures: [],
-            }));
-            console.log("All the data is formed: ", data)
-            cb(data)
+            };  
+            cb(data, change.type)
         });
+    });
 }
 
 async function getData(collection) {
@@ -70,7 +71,6 @@ async function getData(collection) {
         pictures: [],
     }));
 
-    console.log("firebase: getData from " + collection, data)
     return data
 }
 
@@ -114,7 +114,6 @@ async function addNewDocument(data, collection) {
         .add({
             ...data
         })
-    console.log("firebase: addNewDocument")
     return ref.id
 }
 
@@ -155,8 +154,6 @@ async function updateAnimalDocument(id, data, collection) {
 
 async function deleteDocument(id) {
     const ref = db.collection('animals').doc(id);
-
-    console.log('animal deleted')
 
     return ref.update({
         disable: true,
@@ -217,7 +214,6 @@ async function logInUser(email, password) {
 }
 
 async function logOutUser() {
-    console.log("Logging out User")
     firebase.auth().signOut();
 }
 
@@ -232,12 +228,10 @@ async function recoverPassword(emailAddress) {
 }
 
 async function deleteDocumentFromAnimalPhoto(idPhoto, idAnimal) {
-    console.log("delete" + idAnimal, idPhoto)
     db.collection('animals')
         .doc(idAnimal)
         .collection('images')
         .doc(idPhoto).delete().then(() => {
-            console.log("Image deleted");
         }).catch((error) => {
             console.error("Error removing document: ", error);
         });

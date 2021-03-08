@@ -55,7 +55,6 @@ export default {
       this.imageAnimation="../assets/heart_green.svg"
       this.displayLogo = true;
       const logo = document.querySelector("img.logo");
-      console.log(this.imageAnimation)
       const logoAnimation = createAnimation()
         .addElement(logo)
         .duration(this.logoAnimationDuration)
@@ -76,7 +75,6 @@ export default {
       logoAnimation.play();
 
       this.$emit("favoriteSelected", animal.id);
-      console.log('favoriteSelected, payload animal: ', animal)
 
       const that = this;
 

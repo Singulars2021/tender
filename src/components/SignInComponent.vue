@@ -74,7 +74,6 @@ export default {
   async created() {
     const user = await getCurrentUser();
     if (user) {
-      console.log("User credentials", user.email, user.password);
       this.user.email = user.email;
       this.user.password = user.password;
       this.userLogin();

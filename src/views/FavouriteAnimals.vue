@@ -82,7 +82,7 @@ export default {
       ellipse,
     };
   },
-  created() {
+  ionViewWillEnter() {
     this.searchedAnimal = this.$store.getters.getFavoriteAnimals;
   },
   methods: {
@@ -100,7 +100,6 @@ export default {
       }
     },
     chat(animalId, userId) {
-      console.log(animalId, userId);
       this.$router.push({
         name: "contact-info",
         params: {

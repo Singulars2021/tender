@@ -88,22 +88,18 @@ export default {
       this.isPopoverOpen = false;
     },
     getSexLabel(value) {
-      // console.log(this.sexLabels[value].label);
       return this.sexLabels[value].label;
     },
     getSpeciesLabel(value) {
-      // console.log(this.speciesLabels[value].label);
       return this.speciesLabels[value].label;
     },
     getAdoptionTypeLabel(value) {
       return this.adoptionTypeLabels[value].label;
     },
     getAgeLabel(value) {
-      // console.log(this.ageLabels[value].label);
       return this.ageLabels[value].label;
     },
     getProvinceLabel(value) {
-      // console.log(this.provincesLabels[value].label);
       return this.provincesLabels[value - 1].label;
     },
     async presentActionSheet(id) {
@@ -115,7 +111,6 @@ export default {
             role: "destructive",
             handler: () => {
               this.$router.push({ name: "report-animal", params: {id: id} });
-              console.log("Denunciar clicked");
             },
           },
           {
@@ -125,21 +120,8 @@ export default {
                 name:"contact-info",
                 params:{idUser: this.animal.userId} 
               })
-              console.log("Contactar clicked");
             },
           },
-          /*{
-            text: "Copiar enlace",
-            handler: () => {
-              console.log("Copy link clicked");
-            },
-          },
-          {
-            text: "Compartir en",
-            handler: () => {
-              console.log("Share clicked");
-            },
-          },*/
           {
             text: "Cancelar",
             role: "cancel",

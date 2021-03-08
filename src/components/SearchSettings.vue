@@ -153,10 +153,8 @@ export default {
       this.$store.dispatch("updateFilters", {
         filterFields: filter,
       });
-      //console.log("Filtros: ", filter)
       this.$router.push({ name: "slider" });
 
-      console.log(this.$store.getters.getFilters);
     },
     async openToast(msg, response) {
       const toast = await toastController.create({
