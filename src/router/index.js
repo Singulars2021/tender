@@ -26,7 +26,7 @@ const routes = [
       },
       {
         path: 'add',
-        component: () => import('@/views/AddNewAnimal.vue')
+        component: () => import('@/views/AdminAnimals.vue')
       },
       {
         path: 'chat',

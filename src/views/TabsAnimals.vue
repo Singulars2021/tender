@@ -2,7 +2,7 @@
   <ion-page>
     <ion-tabs>
       <ion-tab-bar slot="top">
-        <ion-tab-button tab="add-new-animal" href="/animals/add">
+        <ion-tab-button tab="add-new-animal" href="/adminanimals">
           <ion-icon :icon="settingsSharp" />
         </ion-tab-button>
         <ion-tab-button tab="animal-slider" href="/animals/slider">

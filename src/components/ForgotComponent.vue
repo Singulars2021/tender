@@ -1,17 +1,17 @@
 <template>
-    <div >
+    <div>
         <form class="ion-padding" @submit.prevent="recoverPassword">
-            <h3>Forgot Password?</h3>
-            <p class="paragraph">Give us your mail and we will send you a link to recover your password!</p>
+            <ion-title>Recuperar contraseña</ion-title>
+            <p class="paragraph">Si has olvidado tu contraseña introduce el email con el que te has registrado. Te mandaremos un enlace para restablecer tu cuenta.</p>
             <ion-list>
               <!-- Email Item -->
               <ion-item class="form-group">
-                  <ion-label>Email address</ion-label>
+                  <ion-label position="floating">Email</ion-label>
                   <ion-input type="email" class="form-control form-control-lg" v-model="user.email" required/>
               </ion-item>
-              <!-- Submit Button -->
-              <ion-button type="submit" class="btn btn-dark btn-lg btn-block">Recover password</ion-button>
             </ion-list>
+             <!-- Submit Button -->
+            <cta-button>RECUPERAR CONTRASEÑA</cta-button>
         </form>
     </div>
 </template>
@@ -22,9 +22,11 @@ import {
   IonItem,
   IonLabel,
   IonInput,
-  IonButton,
-  toastController
+  toastController,
+  IonTitle
 } from "@ionic/vue";
+
+import CtaButton from "../ui/CtaButton.vue";
 
 export default {
   data() {
@@ -39,7 +41,8 @@ export default {
     IonItem,
     IonLabel,
     IonInput,
-    IonButton,
+    CtaButton,
+    IonTitle
     
   },
   methods: {
@@ -73,11 +76,17 @@ export default {
 </script>
 
 <style scoped>
-h3 {
-    text-align: center;
+ion-title {
+  font-size: 1.5rem;
+  padding: 0px;
+}
+
+form {
+  margin-top: 5rem;
 }
 
 .paragraph {
-    text-align: center;
+line-height: 1.5rem;
 }
+
 </style>
