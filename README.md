@@ -1,5 +1,9 @@
 # Tender
 
+## What is Tender?
+
+Know moure about Tender in this [presentation](https://docs.google.com/presentation/d/1zS7rsPCDawomvT4J5Rb-RysJJJ-m77B5bMpyot9Iduk/edit#slide=id.p) (Spanish)
+
 ## Current development Web version
 
 [Web version](https://animalslist-19bbf.web.app/)
