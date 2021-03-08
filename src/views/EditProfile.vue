@@ -115,6 +115,7 @@ import {
   // IonButtons,
   IonIcon,
   toastController,
+  IonItemDivider
 } from "@ionic/vue";
 
 export default {
@@ -137,6 +138,8 @@ export default {
     IonIcon,
     BackButton,
     CtaButton,
+      IonItemDivider
+
   },
   data() {
     return {

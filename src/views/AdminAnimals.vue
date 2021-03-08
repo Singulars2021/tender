@@ -20,16 +20,16 @@
             <p>Editar mi perfil</p>
           </ion-label>
           </div>
-          <div >
+          <div>
           <router-link :to="{ name: 'profile' }">            
               <ion-icon color="dark" name="chevron-forward"  class="forward"></ion-icon>
               <!-- <ion-icon :icon="chevronForwardOutline" /> -->            
           </router-link>
           </div>
+          </div>
         </ion-item>
         <router-link :to="{ name: 'filters' }">
           <ctb-button>AJUSTES BÚSQUEDA</ctb-button>
-
           <ion-item-divider></ion-item-divider>
         </router-link>
       </div>
@@ -72,14 +72,14 @@ import CtbButton from "../ui/CtbButton.vue";
 
 export default {
   computed: {
-    animals() {
-      var animals = this.$store.getters.getMyAnimals
-      if(!animals || animals.lenght==0){
-        return []
-      }
-      console.log("returned animals in admin:", animals)
-      return animals;
-    },
+    // animals() {
+    //   // var animals = this.$store.getters.getMyAnimals
+    //   // if(!animals || animals.lenght==0){
+    //   //   return []
+    //   // }
+    //   // console.log("returned animals in admin:", animals)
+    //   // return animals;
+    // },
     user() {
       return this.$store.getters.getLoggedUser;
     },
@@ -88,7 +88,16 @@ export default {
     return {
       chevronForwardOutline,
       addOutline,
+      animals : []
     };
+  },
+  ionViewWillEnter() {
+     var animals = this.$store.getters.getMyAnimals
+      if(!animals || animals.lenght==0){
+        this.animals = []
+      }
+      console.log("returned animals in admin:", animals)
+      this.animals =  animals;
   },
   methods: {
     editAnimal(id) {

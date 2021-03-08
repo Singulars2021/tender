@@ -2,13 +2,13 @@
   <ion-page>
     <ion-tabs>
       <ion-tab-bar slot="top">
-        <ion-tab-button tab="add-new-animal" href="/adminanimals">
+        <ion-tab-button tab="add-new-animal" href="/main/admin-animals">
           <ion-icon :icon="settingsSharp" />
         </ion-tab-button>
-        <ion-tab-button tab="animal-slider" href="/animals/slider">
+        <ion-tab-button tab="animal-slider" href="/main/slider">
           <ion-icon class="logo-tender" src="../../assets/logo_tender_hearts.svg" />
         </ion-tab-button>
-        <ion-tab-button tab="chat-center" href="/animals/chat">
+        <ion-tab-button tab="chat-center" href="/main/liked-animals">
           <ion-icon :icon="heartSharp" />
         </ion-tab-button>
       </ion-tab-bar>

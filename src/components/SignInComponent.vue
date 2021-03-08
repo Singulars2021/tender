@@ -22,8 +22,8 @@
             required
           />
         </ion-item>
-        <p class="forgot-password">¿Olvidaste la contraseña?
-        <router-link :to="{name: 'forgot-password'}">¿?</router-link>
+        <p class="forgot-password">
+        <router-link :to="{name: 'forgot-password'}">¿Olvidaste la contraseña?</router-link>
       </p>
       </ion-list>
       <!-- Submit Button -->

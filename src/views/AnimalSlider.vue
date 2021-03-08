@@ -107,9 +107,12 @@ export default {
     },
   },
   computed: {
-    animals() {
-      return this.$store.getters.getFilteredAnimals;
-    },
+    // animals() {
+    //   return this.$store.getters.getFilteredAnimals;
+    // },
+  },
+  ionViewWillEnter() {
+    this.animals = this.$store.getters.getFilteredAnimals;
   },
   data() {
     return {
@@ -119,6 +122,7 @@ export default {
         initialSlide: 0,
         pager: false,
       },
+      animals: []
     };
   }
 };
