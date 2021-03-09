@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "tender-singulars",
     "public": "dist",
     "ignore": [
       "firebase.json",
